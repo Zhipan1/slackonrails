@@ -1,0 +1,11 @@
+.channel-header
+  .channel-name = @channel.name
+  .channel-topic = @channel.topic
+
+.channel-body
+  - @channel.messages.each do |message| 
+    .message-text = message.text
+
+.channel-footer
+  .channel-message-box
+    input.channel-message-input
