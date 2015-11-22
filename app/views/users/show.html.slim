@@ -1,0 +1,10 @@
+p#notice= notice
+p
+  strong Message:
+  = @user.message
+p
+  strong Name:
+  = @user.name
+= link_to 'Edit', edit_user_path(@user)
+| \
+= link_to 'Back', users_path
