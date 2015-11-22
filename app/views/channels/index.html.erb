@@ -15,8 +15,8 @@
   <tbody>
     <% @channels.each do |channel| %>
       <tr>
-        <td><%= channel.user %></td>
-        <td><%= channel.message %></td>
+        <td><%= channel.users %></td>
+        <td><%= channel.messages %></td>
         <td><%= channel.topic %></td>
         <td><%= link_to 'Show', channel %></td>
         <td><%= link_to 'Edit', edit_channel_path(channel) %></td>
