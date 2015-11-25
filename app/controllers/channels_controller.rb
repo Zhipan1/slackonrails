@@ -26,9 +26,10 @@ class ChannelsController < ApplicationController
   # POST /channels.json
   def create
     @channel = Channel.new(channel_params)
+    @convo = Conversation.new(user: current_user, channel: @channel)
 
     respond_to do |format|
-      if @channel.save
+      if @channel.save and @convo.save
         format.html { redirect_to @channel, notice: 'Channel was successfully created.' }
         format.json { render :show, status: :created, location: @channel }
       else
@@ -70,6 +71,6 @@ class ChannelsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def channel_params
-      params.require(:channel).permit(:user_id, :message_id, :topic)
+      params.require(:channel).permit(:topic)
     end
 end
