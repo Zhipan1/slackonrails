@@ -8,6 +8,10 @@
         - @channel.errors.full_messages.each do |message|
           li= message
   .field
+    = f.label :name
+    br/
+    = f.text_field :name
+  .field
     = f.label :topic
     br/
     = f.text_field :topic

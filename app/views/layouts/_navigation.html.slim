@@ -1,10 +1,10 @@
-.top-bar
+.side-bar
   .application-name
     = link_to 'Slack Home', root_path
   .user-options
     - if user_signed_in?
       .edit-account
-        = link_to 'Edit Your Account', edit_user_registration_path
+        = link_to 'Edit Account', edit_user_registration_path
       .log-out
         = link_to 'Log Out', destroy_user_session_path, :method=>'delete'
     - else
@@ -12,3 +12,11 @@
         = link_to 'Log In', new_user_session_path
       .sign-up
         = link_to 'Join Slack', new_user_registration_path
+  - if user_signed_in?
+    .channel-header 
+      = "Channels"
+    .channels
+      - current_user.conversations.each do |convo|
+        = convo.name
+    .new-channel
+      = link_to 'New Channel', new_channel_path
