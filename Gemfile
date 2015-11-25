@@ -14,6 +14,7 @@ gem 'simple_form'
 gem "slim-rails"
 gem 'autosize-rails'
 gem 'faye'
+gem "private_pub"
 
 group :development do
   gem 'sqlite3'

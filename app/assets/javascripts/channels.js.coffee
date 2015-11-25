@@ -3,10 +3,10 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+  channel = $("#channel-message-input").attr("channel-id")
   $("#channel-message-input").focus().autosize(append: false).keypress (e) ->
     if not e.shiftKey && e.which == 13
       text = $(this).val()
-      channel = $(this).attr("channel-id")
       postMessage(text, channel)
       $(this).val("")
       return false
@@ -21,7 +21,9 @@ $ ->
           channel_id: channel
       success:(data) ->
         console.log data.id
-        location.reload()
       error:(data) ->
         console.log data.responseText
 
+  PrivatePub.subscribe "/channels/#{channel}", (data, channel) ->
+    $("#messages").append data.message
+    $("#channel-body").animate { scrollTop: $("#messages").height() }, "slow"
