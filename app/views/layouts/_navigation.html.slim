@@ -17,6 +17,7 @@
       = "Channels"
     .channels
       - current_user.conversations.each do |convo|
-        = convo.name
+        - channel_id = convo.channel_id
+        = Channel.find_by_id(channel_id).name
     .new-channel
       = link_to 'New Channel', new_channel_path
