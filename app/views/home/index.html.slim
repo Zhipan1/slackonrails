@@ -1,10 +1,2 @@
 .welcome
-  - if current_user
-    = "Hi, #{@user.name}!"
-    p = link_to "Create a new channel", new_channel_path
-    p Current Channels
-    - @user.channels.each do |c|
-      p = link_to c.topic, c
-
-  - else
-    = "Welcome to Slack."
+  = "Welcome to Slack."
