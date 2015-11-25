@@ -1,9 +1,30 @@
 @import partials/variables
+@import partials/mixins
+
+
+#channel-header
+  position: relative
+  padding: 15px 25px
+  +clearfix
+
+#channel-name-hashtag
+  font-size: 18px
+  color: rgba($black, 0.72)
+  opacity: 0.6
 
 
 #channel-name
-  float: left
-  margin-right: 5px
+  font-size: 24px
+  font-weight: bold
+  color: rgba($black, 0.72)
+
+#channel-body
+  position: relative
+  height: calc(100% - 120px)
+  overflow: scroll
+
+
+
 #channel-footer
   position: absolute
   bottom: 0px
@@ -24,6 +45,5 @@
   &:focus
     border-color: rgba($gray, .24)
 
-#channel-message-box
 
 

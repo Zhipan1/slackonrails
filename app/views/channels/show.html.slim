@@ -1,10 +1,12 @@
 #channel-header
   #channel-name = @channel.name
-  #channel-topic = @channel.topic
+
 
 #channel-body
+  - prev_user = nil
   - @channel.messages.each do |message|
-    =render message
+    = render partial: 'messages/message', object: message, locals: { prev_user: prev_user }
+    - prev_user = message.user
 
 #channel-footer
   #channel-message-box

@@ -1,6 +1,8 @@
-.message
-  .message-photo
-  .message-body
-    .message-user = message.user.name
+.message class="#{prev_user == message.user ? '' : 'first'}"
+  .message-gutter
+    .message-icon
+      = image_tag "users/#{message.user.image}"
+  .message-content
+    span.message-user = message.user.name
     .message-time = message.created_at.strftime("%-I:%M%p")
     .message-text = message.text

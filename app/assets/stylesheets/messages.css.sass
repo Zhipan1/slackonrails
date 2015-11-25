@@ -1,3 +1,54 @@
 // Place all the styles related to the messages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import partials/variables
+@import partials/mixins
+
+.message
+  padding: 1px 0px 4px 0px
+  +clearfix
+
+  &:hover
+    background-color: rgba($black, 0.03)
+
+  &.first
+    .message-content
+      margin-top: 3px
+    .message-icon
+      display: block
+    .message-user, .message-time
+      display: inline-block
+
+.message-gutter
+  float: left
+  width: 72px
+  height: 1px
+  padding-right: 10px
+
+.message-icon
+  width: 36px
+  float: right
+  display: none
+  margin-top: 5px
+
+  img
+    width: 100%
+    border-radius: 2px
+
+.message-content
+  font-size: 15px
+  float: left
+  padding-top: 3px
+
+.message-user
+  font-weight: bold
+  margin-right: 3px
+  display: none
+
+.message-time
+  font-size: 12px
+  color: rgba($black, 0.36)
+  display: none
+  margin-bottom: 2px
+
+.message-text
