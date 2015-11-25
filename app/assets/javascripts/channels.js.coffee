@@ -8,7 +8,6 @@ $ ->
       text = $(this).val()
       channel = $(this).attr("channel-id")
       postMessage(text, channel)
-      location.reload();
       $(this).val("")
       return false
 
@@ -22,7 +21,7 @@ $ ->
           channel_id: channel
       success:(data) ->
         console.log data.id
-        return false
+        location.reload()
       error:(data) ->
         console.log data.responseText
 
