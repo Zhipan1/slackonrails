@@ -22,6 +22,24 @@ class ChannelsController < ApplicationController
   def edit
   end
 
+  # GET /channels/:id/join
+  def user_join
+    @channel = Channel.find(params[:channel_id])
+    if not @channel.users.find_by_id(current_user)
+      @convo = Conversation.new(user: current_user, channel: @channel)
+
+      respond_to do |format|
+        if @convo.save
+          format.html { redirect_to @channel, notice: 'Channel was successfully joined.' }
+          format.json { render :show, status: :created, location: @channel }
+        else
+          format.html { render :new }
+          format.json { render json: @channel.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
   # POST /channels
   # POST /channels.json
   def create
@@ -73,4 +91,5 @@ class ChannelsController < ApplicationController
     def channel_params
       params.require(:channel).permit(:name)
     end
+
 end
