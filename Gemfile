@@ -13,6 +13,7 @@ gem 'foundation-rails', '5.4.5'
 gem 'simple_form'
 gem "slim-rails"
 gem 'autosize-rails'
+gem 'faye'
 
 group :development do
   gem 'sqlite3'
