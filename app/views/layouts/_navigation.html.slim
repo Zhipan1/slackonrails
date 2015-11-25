@@ -18,6 +18,16 @@
     .channels
       - current_user.conversations.each do |convo|
         - channel_id = convo.channel_id
-        = Channel.find_by_id(channel_id).name
+        - channel = Channel.find_by_id(channel_id)
+        = link_to channel.name, channel
     .new-channel
-      = link_to 'New Channel', new_channel_path
+      = link_to 'Create a new channel', new_channel_path
+
+/ - if current_user
+/     = "Hi, #{@user.name}!"
+/     p = link_to "Create a new channel", new_channel_path
+/     p Current Channels
+/     - @user.channels.each do |c|
+/       p = link_to c.topic, c
+
+/   - else
