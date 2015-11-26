@@ -3,18 +3,18 @@ h1 Listing Channels
 table
   thead
     tr
-      th User
-      th Message
+      th Name
       th Topic
-      th colspan="3" 
+      th Options
+      th colspan="3"
   tbody
     - @channels.each do |channel|
       tr
-        td= channel.users
-        td= channel.messages
+        td= channel.name
         td= channel.topic
-        td= link_to 'Show', channel
-        td= link_to 'Edit', edit_channel_path(channel)
-        td= link_to 'Destroy', channel, method: :delete, data:   confirm: 'Are you sure?'  
+        - if channel.users.find_by_id(current_user)
+          td= link_to 'Leave', "/channels/#{channel.id}/leave"
+        - else
+          td= link_to 'Join', "/channels/#{channel.id}/join"
 br/
 = link_to 'New Channel', new_channel_path

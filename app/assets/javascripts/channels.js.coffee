@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+  console.log 'hi'
   channel = $("#channel-message-input").attr("channel-id")
   $("#channel-message-input").focus().autosize(append: false).keypress (e) ->
     if not e.shiftKey && e.which == 13

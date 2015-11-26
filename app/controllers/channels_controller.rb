@@ -37,6 +37,28 @@ class ChannelsController < ApplicationController
           format.json { render json: @channel.errors, status: :unprocessable_entity }
         end
       end
+    else
+      redirect_to channels_path
+    end
+  end
+
+  # GET /channels/:id/join
+  def user_leave
+    @channel = Channel.find(params[:channel_id])
+    if @channel.users.find_by_id(current_user)
+      @convo = Conversation.where("user_id = ? AND channel_id = ?", current_user, @channel)
+
+      respond_to do |format|
+        if Conversation.destroy @convo
+          format.html { redirect_to channels_path, notice: "You left #{@channel.name}" }
+          format.json { render :show, status: :created, location: @channel }
+        else
+          format.html { render :new }
+          format.json { render json: @channel.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      redirect_to channels_path
     end
   end
 
@@ -89,7 +111,7 @@ class ChannelsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def channel_params
-      params.require(:channel).permit(:name)
+      params.require(:channel).permit(:name, :topic)
     end
 
 end

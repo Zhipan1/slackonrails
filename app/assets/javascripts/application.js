@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.autosize
+//= require jquery.turbolinks
 //= require private_pub
 //= require_tree .

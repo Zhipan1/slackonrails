@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params.merge user: current_user )
     channel = @message.channel
-    prev_user = channel.messages.last.user
+    prev_user = if channel.messages.last then channel.messages.last.user else nil end
 
     respond_to do |format|
       if @message.save
@@ -11,6 +11,7 @@ class MessagesController < ApplicationController
         format.json {}
         rendered_message = render partial: 'messages/message', object: @message, locals: { prev_user: prev_user }
         PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message
+        PrivatePub.publish_to "/channels", channel: channel.id
       else
         format.html { render :nothing => true }
         format.json {}

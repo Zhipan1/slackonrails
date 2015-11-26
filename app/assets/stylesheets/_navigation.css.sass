@@ -1,34 +1,122 @@
-.side-bar
-  width: 200px
-  background-color: lightblue
-  padding: 20px
+@import partials/variables
+@import partials/mixins
+
+.sidebar
+  width: 220px
+  background-color: $purple
   height: 100%
   position: relative
   float: left
-.application-name
-  font-size: 20px
+
+.sidebar-header
+  padding: 16px
+  padding-bottom: 12px
+  &:hover
+    background-color: darken($purple, 5%)
+    cursor: pointer
+
+    .sidebar-user-name
+      opacity: 1
+
+.team-name
+  color: white
+  font-size: 18px
+  font-weight: bold
+
+.sidebar-user
+  +clearfix
+  margin-top: 2px
+
+.sidebar-user-status
+  content: ""
+  width: 9px
+  height: 9px
+  display: block
+  border-radius: 50%
+  background-color: $green
   float: left
-.edit-account
-  margin-right: 10px
-  float: left
-.log-out
-  margin-right: 10px
-  float: left
-.log-in
-  margin-right: 10px
-  float: left
-.sign-up
-  margin-right: 10px
-  float: left
-.channel-header
-  margin-right: 10px
-  float: left
-.channels
-  margin-right: 10px
-  margin-left: 20px
-  float: left
-.new-channel
-  margin-right: 10px
-  margin-left: 20px
-  float: left
+  margin-right: 5px
+  margin-top: 7px
+
+.sidebar-user-name
+  color: white
+  opacity: 0.6
+  font-weight: 300
+  transition: 0.2s ease
+
+
+.channel-list
+  padding: 10px 16px
+
+.channel-list-header
+  margin-bottom: 10px
+
+.channel-list-title
+  font-size: 12px
+  letter-spacing: 0.05em
+  opacity: 0.5
+
+  &:hover
+    opacity: 1
+    transition: 0.2s ease
+
+
+.channel-list-type
+  text-transform: uppercase
+  color: white
+
+.channel-list-count
+  color: white
+  opacity: 0.50
+
+.new-channel-btn
+  float: right
+  border: 1px solid white
+  border-radius: 50%
+  width: 16px
+  height: 16px
+  position: relative
+  opacity: 0.25
+  margin-top: 3px
+  margin-right: 4px
+  cursor: pointer
+
+  &:hover
+    opacity: 0.6
+
+  a
+    position: absolute
+    top: -5px
+    left: 3px
+  i
+    color: white
+    font-size: 10px
+
+.sidebar-channel
+  padding: 2px 3px 3px 3px
+  padding-left: 22px
+  margin-left: -19px
+  cursor: pointer
+  border-radius: 4px
+
+  &:hover
+    background-color: darken($purple, 5%)
+
+  a
+    color: white
+    opacity: 0.5
+    font-size: 16px
+    font-weight: 300
+    width: 100%
+    display: block
+
+
+
+  &.active
+    background-color: $green
+    a
+      opacity: 1
+
+
+
 
