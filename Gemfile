@@ -17,6 +17,7 @@ gem 'autosize-rails'
 gem 'faye'
 gem "private_pub"
 gem "font-awesome-rails"
+gem 'gemoji'
 
 group :development do
   gem 'sqlite3'
