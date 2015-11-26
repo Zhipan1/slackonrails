@@ -16,11 +16,13 @@
         = fa_icon "plus"
     - current_user.channels.each do |c|
       - if current_channel == c
-        .sidebar-channel.active id="channel-#{c.id}"
-          = link_to c.name, c
+        .sidebar-channel.active id="channel-#{c.id}" = link_to c do
+          .sidebar-hash-tag #
+          .sidebar-channel-name = c.name
       - else
-        .sidebar-channel id="channel-#{c.id}"
-          = link_to c.name, c
+        .sidebar-channel id="channel-#{c.id}" = link_to c do
+          .sidebar-hash-tag #
+          .sidebar-channel-name = c.name
 
 
 

@@ -99,27 +99,38 @@
   cursor: pointer
   border-radius: 4px
 
+  .sidebar-channel-name
+    color: rgba(white, 0.5)
+    font-size: 15px
+    font-weight: 300
+
   &:hover
     background-color: darken($purple, 5%)
 
-  a
-    color: white
-    opacity: 0.5
-    font-size: 16px
-    font-weight: 300
-    width: 100%
-    display: block
-
   &.active
     background-color: $green
-    a
-      opacity: 1
+    .sidebar-channel-name
+      color: white
+
+    .sidebar-hash-tag
+      color: rgba(white, 0.6)
+      font-weight: 300
 
   &.unread-messages
-    a
-      opacity: 1
+    .sidebar-channel-name
+      color: white
       font-weight: bold
 
+    .sidebar-hash-tag
+      color: rgba(white, 0.6)
+      font-weight: 300
 
+.sidebar-hash-tag
+  float: left
+  margin-left: 3px
+  margin-right: 3px
+  margin-top: -1px
+  color: rgba(white, 0.3)
+  font-weight: 100
 
 
