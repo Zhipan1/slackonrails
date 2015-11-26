@@ -7,5 +7,5 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   body
-    = render 'layouts/navigation'
+    = render 'layouts/navigation' if user_signed_in?
     main = yield

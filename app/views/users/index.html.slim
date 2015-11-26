@@ -14,5 +14,7 @@ table
         td= link_to 'Show', user
         td= link_to 'Edit', edit_user_path(user)
         td= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'}
+        -if user == current_user
+          td= link_to 'Log Out', destroy_user_session_path, :method=>'delete'
 br/
 = link_to 'New User', new_user_path
