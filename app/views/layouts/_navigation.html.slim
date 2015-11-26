@@ -12,15 +12,17 @@
         = link_to channels_path do
           span.channel-list-type Channels
           span.channel-list-count = " (#{Channel.count})"
-      span.new-channel-btn = link_to new_channel_path do
-        = fa_icon "plus"
+      = link_to new_channel_path do
+        span.new-channel-btn  = fa_icon "plus"
     - current_user.channels.each do |c|
       - if current_channel == c
-        .sidebar-channel.active id="channel-#{c.id}"
-          = link_to c.name, c
+        .sidebar-channel.active id="channel-#{c.id}" = link_to c do
+          .sidebar-hash-tag #
+          .sidebar-channel-name = c.name
       - else
-        .sidebar-channel id="channel-#{c.id}"
-          = link_to c.name, c
+        .sidebar-channel id="channel-#{c.id}" = link_to c do
+          .sidebar-hash-tag #
+          .sidebar-channel-name = c.name
 
 
 

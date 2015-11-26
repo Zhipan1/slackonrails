@@ -5,4 +5,4 @@
   .message-content
     span.message-user = message.user.name
     .message-time = message.created_at.strftime("%-I:%M%p")
-    .message-text = message.text
+    .message-text = emojify message.text

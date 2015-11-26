@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 gem 'sass', '3.4'
+gem 'sass-rails'
 gem 'materialize-sass'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
@@ -18,6 +19,7 @@ gem 'autosize-rails'
 gem 'faye'
 gem "private_pub"
 gem "font-awesome-rails"
+gem 'gemoji'
 
 group :development do
   gem 'sqlite3'
