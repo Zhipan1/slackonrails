@@ -22,12 +22,8 @@
         = link_to channel.name, channel
     .new-channel
       = link_to 'Create a new channel', new_channel_path
-
-/ - if current_user
-/     = "Hi, #{@user.name}!"
-/     p = link_to "Create a new channel", new_channel_path
-/     p Current Channels
-/     - @user.channels.each do |c|
-/       p = link_to c.topic, c
-
-/   - else
+    .join-channel
+      = 'Join an existing channel'
+      - Channel.all.each do |channel|
+        - if not channel.users.find_by_id(current_user)
+          = link_to channel.name, join_channel_path(channel.id)
