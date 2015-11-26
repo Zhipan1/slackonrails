@@ -30,7 +30,7 @@ class ChannelsController < ApplicationController
 
       respond_to do |format|
         if @convo.save
-          format.html { redirect_to @channel, notice: 'Channel was successfully joined.' }
+          format.html { redirect_to @channel, notice: "Successfully joined then #{@channel.name} channel" }
           format.json { render :show, status: :created, location: @channel }
         else
           format.html { render :new }
@@ -50,7 +50,7 @@ class ChannelsController < ApplicationController
 
       respond_to do |format|
         if Conversation.destroy @convo
-          format.html { redirect_to channels_path, notice: "You left #{@channel.name}" }
+          format.html { redirect_to channels_path, notice: "You left the #{@channel.name} channel" }
           format.json { render :show, status: :created, location: @channel }
         else
           format.html { render :new }
