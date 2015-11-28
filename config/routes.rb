@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
 
   devise_for :users, controllers: { registrations: 'users/registrations'}
+
+  get '/messages/search', to: 'messages#search'
+
   resources :channels, :messages, :users
 
 

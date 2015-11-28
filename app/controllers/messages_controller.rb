@@ -19,9 +19,26 @@ class MessagesController < ApplicationController
     end
   end
 
+  def search
+    search = params[:message][:text]
+    @messages = Message.where("text LIKE ?", "%#{search}%").all.sort
+
+    respond_to do |format|
+      if @messages.count > 0
+        format.html { render partial: 'messages/search', object: @messages }
+        format.json {  }
+        # rendered_message = render partial: 'messages/message', object: @message, locals: { prev_user: prev_user }
+      else
+        format.html { render text: "Nothing found!" }
+        format.json {}
+      end
+    end
+  end
+
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
       params.require(:message).permit(:text, :channel_id)
     end
+
 end
