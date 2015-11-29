@@ -1,4 +1,3 @@
-= subscribe_to "/channels"
 
 .sidebar
   .sidebar-header
@@ -21,7 +20,7 @@
           .sidebar-hash-tag #
           .sidebar-channel-name = c.name
       - else
-        .sidebar-channel class="#{'unread-messages' if c.notification}" id="channel-#{c.id}" = link_to c do
+        .sidebar-channel class="#{'unread-messages' if channel_notification? c}" id="channel-#{c.id}" = link_to c do
           .sidebar-hash-tag #
           .sidebar-channel-name = c.name
 
@@ -30,7 +29,7 @@
       span.channel-list-title
         = link_to direct_messages_path do
           span.channel-list-type Direct Messages
-          span.channel-list-count = " (#{User.count})"
+          span.channel-list-count = " (#{User.count - 1})"
       = link_to direct_messages_path do
         span.new-channel-btn  = fa_icon "plus"
     - current_user.direct_messages.each do |c|
@@ -39,7 +38,7 @@
           .sidebar-hash-tag @
           .sidebar-channel-name = messaging?(c).name
       - else
-        .sidebar-channel class="#{'unread-messages' if c.notification}" id="channel-#{c.id}" = link_to c do
+        .sidebar-channel class="#{'unread-messages' if channel_notification? c}" id="channel-#{c.id}" = link_to c do
           .sidebar-hash-tag @
           .sidebar-channel-name = messaging?(c).name
 

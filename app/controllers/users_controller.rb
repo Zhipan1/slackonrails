@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params.merge image: "drake.png")
 
     respond_to do |format|
-      if @user.save and create_direct_messages
+      if @user.save and create_direct_messages and join_default_channels
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -79,5 +79,12 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name)
+    end
+
+    def join_default_channels
+      default_channels = [1, 2]
+      default_channels.each do |c|
+        join_channel Channel.find c
+      end
     end
 end

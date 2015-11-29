@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   resources :channels, :messages, :users, :public_channels
 
   get '/direct_messages/start', to: 'direct_messages#direct_message', as: 'start_direct_message'
+  post '/channels/:id/clear', to: 'channels#clear_notification'
+  get '/subscribe_to/:channel_id', to: 'application#turbolinks_subscribe_to', as: "subscribe"
   resources :direct_messages
 
 

@@ -4,9 +4,12 @@
 
 $ ->
   channel = $("#channel-message-input").attr("channel-id")
-
+  getNotifications(channel)
+  $("#channel-body").scrollTop $("#messages").height()
   $("#channel-message-input").focus().autosize(append: false).keypress (e) ->
     if not e.shiftKey && e.which == 13
+      if not $(this).val()
+        return false
       text = $(this).val()
       postMessage(text, channel)
       $(this).val("")
@@ -17,31 +20,36 @@ $ ->
       text = $(this).val()
       searchMessage text
 
-  postMessage = (text, channel) ->
-    $.ajax
-      type: "POST"
-      url: "/messages"
-      data:
-        message:
-          text: text
-          channel_id: channel
-      success:(data) ->
-        console.log data.id
-      error:(data) ->
-        console.log data.responseText
+  PrivatePub.subscribe "/channels/#{channel}", (data, channel_url) ->
+    if channel == channel_url.split("/channels/")[1]
+      $("#messages").append data.message
+      $("#channel-body").animate { scrollTop: $("#messages").height() }, "slow"
 
-  searchMessage = (text) ->
-    $.ajax
-      type: "GET"
-      url: "/messages/search"
-      data:
-        message:
-          text: text
-      success:(data) ->
-        console.log data
-      error:(data) ->
-        console.log data.responseText
+postMessage = (text, channel) ->
+  $.ajax
+    type: "POST"
+    url: "/messages"
+    data:
+      message:
+        text: text
+        channel_id: channel
+    error:(data) ->
+      console.log data.responseText
 
-  PrivatePub.subscribe "/channels/#{channel}", (data, channel) ->
-    $("#messages").append data.message
-    $("#channel-body").animate { scrollTop: $("#messages").height() }, "slow"
+searchMessage = (text) ->
+  $.ajax
+    type: "GET"
+    url: "/messages/search"
+    data:
+      message:
+        text: text
+    success:(data) ->
+      console.log data
+    error:(data) ->
+      console.log data.responseText
+
+
+
+
+window.p = PrivatePub
+

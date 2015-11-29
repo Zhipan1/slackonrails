@@ -16,17 +16,17 @@ ActiveRecord::Schema.define(version: 20151129024418) do
   create_table "channels", force: :cascade do |t|
     t.string   "topic"
     t.string   "name"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.string   "type",         default: "PublicChannel"
-    t.boolean  "notification", default: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.string   "type",       default: "PublicChannel"
   end
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "channel_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "notification", default: false
   end
 
   add_index "conversations", ["channel_id"], name: "index_conversations_on_channel_id"

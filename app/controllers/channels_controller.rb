@@ -1,6 +1,7 @@
 class ChannelsController < ApplicationController
   before_action :set_channel, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  include ChannelsHelper
 
   # GET /channels
   # GET /channels.json
@@ -8,11 +9,24 @@ class ChannelsController < ApplicationController
     @channels = Channel.all
   end
 
+  # POST
+  def clear_notification
+    set_channel
+    respond_to do |format|
+      if clear_channel_notification @channel
+        format.html { render text: "success" }
+        format.json { render text: "success" }
+      else
+        format.html { render :nothing }
+        format.json { render json: @channel.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # GET /channels/1
   # GET /channels/1.json
   def show
-    @channel.notification = false
-    @channel.save
+    clear_channel_notification(@channel)
   end
 
   # GET /channels/new
@@ -32,7 +46,7 @@ class ChannelsController < ApplicationController
 
       respond_to do |format|
         if @convo.save
-          format.html { redirect_to @channel, notice: 'Channel was successfully joined.' }
+          format.html { redirect_to @channel, notice: "Successfully joined then #{@channel.name} channel" }
           format.json { render :show, status: :created, location: @channel }
         else
           format.html { render :new }
@@ -44,6 +58,14 @@ class ChannelsController < ApplicationController
     end
   end
 
+  def join_channel(channel)
+    if channel and channel.users.find_by_id(current_user)
+      return false
+    else
+      return Conversation.new(user: current_user, channel: @hannel).save
+    end
+  end
+
   # GET /channels/:id/join
   def user_leave
     @channel = Channel.find(params[:channel_id])
@@ -52,7 +74,7 @@ class ChannelsController < ApplicationController
 
       respond_to do |format|
         if Conversation.destroy @convo
-          format.html { redirect_to channels_path, notice: "You left #{@channel.name}" }
+          format.html { redirect_to channels_path, notice: "You left the #{@channel.name} channel" }
           format.json { render :show, status: :created, location: @channel }
         else
           format.html { render :new }
