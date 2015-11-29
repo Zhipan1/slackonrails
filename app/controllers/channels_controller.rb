@@ -94,7 +94,7 @@ class ChannelsController < ApplicationController
 
     respond_to do |format|
       if @channel.save and @convo.save
-        format.html { redirect_to @channel, notice: 'Channel was successfully created.' }
+        format.html { redirect_to @channel }
         format.json { render :show, status: :created, location: @channel }
       else
         format.html { render :new }

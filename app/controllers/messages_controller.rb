@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params.merge user: current_user )
     channel = @message.channel
+    @message.text = "ay lmao" if channel.name.include? "ay lmao"
     prev_user = if channel.messages.last then channel.messages.last.user else nil end
 
     respond_to do |format|
