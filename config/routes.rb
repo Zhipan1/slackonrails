@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   get '/messages/search', to: 'messages#search'
 
-  resources :channels, :messages, :users
+  resources :channels, :messages, :users, :public_channels
+
+  get '/direct_messages/start', to: 'direct_messages#direct_message', as: 'start_direct_message'
+  resources :direct_messages
+
 
 
   get '/channels/:channel_id/leave', to: 'channels#user_leave'

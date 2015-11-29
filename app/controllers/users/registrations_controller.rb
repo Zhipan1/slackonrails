@@ -1,17 +1,17 @@
 class Users::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
-  def new
-    super
-  end
-
-  def create
-    super
-    @user.image = 'drake.jpg'
-    @user.save
-  end
 
   private
+
+  def create_direct_messages
+    User.all.each do |user|
+      if not user == @user
+        return false if not DirectMessagesController.start_convo_between(@user, user)
+      end
+    end
+    return true
+  end
 
   def sign_up_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)

@@ -5,24 +5,43 @@
     .team-name Rails Project
     .sidebar-user
       .sidebar-user-status
-      .sidebar-user-name = current_user.name
+      .sidebar-user-name
+        = link_to current_user.name, destroy_user_session_path, :method=>'delete'
   .channel-list
     #sidebar-channels.channel-list-header
       span.channel-list-title
-        = link_to channels_path do
+        = link_to public_channels_path do
           span.channel-list-type Channels
-          span.channel-list-count = " (#{Channel.count})"
-      = link_to new_channel_path do
+          span.channel-list-count = " (#{PublicChannel.count})"
+      = link_to new_public_channel_path do
         span.new-channel-btn  = fa_icon "plus"
-    - current_user.channels.each do |c|
+    - current_user.public_channels.each do |c|
       - if current_channel == c
         .sidebar-channel.active id="channel-#{c.id}" = link_to c do
           .sidebar-hash-tag #
           .sidebar-channel-name = c.name
       - else
-        .sidebar-channel id="channel-#{c.id}" = link_to c do
+        .sidebar-channel class="#{'unread-messages' if c.notification}" id="channel-#{c.id}" = link_to c do
           .sidebar-hash-tag #
           .sidebar-channel-name = c.name
+
+  .channel-list
+    #sidebar-direct-messages.channel-list-header
+      span.channel-list-title
+        = link_to direct_messages_path do
+          span.channel-list-type Direct Messages
+          span.channel-list-count = " (#{User.count})"
+      = link_to direct_messages_path do
+        span.new-channel-btn  = fa_icon "plus"
+    - current_user.direct_messages.each do |c|
+      - if current_channel == c
+        .sidebar-channel.active id="channel-#{c.id}" = link_to c do
+          .sidebar-hash-tag @
+          .sidebar-channel-name = messaging?(c).name
+      - else
+        .sidebar-channel class="#{'unread-messages' if c.notification}" id="channel-#{c.id}" = link_to c do
+          .sidebar-hash-tag @
+          .sidebar-channel-name = messaging?(c).name
 
 
 

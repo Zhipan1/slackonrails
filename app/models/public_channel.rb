@@ -1,0 +1,2 @@
+class PublicChannel < Channel
+end

@@ -28,12 +28,20 @@ class UsersController < ApplicationController
     @user = User.new(user_params.merge image: "drake.png")
 
     respond_to do |format|
-      if @user.save
+      if @user.save and create_direct_messages
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def create_direct_messages
+    User.all.each do |user|
+      if not user == current_user
+        return false if not DirectMessagesController.start_convo_with(user)
       end
     end
   end

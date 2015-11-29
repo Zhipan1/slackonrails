@@ -1,5 +1,5 @@
 p#notice= notice
-h1 = "Listing #{@type}"
+h1 = "Listing Channels"
 table
   thead
     tr
@@ -17,4 +17,4 @@ table
         - else
           td= link_to 'Join', "/channels/#{channel.id}/join"
 br/
-= link_to 'New Channel', new_public_channel_path if @type == "Public Channel"
+= link_to 'New Channel', new_public_channel_path

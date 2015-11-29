@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
   has_many :messages
   has_many :conversations
   has_many :channels, through: :conversations
+  delegate :direct_messages, :public_channels, to: :channels
 end
