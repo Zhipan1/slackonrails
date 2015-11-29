@@ -6,7 +6,5 @@ class CreateChannels < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_foreign_key :channels, :users, column: :user_id
-    add_foreign_key :channels, :messages
   end
 end
