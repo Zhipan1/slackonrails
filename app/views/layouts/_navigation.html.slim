@@ -4,8 +4,9 @@
   .sidebar-header
     .team-name Rails Project
     .sidebar-user
-      .sidebar-user-status
-      .sidebar-user-name = current_user.name
+      - if user_signed_in?
+        .sidebar-user-status
+        .sidebar-user-name = current_user.name
   .channel-list
     #sidebar-channels.channel-list-header
       span.channel-list-title
@@ -14,15 +15,16 @@
           span.channel-list-count = " (#{Channel.count})"
       = link_to new_channel_path do
         span.new-channel-btn  = fa_icon "plus"
-    - current_user.channels.each do |c|
-      - if current_channel == c
-        .sidebar-channel.active id="channel-#{c.id}" = link_to c do
-          .sidebar-hash-tag #
-          .sidebar-channel-name = c.name
-      - else
-        .sidebar-channel id="channel-#{c.id}" = link_to c do
-          .sidebar-hash-tag #
-          .sidebar-channel-name = c.name
+    - if user_signed_in?
+      - current_user.channels.each do |c|
+        - if current_channel == c
+          .sidebar-channel.active id="channel-#{c.id}" = link_to c do
+            .sidebar-hash-tag #
+            .sidebar-channel-name = c.name
+        - else
+          .sidebar-channel id="channel-#{c.id}" = link_to c do
+            .sidebar-hash-tag #
+            .sidebar-channel-name = c.name
 
 
 
