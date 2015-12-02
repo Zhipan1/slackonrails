@@ -1,20 +1,31 @@
-p#notice = notice
-h1 Listing Channels
-table
-  thead
-    tr
-      th Name
-      th Topic
-      th Options
-      th colspan="3"
-  tbody
-    - @channels.each do |channel|
-      tr
-        td= channel.name
-        td= channel.topic
-        - if channel.users.find_by_id(current_user)
-          td= link_to 'Leave', "/channels/#{channel.id}/leave"
-        - else
-          td= link_to 'Join', "/channels/#{channel.id}/join"
-br/
-= link_to 'New Channel', new_public_channel_path if @type == "Public Channel"
+p#notice= notice
+.container
+  .header 
+    -if PublicChannel.count == 1
+      = "Browse all #{PublicChannel.count} channel"
+    -else
+      = "Browse all #{PublicChannel.count} channels"
+  .public-channels
+    table class="bordered"
+      thead
+        tr
+          th colspan="3"
+      tbody
+        - @channels.each do |channel|
+          tr
+            td
+              span.name 
+                = channel.name
+              span.number-users
+                = fa_icon "user"
+                = "   "
+                = channel.users.count
+              .topic = channel.topic
+            - if channel.users.find_by_id(current_user)
+              td
+                .leave-link = link_to 'Leave', "/channels/#{channel.id}/leave", style: "color:black;opacity:0.6;"
+            - else
+              td
+                .join-link = link_to 'Join', "/channels/#{channel.id}/join", style: "color:black;opacity:0.6;"
+    br/
+    = link_to 'New Channel', new_public_channel_path, class:"btn"

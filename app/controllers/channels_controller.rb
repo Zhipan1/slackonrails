@@ -6,7 +6,7 @@ class ChannelsController < ApplicationController
   # GET /channels
   # GET /channels.json
   def index
-    @channels = Channel.all
+    @channels = PublicChannel.all
   end
 
   # POST

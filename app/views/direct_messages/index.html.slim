@@ -1,13 +1,18 @@
 p#notice= notice
-h1 = "Listing Direct Messages"
-table
-  thead
-    tr
-      th Name
-      th colspan="1"
-  tbody
-    - User.where.not(id: current_user).each do |user|
-      tr
-        td = user.name
-        td= link_to 'Message', start_direct_message_path(user_id: user)
-br/
+.container
+  .header 
+    = "Direct Messages"
+  .direct-messages
+    table class="bordered"
+      thead
+        tr
+          th colspan="1"
+      tbody
+        - User.where.not(id: current_user).each do |user|
+          tr
+            td
+              .user-icon = image_tag "users/#{user.image}"
+              .name = user.name
+            td text-align="right"
+              .message-link = link_to 'Message', start_direct_message_path(user_id: user), style: "color:black;opacity:0.6;"
+    br/
