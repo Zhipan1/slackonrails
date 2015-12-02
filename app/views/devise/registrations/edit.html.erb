@@ -7,7 +7,6 @@
 
       <div class="form-inputs card">
         <%= f.input :name, required: true, autofocus: true %>
-        <%= f.input :image, as: :file %>
         <%= f.input :email, required: true, autofocus: true %>
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
