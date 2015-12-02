@@ -1,6 +1,13 @@
 class PublicChannelsController < ChannelsController
-  # POST /channels
-  # POST /channels.json
+
+  # GET /public_channels/new
+  def new
+    @channel = PublicChannel.new
+  end
+
+
+  # POST /public_channels
+  # POST /public_channels.json
   def create
     @channel = PublicChannel.new(channel_params)
     @convo = Conversation.new(user: current_user, channel: @channel)
@@ -19,5 +26,13 @@ class PublicChannelsController < ChannelsController
   def index
     @channels = PublicChannel.all
     @type = "Public Channel"
+  end
+
+  private
+
+  def channel_params
+    p = params.require(:public_channel).permit(:name, :topic)
+    p[:name] = p[:name].downcase
+    p
   end
 end

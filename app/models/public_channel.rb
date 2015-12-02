@@ -1,3 +1,3 @@
 class PublicChannel < Channel
-  validates :name, presence: true, uniqueness: true
+  validates :name, uniqueness: true, presence: true, allow_blank: false
 end
