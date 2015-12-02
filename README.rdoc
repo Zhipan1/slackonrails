@@ -1,28 +1,37 @@
-== README
+Title: Slack
+Team Members: Nicole Kinser, Alexander Hsieh, Zhi Pan
+Demo Link: http://slackonrails.herokuapp.com/
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Idea: An application where users can message other users and channels (which users belong to). 
 
-Things you may want to cover:
+Models and Description:
+User
+• has name, email, image, and many messages
+• belong to channels
+Channel
+• has name and topic
+• has many messages and one or more users
+• has type of either PublicChannel or DirectMessage (default is PublicChannel)
+DirectMessage
+• private channel between two users
+• inherits from Channel model
+PublicChannel
+• public channel that any user can join
+• has name and topic
+• has many messages and one or more users
+• inherits from Channel model
+Message
+• has text
+• belongs to a user and a channel
+Conversations
+• join table that connects users to channels
 
-* Ruby version
+Features:
+• Users can log in, log out, edit account info, and sign out
+• Users can privately message other users
+• Users can message many users through a channel
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Division of Labor:
+• Nicole: Devise, worked on controllers, and worked on views
+• Alex: Styling and worked on views
+• Zhi: Created models, worked on controllers, and worked on views
