@@ -8,7 +8,8 @@
 
 public_channels_list = [
   {name: "general", topic: "Generally a general channel for general topics of general discussion"},
-  {name: "random", topic: "Ay lmao"}
+  {name: "random", topic: "Ay lmao"},
+  {name: "ay lmao", topic: "Ay lmao"}
 ]
 
 users_list = [
