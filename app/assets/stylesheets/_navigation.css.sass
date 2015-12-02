@@ -64,18 +64,39 @@
     left: 3px
     top: 2px
 
-.user-options
-  width: 150px
-  height: 55px
+#user-dropdown
+  width: 220px
   background-color: white
   border-radius: 5px
-  margin-left: 150px
-  border: 1px solid rgba($gray, .18)
   position: absolute
-  z-index: 10
-  margin-top: -10px
-  visibility: hidden
-  .active
+  border: 1px solid rgba($gray, .18)
+  padding: 8px
+  z-index: 1
+  font-size: 15px
+  left: 160px
+  top: 60px
+  box-shadow: 4px 4px 12px 0px rgba(0,0,0,0.12)
+  opacity: 0
+  display: none
+  transition: 0.2s ease
+
+  &.active
+    opacity: 1
+
+
+  .dropdown-item
+    a
+      display: block
+      padding: 3px 15px
+      color: black
+      border-radius: 3px
+
+      &:hover
+        color: white
+        background-color: $blue
+        font-weight: 300
+
+
 
 
 

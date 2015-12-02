@@ -1,9 +1,5 @@
 .sidebar
   .sidebar-header
-    javascript:
-      $('#toggle-btn').click(function() {
-        $('#options').toggle();
-      });
     .team-name Rails Project
     span.dropdown-btn#toggle-btn
        = fa_icon "angle-down"
@@ -11,11 +7,11 @@
       .sidebar-user-status
       .sidebar-user-name
         = current_user.name
-    .user-options#options
-      .edit-account
-        = link_to 'Edit Account', edit_user_registration_path, style: 'color:black;'
-      .log-out-account
-        = link_to 'Log Out', destroy_user_session_path, :method=>'delete', style: 'color:black;'
+  #user-dropdown
+    .dropdown-item
+      = link_to 'Edit Account', edit_user_registration_path
+    .dropdown-item
+      = link_to 'Log Out', destroy_user_session_path, :method=>'delete'
   .channel-list
     .sidebar-channels.channel-list-header
       span.channel-list-title
