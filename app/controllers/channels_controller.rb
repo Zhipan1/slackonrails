@@ -46,7 +46,7 @@ class ChannelsController < ApplicationController
 
       respond_to do |format|
         if @convo.save
-          format.html { redirect_to @channel, notice: "Successfully joined then #{@channel.name} channel" }
+          format.html { redirect_to @channel, notice: "Successfully joined the #{@channel.name} channel" }
           format.json { render :show, status: :created, location: @channel }
         else
           format.html { render :new }

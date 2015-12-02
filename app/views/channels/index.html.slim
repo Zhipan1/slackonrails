@@ -1,6 +1,6 @@
 p#notice= notice
 .container
-  .header 
+  .header
     -if PublicChannel.count == 1
       = "Browse all #{PublicChannel.count} channel"
     -else
@@ -14,7 +14,7 @@ p#notice= notice
         - @channels.each do |channel|
           tr
             td
-              span.name 
+              span.name
                 = channel.name
               span.number-users
                 = fa_icon "user"

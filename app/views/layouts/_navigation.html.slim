@@ -1,20 +1,21 @@
 .sidebar
   .sidebar-header
-    / javascript:
-    /   document.getElementById("user-options").style.visibility = "hidden";
+    javascript:
+      $('#toggle-btn').click(function() {
+        $('#options').toggle();
+      });
     .team-name Rails Project
-    span.dropdown-btn
+    span.dropdown-btn#toggle-btn
        = fa_icon "angle-down"
     .sidebar-user
       .sidebar-user-status
       .sidebar-user-name
         = current_user.name
-    .user-options
+    .user-options#options
       .edit-account
-        = link_to 'Edit Account', edit_user_registration_path
+        = link_to 'Edit Account', edit_user_registration_path, style: 'color:black;'
       .log-out-account
-        = link_to 'Log Out', destroy_user_session_path, :method=>'delete'
-    / = link_to_function "Toggle", "$('.user-options').toggle()"
+        = link_to 'Log Out', destroy_user_session_path, :method=>'delete', style: 'color:black;'
   .channel-list
     .sidebar-channels.channel-list-header
       span.channel-list-title

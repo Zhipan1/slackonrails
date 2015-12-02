@@ -12,7 +12,7 @@ public_channels_list = [
 ]
 
 users_list = [
-  { name: "slackbot", email: "aylmao@aylmao.com", password: "password" }
+  { name: "slackbot", email: "aylmao@aylmao.com", password: "password", image: "drake.png"}
 ]
 
 public_channels_list.each do |c|

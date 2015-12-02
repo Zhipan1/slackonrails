@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get '/channels/:channel_id/join', to: 'channels#user_join', as: 'join_channel'
 
   authenticated :user do
-    root to: "home#index", as: 'authenticated'
+    root to: "channels#index", as: 'authenticated'
   end
 
   devise_scope :user do
