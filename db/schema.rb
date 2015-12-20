@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151129024418) do
+ActiveRecord::Schema.define(version: 20151220181730) do
 
   create_table "channel_memberships", force: :cascade do |t|
     t.integer  "user_id"
@@ -32,15 +32,42 @@ ActiveRecord::Schema.define(version: 20151129024418) do
     t.string   "type",       default: "PublicChannel"
   end
 
+  create_table "conversation_participants", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "message_thread_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "conversation_participants", ["message_thread_id"], name: "index_conversation_participants_on_message_thread_id"
+  add_index "conversation_participants", ["user_id"], name: "index_conversation_participants_on_user_id"
+
+  create_table "conversations", force: :cascade do |t|
+    t.integer  "channel_id"
+    t.integer  "message_thread_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "conversations", ["channel_id"], name: "index_conversations_on_channel_id"
+  add_index "conversations", ["message_thread_id"], name: "index_conversations_on_message_thread_id"
+
+  create_table "message_threads", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "messages", force: :cascade do |t|
     t.string   "text"
     t.integer  "channel_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "user_id"
+    t.integer  "message_thread_id"
   end
 
   add_index "messages", ["channel_id"], name: "index_messages_on_channel_id"
+  add_index "messages", ["message_thread_id"], name: "index_messages_on_message_thread_id"
   add_index "messages", ["user_id"], name: "index_messages_on_user_id"
 
   create_table "users", force: :cascade do |t|

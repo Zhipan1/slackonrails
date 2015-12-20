@@ -1,3 +1,12 @@
 TODO
 
 - Make sure new direct message shows up on sidebar without refresh
+- Thread <> Channel - conversation
+- Thread <> user - conversation-participant
+
+
+
+- Channel
+  - Threads, through conversations
+    - Messages
+    - Users, through conversation_participants

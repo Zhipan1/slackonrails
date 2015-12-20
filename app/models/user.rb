@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   belongs_to :message
   has_many :messages
+  has_many :conversation_participants
+  has_many :message_threads, through: :conversation_participants
   has_many :channel_memberships
   has_many :channels, through: :channel_memberships
   delegate :direct_messages, :public_channels, to: :channels
