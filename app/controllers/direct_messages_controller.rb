@@ -5,10 +5,10 @@ class DirectMessagesController < ChannelsController
   # POST /direct_messages.json
   def create
     @channel = DirectMessage.new(channel_params)
-    @convo = Conversation.new(user: current_user, channel: @channel)
+    @memebership = ChannelMembership.new(user: current_user, channel: @channel)
 
     respond_to do |format|
-      if @channel.save and @convo.save
+      if @channel.save and @memebership.save
         format.html { redirect_to @channel }
         format.json { render :show, status: :created, location: @channel }
       else
@@ -20,10 +20,10 @@ class DirectMessagesController < ChannelsController
 
   def start_convo_between(user_1, user_2)
     @channel = DirectMessage.new
-    @convo_to = Conversation.new(user: user_1, channel: @channel)
-    @convo_from = Conversation.new(user: user_2, channel: @channel)
+    @memebership_to = ChannelMembership.new(user: user_1, channel: @channel)
+    @memebership_from = ChannelMembership.new(user: user_2, channel: @channel)
 
-    if @channel.save and @convo_to.save and @convo_from.save
+    if @channel.save and @memebership_to.save and @memebership_from.save
       return @channel
     else
       return false

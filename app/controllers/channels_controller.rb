@@ -42,10 +42,10 @@ class ChannelsController < ApplicationController
   def user_join
     @channel = Channel.find(params[:channel_id])
     if not @channel.users.find_by_id(current_user)
-      @convo = Conversation.new(user: current_user, channel: @channel)
+      @memebership = ChannelMembership.new(user: current_user, channel: @channel)
 
       respond_to do |format|
-        if @convo.save
+        if @memebership.save
           format.html { redirect_to @channel, notice: "Successfully joined the #{@channel.name} channel" }
           format.json { render :show, status: :created, location: @channel }
         else
@@ -62,7 +62,7 @@ class ChannelsController < ApplicationController
     if channel and channel.users.find_by_id(current_user)
       return false
     else
-      return Conversation.new(user: current_user, channel: @hannel).save
+      return ChannelMembership.new(user: current_user, channel: @hannel).save
     end
   end
 
@@ -70,10 +70,10 @@ class ChannelsController < ApplicationController
   def user_leave
     @channel = Channel.find(params[:channel_id])
     if @channel.users.find_by_id(current_user)
-      @convo = Conversation.where("user_id = ? AND channel_id = ?", current_user, @channel)
+      @memebership = ChannelMembership.where("user_id = ? AND channel_id = ?", current_user, @channel)
 
       respond_to do |format|
-        if Conversation.destroy @convo
+        if ChannelMembership.destroy @memebership
           format.html { redirect_to channels_path, notice: "You left the #{@channel.name} channel" }
           format.json { render :show, status: :created, location: @channel }
         else
@@ -90,10 +90,10 @@ class ChannelsController < ApplicationController
   # POST /channels.json
   def create
     @channel = Channel.new(channel_params)
-    @convo = Conversation.new(user: current_user, channel: @channel)
+    @memebership = ChannelMembership.new(user: current_user, channel: @channel)
 
     respond_to do |format|
-      if @channel.save and @convo.save
+      if @channel.save and @memebership.save
         format.html { redirect_to @channel }
         format.json { render :show, status: :created, location: @channel }
       else

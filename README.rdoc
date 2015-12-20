@@ -2,7 +2,7 @@ Title: Slack
 Team Members: Nicole Kinser, Alexander Hsieh, Zhi Pan
 Demo Link: http://slackonrails.herokuapp.com/
 
-Idea: An application where users can message other users and channels (which users belong to). 
+Idea: An application where users can message other users and channels (which users belong to).
 
 Models and Description:
 User
@@ -23,7 +23,7 @@ PublicChannel
 Message
 • has text
 • belongs to a user and a channel
-Conversations
+ChannelMemberships
 • join table that connects users to channels
 
 Features:
@@ -35,3 +35,7 @@ Division of Labor:
 • Nicole: Devise, worked on controllers, and worked on views
 • Alex: Styling and worked on views
 • Zhi: Created models, worked on controllers, and worked on views
+
+to run locally:
+  rails s
+  rackup private_pub.ru -s thin -E production

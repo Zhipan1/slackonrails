@@ -1,7 +1,7 @@
 class Channel < ActiveRecord::Base
   has_many :messages
-  has_many :conversations
-  has_many :users, through: :conversations
+  has_many :channel_memberships
+  has_many :users, through: :channel_memberships
   scope :direct_messages, -> { where(type: 'DirectMessage') }
   scope :public_channels, -> { where(type: 'PublicChannel') }
 

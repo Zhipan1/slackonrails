@@ -1,0 +1,3 @@
+TODO
+
+- Make sure new direct message shows up on sidebar without refresh

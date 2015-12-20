@@ -10,10 +10,10 @@ class PublicChannelsController < ChannelsController
   # POST /public_channels.json
   def create
     @channel = PublicChannel.new(channel_params)
-    @convo = Conversation.new(user: current_user, channel: @channel)
+    @memebership = ChannelMembership.new(user: current_user, channel: @channel)
 
     respond_to do |format|
-      if @channel.save and @convo.save
+      if @channel.save and @memebership.save
         format.html { redirect_to @channel, notice: 'Channel was successfully created.' }
         format.json { render :show, status: :created, location: @channel }
       else

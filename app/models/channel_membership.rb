@@ -1,4 +1,4 @@
-class Conversation < ActiveRecord::Base
+class ChannelMembership < ActiveRecord::Base
   belongs_to :user
   belongs_to :channel
   belongs_to :public_channel

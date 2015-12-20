@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
         rendered_message = render partial: 'messages/message', object: @message, locals: { prev_user: prev_user }
         PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message
         PrivatePub.publish_to "/channels/0", channel: channel.id
-        channel.conversations.where.not(user: current_user).update_all notification: true
+        channel.channel_memberships.where.not(user: current_user).update_all notification: true
       else
         format.html { render :nothing => true }
         format.json {}

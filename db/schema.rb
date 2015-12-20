@@ -13,15 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20151129024418) do
 
-  create_table "channels", force: :cascade do |t|
-    t.string   "topic"
-    t.string   "name"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.string   "type",       default: "PublicChannel"
-  end
-
-  create_table "conversations", force: :cascade do |t|
+  create_table "channel_memberships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "channel_id"
     t.datetime "created_at",                   null: false
@@ -29,8 +21,16 @@ ActiveRecord::Schema.define(version: 20151129024418) do
     t.boolean  "notification", default: false
   end
 
-  add_index "conversations", ["channel_id"], name: "index_conversations_on_channel_id"
-  add_index "conversations", ["user_id"], name: "index_conversations_on_user_id"
+  add_index "channel_memberships", ["channel_id"], name: "index_channel_memberships_on_channel_id"
+  add_index "channel_memberships", ["user_id"], name: "index_channel_memberships_on_user_id"
+
+  create_table "channels", force: :cascade do |t|
+    t.string   "topic"
+    t.string   "name"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.string   "type",       default: "PublicChannel"
+  end
 
   create_table "messages", force: :cascade do |t|
     t.string   "text"

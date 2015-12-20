@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   belongs_to :message
   has_many :messages
-  has_many :conversations
-  has_many :channels, through: :conversations
+  has_many :channel_memberships
+  has_many :channels, through: :channel_memberships
   delegate :direct_messages, :public_channels, to: :channels
 end
