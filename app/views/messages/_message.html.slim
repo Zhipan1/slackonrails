@@ -1,4 +1,11 @@
-.message class="#{prev_user == message.user ? '' : 'first'}"
+- classes = ""
+- if message.message_thread.messages.count > 1
+  - classes += "color-thread thread-color-#{message.message_thread.id%8}"
+- if prev_user != message.user
+  - classes += " first"
+
+
+.message class="#{classes}" message-thread="#{message.message_thread.id}"
   .message-gutter
     .message-icon
       = image_tag "users/#{message.user.image}"

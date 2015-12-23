@@ -8,7 +8,7 @@ p#notice = notice
 #channel-body
   #messages
     - prev_user = nil
-    - @channel.messages.each do |message|
+    - @channel.messages.order(:created_at).each do |message|
       = render partial: 'messages/message', object: message, locals: { prev_user: prev_user }
       - prev_user = message.user
 

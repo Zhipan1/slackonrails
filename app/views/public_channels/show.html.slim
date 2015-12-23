@@ -8,10 +8,11 @@
 #channel-body
   #messages
     - prev_user = nil
-    - @channel.messages.each do |message|
-      = render partial: 'messages/message', object: message, locals: { prev_user: prev_user }
+    - thread_count = 0
+    - @channel.messages.order(:created_at).each do |message|
+      = render partial: 'messages/message', object: message, locals: { prev_user: prev_user, thread_count: thread_count }
       - prev_user = message.user
 
 #channel-footer
   #channel-message-box
-    textarea#channel-message-input rows="1" channel-id="#{@channel.id}"
+    textarea#channel-message-input rows="1" channel-id="#{@channel.id}" message-thread-id="-1"

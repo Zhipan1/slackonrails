@@ -10,3 +10,12 @@ TODO
   - Threads, through conversations
     - Messages
     - Users, through conversation_participants
+
+
+- Sending a message
+  - Thread: null ? int
+  - User: current_user
+
+- Thread
+  - Conversation.create channel: current_channel, message: message
+  - ConversationParticipant.create message_thread: thread, user: current_user

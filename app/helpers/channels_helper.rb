@@ -12,4 +12,5 @@ module ChannelsHelper
   def channel_notification?(channel)
     user_channel_membership(channel).notification
   end
+
 end

@@ -1,13 +1,13 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
   def create
-    @message = Message.new(message_params.merge user: current_user )
-    channel = @message.channel
-    @message.text = "ay lmao" if channel.name and channel.name.include? "ay lmao"
+    thread = get_or_create_thread(thread_id, channel)
+    @message = Message.new(message_params.merge(user: current_user, message_thread: thread))
+
     prev_user = if channel.messages.last then channel.messages.last.user else nil end
 
     respond_to do |format|
-      if @message.save
+      if thread.save and @message.save
         format.html {}
         format.json {}
         rendered_message = render partial: 'messages/message', object: @message, locals: { prev_user: prev_user }
@@ -19,6 +19,13 @@ class MessagesController < ApplicationController
         format.json {}
       end
     end
+  end
+
+  def get_or_create_thread(thread_id, channel)
+    thread = MessageThread.find_by_id thread_id
+    thread ||= MessageThread.create
+    ThreadMembership.where(message_thread: thread, channel: channel).first_or_create
+    thread
   end
 
   def search
@@ -40,7 +47,15 @@ class MessagesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
-      params.require(:message).permit(:text, :channel_id)
+      params.require(:message).permit(:text)
+    end
+
+    def channel
+      Channel.find params[:message][:channel_id]
+    end
+
+    def thread_id
+      params[:message][:message_thread_id]
     end
 
 end

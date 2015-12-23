@@ -4,6 +4,7 @@
 
 $ ->
   channel = $("#channel-message-input").attr("channel-id")
+  getThread = -> $("#channel-message-input").attr("message-thread-id")
   getNotifications(channel)
   $("#channel-body").scrollTop $("#messages").height()
   $("#channel-message-input").focus().autosize(append: false).keypress (e) ->
@@ -11,7 +12,7 @@ $ ->
       if not $(this).val()
         return false
       text = $(this).val()
-      postMessage(text, channel)
+      postMessage(text, channel, getThread())
       $(this).val("")
       return false
 
@@ -20,12 +21,16 @@ $ ->
       text = $(this).val()
       searchMessage text
 
+  $("#channel-body").on 'click', '.message', (e) ->
+    message_thread_id = $(this).attr("message-thread")
+    $("#channel-message-input").attr("message-thread-id", message_thread_id).focus()
+
   PrivatePub.subscribe "/channels/#{channel}", (data, channel_url) ->
     if channel == channel_url.split("/channels/")[1]
       $("#messages").append data.message
       $("#channel-body").animate { scrollTop: $("#messages").height() }, "slow"
 
-postMessage = (text, channel) ->
+postMessage = (text, channel, thread) ->
   $.ajax
     type: "POST"
     url: "/messages"
@@ -33,6 +38,7 @@ postMessage = (text, channel) ->
       message:
         text: text
         channel_id: channel
+        message_thread_id: thread
     error:(data) ->
       console.log data.responseText
 
