@@ -1,17 +1,22 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
+  include MessagesHelper
+
   def create
     thread = get_or_create_thread(thread_id, channel)
     @message = Message.new(message_params.merge(user: current_user, message_thread: thread))
 
-    prev_user = if channel.messages.last then channel.messages.last.user else nil end
+    prev_message = channel.messages.last
 
     respond_to do |format|
       if thread.save and @message.save
         format.html {}
         format.json {}
-        rendered_message = render partial: 'messages/message', object: @message, locals: { prev_user: prev_user }
-        PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message
+
+        # need to render new message + update dom
+        rendered_message = render partial: 'messages/message', object: @message, locals: { prev_message: prev_message, channel: channel }
+        update_dom = update_dom(@message, channel)
+        PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message, user: @message.user.id, update_dom: update_dom
         PrivatePub.publish_to "/channels/0", channel: channel.id
         channel.channel_memberships.where.not(user: current_user).update_all notification: true
       else

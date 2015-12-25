@@ -6,6 +6,7 @@ p#notice = notice
   #channel-topic = @channel.topic
 
 #channel-body
+  #thread-overlay
   #messages
     - prev_user = nil
     - @channel.messages.order(:created_at).each do |message|

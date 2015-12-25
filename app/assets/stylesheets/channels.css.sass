@@ -37,12 +37,27 @@ hr
 
 #channel-body
   position: relative
+  height: calc(100% - 140px)
+  padding-bottom: 15px
+  overflow: scroll
+  overflow-x: hidden
+  width: calc(100% - 4px)
+
+#thread-container
+  position: absolute
   height: calc(100% - 128px)
   padding-bottom: 25px
   overflow: scroll
   overflow-x: hidden
   width: calc(100% - 4px)
+  top: 64px
+  background-color: white
+  opacity: 0
+  display: none
+  transition: 0.2s ease
 
+  &.active
+    opacity: 1
 
 
 #channel-footer
@@ -105,3 +120,5 @@ hr
 .new-channel-container
   width: 80%
   margin: 0 auto
+
+

@@ -6,18 +6,58 @@
 
 .message
   padding: 1px 0px 4px 0px
+  background-color: white
+  position: relative
   +clearfix
 
   &:hover
     background-color: rgba($black, 0.03)
 
   &.first
-    .message-content
-      margin-top: 3px
     .message-icon
       display: block
     .message-user, .message-time
       display: inline-block
+
+  &.highlight
+    background-color: $light-yellow
+
+  &.remove-highlight
+    transition: background-color 0.8s ease
+    background-color: white
+
+.thread-bar
+  position: absolute
+  height: 100%
+  width: 4px
+  top: 0
+  opacity: 0
+  transition: 0.3s ease
+
+.color-thread
+  .thread-bar
+    opacity: 0.6
+
+    &.active
+      opacity: 1
+
+.thread-head
+  .thread-bar
+    border-radius: 0px 3px 0px 0px
+    height: calc(100% - 8px)
+    top: 8px
+
+.thread-tail
+  .thread-bar
+    border-radius: 0px 0px 3px 0px
+    height: calc(100% - 8px)
+    bottom: 8px
+
+.thread-tail.thread-head
+  .thread-bar
+    border-radius: 0px 3px 3px 0px
+    height: calc(100% - 16px)
+    top: 8px
 
 .message-gutter
   float: left
@@ -49,25 +89,32 @@
   font-size: 12px
   color: rgba($black, 0.36)
   display: none
-  margin-bottom: 2px
 
-.color-thread
-  border-left: 3px solid $thread-color-0
+.message-text
+  margin-top: -1px
 
 .thread-color-0
-  border-color: $thread-color-0
+  .thread-bar
+    background-color: $thread-color-0
 .thread-color-1
-  border-color: $thread-color-1
+  .thread-bar
+    background-color: $thread-color-1
 .thread-color-2
-  border-color: $thread-color-2
+  .thread-bar
+    background-color: $thread-color-2
 .thread-color-3
-  border-color: $thread-color-3
+  .thread-bar
+    background-color: $thread-color-3
 .thread-color-4
-  border-color: $thread-color-4
+  .thread-bar
+    background-color: $thread-color-4
 .thread-color-5
-  border-color: $thread-color-5
+  .thread-bar
+    background-color: $thread-color-5
 .thread-color-6
-  border-color: $thread-color-6
+  .thread-bar
+    background-color: $thread-color-6
 .thread-color-7
-  border-color: $thread-color-7
+  .thread-bar
+    background-color: $thread-color-7
 
