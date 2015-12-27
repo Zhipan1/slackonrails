@@ -49,4 +49,28 @@ module MessagesHelper
     dom
   end
 
+  def process_message(content)
+    emojify(add_message_links(content))
+  end
+
+  def detect_channels(content)
+    links = []
+    content.to_str.gsub(/(#(\w*))/) do |match|
+      if channel = PublicChannel.find_by_name($2)
+        links.append channel
+      end
+    end if content.present?
+    links
+  end
+
+  def add_message_links(content)
+    content.to_str.gsub(/(#(\w*))/) do |match|
+      if channel = PublicChannel.find_by_name($2)
+        %(#{link_to $1, channel})
+      else
+        match
+      end
+    end.html_safe if content.present?
+  end
+
 end

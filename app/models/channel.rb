@@ -1,4 +1,5 @@
 class Channel < ActiveRecord::Base
+  validates :name, presence: true, uniqueness: true
   has_many :thread_memberships
   has_many :message_threads, through: :thread_memberships
   has_many :messages, through: :message_threads

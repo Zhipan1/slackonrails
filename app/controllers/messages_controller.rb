@@ -5,6 +5,7 @@ class MessagesController < ApplicationController
   def create
     thread = get_or_create_thread(thread_id, channel)
     @message = Message.new(message_params.merge(user: current_user, message_thread: thread))
+    add_thread_to_mentioned_channels(thread, @message)
 
     prev_message = channel.messages.last
 
@@ -29,8 +30,23 @@ class MessagesController < ApplicationController
   def get_or_create_thread(thread_id, channel)
     thread = MessageThread.find_by_id thread_id
     thread ||= MessageThread.create
-    ThreadMembership.where(message_thread: thread, channel: channel).first_or_create
+    add_thread_to_channel(thread, channel)
     thread
+  end
+
+  def add_thread_to_mentioned_channels(thread, message)
+    channel_links = detect_channels(message.text)
+
+    # add this thread to another channel
+    if not channel_links.empty?
+      for channel in channel_links
+        add_thread_to_channel(thread, channel)
+      end
+    end
+  end
+
+  def add_thread_to_channel(thread, channel)
+    ThreadMembership.where(message_thread: thread, channel: channel).first_or_create
   end
 
   def search

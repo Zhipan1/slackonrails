@@ -4,9 +4,10 @@ module ChannelsHelper
   end
 
   def clear_channel_notification(channel)
-    channel_membership = user_channel_membership(channel)
-    channel_membership.notification = false
-    channel_membership.save
+    if channel_membership = user_channel_membership(channel)
+      channel_membership.notification = false
+      channel_membership.save
+    end
   end
 
   def channel_notification?(channel)
