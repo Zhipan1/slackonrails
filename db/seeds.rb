@@ -37,7 +37,8 @@ threads_list = [
 ]
 
 public_channels_list.each do |c|
-  PublicChannel.create c
+  channel = PublicChannel.create c.merge main_thread: MessageThread.create
+  ThreadMembership.create message_thread: channel.main_thread, channel: channel
 end
 
 users_list.each do |u|
@@ -50,7 +51,7 @@ threads_list.each do |t|
     Message.create user_id: m[:user], message_thread: thread, text: m[:text]
   end
   t[:channels].each do |c|
-    ThreadMembership.create message_thread: thread, channel_id: c[:channel], message_id: c[:head]
+    ThreadMembership.create message_thread: thread, channel_id: c[:channel], head_id: c[:head]
   end
 end
 

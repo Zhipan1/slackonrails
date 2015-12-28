@@ -1,0 +1,7 @@
+
+
+.tiny-message
+  = image_tag "users/#{message.user.image}", class: "tiny-user-image"
+  = link_to message.user.name, message.user, class: "tiny-message-username"
+  .message-text = process_message message.text
+  .message-time = message.created_at.strftime("%b #{message.created_at.day.ordinalize} at %-I:%M%p")

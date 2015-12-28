@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222004716) do
+ActiveRecord::Schema.define(version: 20151227021244) do
 
   create_table "channel_memberships", force: :cascade do |t|
     t.integer  "user_id"
@@ -27,10 +27,13 @@ ActiveRecord::Schema.define(version: 20151222004716) do
   create_table "channels", force: :cascade do |t|
     t.string   "topic"
     t.string   "name"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.string   "type",       default: "PublicChannel"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "type",           default: "PublicChannel"
+    t.integer  "main_thread_id"
   end
+
+  add_index "channels", ["main_thread_id"], name: "index_channels_on_main_thread_id"
 
   create_table "message_threads", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -54,9 +57,11 @@ ActiveRecord::Schema.define(version: 20151222004716) do
     t.integer  "message_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "head_id"
   end
 
   add_index "thread_memberships", ["channel_id"], name: "index_thread_memberships_on_channel_id"
+  add_index "thread_memberships", ["head_id"], name: "index_thread_memberships_on_head_id"
   add_index "thread_memberships", ["message_id"], name: "index_thread_memberships_on_message_id"
   add_index "thread_memberships", ["message_thread_id"], name: "index_thread_memberships_on_message_thread_id"
 

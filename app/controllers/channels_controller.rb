@@ -89,7 +89,8 @@ class ChannelsController < ApplicationController
   # POST /channels
   # POST /channels.json
   def create
-    @channel = Channel.new(channel_params)
+    @main_thread = MessageThread.create
+    @channel = Channel.new(channel_params.merge main_thread)
     @memebership = ChannelMembership.new(user: current_user, channel: @channel)
 
     respond_to do |format|

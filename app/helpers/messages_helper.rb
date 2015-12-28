@@ -1,30 +1,33 @@
 module MessagesHelper
   def get_message_classes(message, prev_message, channel)
-    classes = ""
     message_is_thread = message.message_thread.messages.count > 1
     prev_message_is_thread = (prev_message and prev_message.message_thread.messages.count > 1)
     prev_user = prev_message.user if prev_message
 
     diff_user = prev_user != message.user
-    new_thread = ((prev_message_is_thread or message_is_thread) and prev_message and prev_message.message_thread != message.message_thread)
-    new_time = (prev_message and (message.created_at - prev_message.created_at) > 10.minute)
+    diff_thread = (prev_message and (prev_message.message_thread != message.message_thread))
+    diff_time = (prev_message and (message.created_at - prev_message.created_at) > 10.minute)
 
-    if message.message_thread.messages.count > 1
-      classes += get_thread_classes(message, prev_message, message.next(channel))
-    end
-    if diff_user or new_thread or new_time
-      classes += " first"
-    end
+    classes = get_thread_classes(message, prev_message, channel)
+
+    classes += " first" if diff_user or diff_thread or diff_time
+
     classes
   end
 
-  def get_thread_classes(message, prev_message, next_message)
-    classes = "color-thread thread-color-#{message.message_thread.id%8}"
-    if not prev_message or message.message_thread != prev_message.message_thread
-      classes += " thread-head"
-    end
-    if not next_message or message.message_thread != next_message.message_thread
-      classes += " thread-tail"
+  def get_thread_classes(message, prev_message, channel)
+    classes = ""
+    if channel.main_thread != message.message_thread
+      next_message = message.next(channel)
+      classes += "color-thread thread-color-#{message.message_thread.id%8}"
+      if not prev_message or message.message_thread != prev_message.message_thread
+        classes += " thread-head"
+      end
+      if not next_message or message.message_thread != next_message.message_thread
+        classes += " thread-tail"
+      end
+    else
+      classes += "main-thread"
     end
     classes
   end
@@ -32,7 +35,7 @@ module MessagesHelper
   def update_dom(message, channel)
     dom = []
     thread = message.message_thread
-    if thread.messages.count == 2
+    if thread != channel.main_thread
       head = thread.messages.first
       prev_message = head.prev(channel)
       next_message = head.next(channel)
@@ -49,8 +52,21 @@ module MessagesHelper
     dom
   end
 
+  def add_media(content)
+    content.to_str.gsub(/#<(\w+)\s*(\w*)\s*,\s*(\w*)\s*,\s*([\[\w\],\s]*)>/) do |match|
+      if $1 == "add_channels_to_thread"
+        %(#{render_add_channels_message($2, $3, eval($4))})
+      end
+    end if content.present?
+  end
+
+  def render_add_channels_message(user_id, thread_id, channels_id)
+    channels = channels_id.map{ |c| Channel.find_by_id c }
+    render partial: 'messages/add_channels_message', object: nil, locals: { user: User.find_by_id(user_id), thread: MessageThread.find_by_id(thread_id), channels: channels }
+  end
+
   def process_message(content)
-    emojify(add_message_links(content))
+    emojify(add_message_links(add_media(content)))
   end
 
   def detect_channels(content)

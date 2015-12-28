@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+    <title>Rectangle 10</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Slack" sketch:type="MSArtboardGroup" transform="translate(-243.000000, -188.000000)" fill="#4A4A4A">
+            <path d="M254.326718,197.558951 L261.748487,190.137182 C262.234133,189.651536 262.239494,188.854718 261.751339,188.366563 C261.25978,187.875004 260.47045,187.879684 259.98072,188.369415 L252.558951,195.791184 L245.137182,188.369415 C244.651536,187.883769 243.854718,187.878407 243.366563,188.366563 C242.875004,188.858121 242.879684,189.647451 243.369415,190.137182 L250.791184,197.558951 L243.369415,204.98072 C242.883769,205.466366 242.878407,206.263184 243.366563,206.751339 C243.858121,207.242898 244.647451,207.238217 245.137182,206.748487 L252.558951,199.326718 L259.98072,206.748487 C260.466366,207.234133 261.263184,207.239494 261.751339,206.751339 C262.242898,206.25978 262.238217,205.47045 261.748487,204.98072 L254.326718,197.558951 Z" id="Rectangle-10" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

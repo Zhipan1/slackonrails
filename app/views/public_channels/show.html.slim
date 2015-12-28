@@ -6,16 +6,24 @@
 
 
 #channel-body
-  .messages
-    - prev_message = nil
-    - @channel.messages.order(:created_at).each do |message|
-      = render partial: 'messages/message', object: message, locals: { prev_message: prev_message, channel: @channel }
-      - prev_message = message
+  .messages-container
+    .messages
+      - prev_message = nil
+      - @channel.messages.order(:created_at).each do |message|
+        = render partial: 'messages/message', object: message, locals: { prev_message: prev_message, channel: @channel }
+        - prev_message = message
 
 #thread-container thread_id="-1"
-  .messages
+  #thread-container-header
+    = image_tag "icons/convo.svg", id: "thread-icon"
+    #thread-prompt
+    #thread-close
+      = image_tag "icons/slack-times.svg"
+      #thread-close-text esc
+  .messages-container
+    .messages
 
 
 #channel-footer
   #channel-message-box
-    textarea#channel-message-input rows="1" channel_id="#{@channel.id}" thread_id="-1" user_id="#{current_user.id}"
+    textarea#channel-message-input rows="1" channel_id="#{@channel.id}" thread_id="#{@channel.main_thread.id}" user_id="#{current_user.id}"

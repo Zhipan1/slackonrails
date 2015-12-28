@@ -5,6 +5,7 @@ class Channel < ActiveRecord::Base
   has_many :messages, through: :message_threads
   has_many :channel_memberships
   has_many :users, through: :channel_memberships
+  belongs_to :main_thread, class_name: "MessageThread"
   scope :direct_messages, -> { where(type: 'DirectMessage') }
   scope :public_channels, -> { where(type: 'PublicChannel') }
 
