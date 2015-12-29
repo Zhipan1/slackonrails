@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
 
   def create
     thread, thread_membership = get_or_create_thread(thread_id, channel)
-    @message = Message.new(message_params.merge(user: current_user))
+    @message = Message.create(message_params.merge(user: current_user))
     thread, slackbot_message = add_thread_to_mentioned_channels(thread, @message, channel)
 
     prev_message = channel.messages.last

@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20151227021244) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.string   "image",                  default: "default-0.jpg"
+    t.string   "image",                  default: "default-0.png"
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.string   "email",                  default: "",              null: false
