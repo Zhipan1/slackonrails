@@ -77,7 +77,10 @@ $ ->
     $("#thread-container").show()
     $('#thread-container .messages').append($thread)
 
-    setTimeout (-> $("#thread-container").addClass("active")), 50
+    setTimeout (->
+      $("#thread-container").addClass("active")
+      setTimeout (-> removeHighlight($("#thread-container").find(".highlight"))), 400
+      ), 50
 
   disableThreadView = ($message) ->
     $("#channel-message-input").attr("thread_id", main_thread_id)
@@ -89,12 +92,7 @@ $ ->
       $('#thread-container .messages').empty()
       ), 200
 
-    setTimeout (->
-      $message.addClass("remove-highlight")
-      setTimeout (->
-        $message.removeClass("remove-highlight highlight")
-        ), 800
-      ), 400
+    setTimeout (-> removeHighlight($message)), 400
 
   appendNewMessage = ($message, user, new_thread_head) ->
     $("#channel-body .messages").append $message
@@ -119,6 +117,12 @@ $ ->
           new_message = $(message.render)
           old_message = $("#channel-body .message[message_id='#{message.id}']").addClass("highlight")
           old_message.replaceWith(new_message)
+
+removeHighlight = ($element) ->
+  $element.addClass("remove-highlight")
+  setTimeout (->
+    $element.removeClass("remove-highlight highlight")
+  ), 800
 
 hoverThread = (e) ->
   thread_id = $(this).attr("thread_id")
