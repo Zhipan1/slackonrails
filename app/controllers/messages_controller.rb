@@ -13,10 +13,6 @@ class MessagesController < ApplicationController
       if thread.save and @message.save and (not slackbot_message or slackbot_message.save)
         format.html {}
         format.json {}
-
-
-
-
         # need to render new message + update dom
         rendered_message = render partial: 'messages/message', object: @message, locals: { prev_message: prev_message, channel: channel }
         update_dom = update_dom(@message, channel)
