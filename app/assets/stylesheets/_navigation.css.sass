@@ -36,13 +36,15 @@
   background-color: $green
   float: left
   margin-right: 5px
-  margin-top: 7px
+  margin-top: 5px
 
 .sidebar-user-name
   color: white
   opacity: 0.6
   font-weight: 300
   transition: 0.2s ease
+  font-size: 14px
+  margin-top: 5px
 
 .dropdown-btn
   float: right
@@ -156,7 +158,7 @@
     top: 2px
 
 .sidebar-channel
-  padding: 2px 3px 3px 3px
+  padding: 2px 3px 4px 3px
   padding-left: 22px
   margin-left: -19px
   cursor: pointer
@@ -171,13 +173,15 @@
     background-color: darken($purple, 5%)
 
   &.active
-    background-color: $green
+    background-color: $channel-active-green
     .sidebar-channel-name
       color: white
 
     .sidebar-hash-tag
       color: rgba(white, 0.6)
       font-weight: 300
+      margin-left: 2px
+      margin-right: 4px
 
   &.unread-messages
     .sidebar-channel-name

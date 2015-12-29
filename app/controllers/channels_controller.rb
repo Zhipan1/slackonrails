@@ -58,12 +58,8 @@ class ChannelsController < ApplicationController
     end
   end
 
-  def join_channel(channel)
-    if channel and channel.users.find_by_id(current_user)
-      return false
-    else
-      return ChannelMembership.new(user: current_user, channel: @hannel).save
-    end
+  def join_channel(channel, user=current_user)
+    ChannelMembership.where(user: user, channel: channel).first_or_create
   end
 
   # GET /channels/:id/join

@@ -19,7 +19,7 @@ module MessagesHelper
     classes = ""
     if channel.main_thread != message.message_thread
       next_message = message.next(channel)
-      classes += "color-thread thread-color-#{message.message_thread.id%8}"
+      classes += "color-thread thread-color-#{message.message_thread.id%4}"
       if not prev_message or message.message_thread != prev_message.message_thread
         classes += " thread-head"
       end

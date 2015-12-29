@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 20151227021244) do
   create_table "thread_memberships", force: :cascade do |t|
     t.integer  "message_thread_id"
     t.integer  "channel_id"
-    t.integer  "message_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "head_id"
@@ -62,20 +61,19 @@ ActiveRecord::Schema.define(version: 20151227021244) do
 
   add_index "thread_memberships", ["channel_id"], name: "index_thread_memberships_on_channel_id"
   add_index "thread_memberships", ["head_id"], name: "index_thread_memberships_on_head_id"
-  add_index "thread_memberships", ["message_id"], name: "index_thread_memberships_on_message_id"
   add_index "thread_memberships", ["message_thread_id"], name: "index_thread_memberships_on_message_thread_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.string   "image",                  default: "drake.jpg"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.string   "email",                  default: "",          null: false
-    t.string   "encrypted_password",     default: "",          null: false
+    t.string   "image",                  default: "default-0.jpg"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.string   "email",                  default: "",              null: false
+    t.string   "encrypted_password",     default: "",              null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,           null: false
+    t.integer  "sign_in_count",          default: 0,               null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"

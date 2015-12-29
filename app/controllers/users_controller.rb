@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params.merge image: "drake.png")
+    @user = User.new(user_params.merge image: "default-#{User.count%3}.png")
 
     respond_to do |format|
       if @user.save and create_direct_messages and join_default_channels
@@ -79,12 +79,5 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name)
-    end
-
-    def join_default_channels
-      default_channels = [1, 2]
-      default_channels.each do |c|
-        join_channel Channel.find c
-      end
     end
 end

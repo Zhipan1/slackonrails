@@ -9,46 +9,55 @@ hr
 
 #channel-header
   position: relative
-  padding: 15px 25px
+  padding: 15px 25px 10px 25px
   +clearfix
+
+  &:hover
+    #channel-name-hashtag
+      opacity: 1
 
 #channel-name-hashtag
   font-size: 21px
   color: rgba($black, 0.72)
   opacity: 0.6
   float: left
-  margin-top: 2px
-  margin-right: 2px
+  margin-top: 3px
+  margin-right: 1px
   font-weight: 500
+  width: 14px
+  transition: 0.1s linear
+
+  img
+    width: 100%
 
 
 #channel-name
   font-size: 23px
   font-weight: bold
-  color: rgba($black, 0.70)
+  color: $channel-name-color
   float: left
   margin-right: 20px
 
 #channel-topic
-  font-size: 17px
-  color: rgba($black, 0.35)
-  margin-top: 6px
+  font-size: 15px
+  color: $time-stamp-gray
+  margin-top: 8px
 
 
 #channel-body
   position: relative
-  height: calc(100% - 140px)
+  height: calc(100% - 107px)
   padding-bottom: 15px
   overflow: hidden
   width: calc(100% - 4px)
 
 #thread-container
   position: absolute
-  height: calc(100% - 140px)
+  height: calc(100% - 151px)
   padding-bottom: 25px
   overflow: hidden
   width: calc(100% - 4px)
-  top: 64px
+  top: 53px
   background-color: white
   opacity: 0
   display: none
