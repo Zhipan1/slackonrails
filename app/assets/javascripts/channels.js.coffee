@@ -16,8 +16,13 @@ $ ->
       console.log data
       updateDom(data)
 
+  $("#channel-message-input").focusin( -> $("#channel-message-box").addClass("focus") ).focusout( -> $("#channel-message-box").removeClass("focus") )
 
-  $("#channel-message-input").focus().autosize(append: false).keypress (e) ->
+  $("#channel-message-input").focus().autosize(append: false).on 'autosize.resized', ->
+    height = $("#channel-message-input").outerHeight()
+    $("#channel-message-upload").css(height: height)
+
+  $("#channel-message-input").keypress (e) ->
     if not e.shiftKey && e.which == 13
       if not $(this).val()
         return false
@@ -25,6 +30,8 @@ $ ->
       postMessage(text, channel, getThread(), getNewThreadHead())
       $(this).val("")
       return false
+
+
 
   $("#message-search").keypress (e) ->
     if e.which == 13

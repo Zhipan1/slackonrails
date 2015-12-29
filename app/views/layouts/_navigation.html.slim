@@ -19,7 +19,7 @@
           span.channel-list-type Channels
           span.channel-list-count = " (#{PublicChannel.count})"
       = link_to new_public_channel_path do
-        span.new-channel-btn  = fa_icon "plus"
+        span.new-channel-btn  = image_tag "icons/slack-circle-plus.svg"
     - current_user.public_channels.each do |c|
       - if current_channel == c
         .sidebar-channel.active id="channel-#{c.id}" = link_to c do
@@ -37,7 +37,7 @@
           span.channel-list-type Direct Messages
           span.channel-list-count = " (#{User.count - 1})"
       = link_to direct_messages_path do
-        span.new-channel-btn  = fa_icon "plus"
+        span.new-channel-btn  = image_tag "icons/slack-circle-plus.svg"
     - current_user.direct_messages.each do |c|
       - if current_channel == c
         .sidebar-channel.active id="channel-#{c.id}" = link_to c do

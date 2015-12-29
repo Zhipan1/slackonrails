@@ -46,13 +46,13 @@ hr
 
 #channel-body
   position: relative
-  height: calc(100% - 122px)
+  height: calc(100% - 118px)
   overflow: hidden
   width: calc(100% - 4px)
 
 #thread-container
   position: absolute
-  height: calc(100% - 122px)
+  height: calc(100% - 118px)
   overflow: hidden
   width: calc(100% - 4px)
   top: 53px
@@ -122,23 +122,54 @@ hr
 #channel-footer
   position: absolute
   bottom: 0px
-  padding-bottom: 20px
-  padding-left: 15px
-  padding-right: 15px
+  padding-bottom: 19px
+  padding-left: 20px
+  padding-right: 36px
   width: 100%
   background-color: white
+
+#channel-message-upload
+  float: left
+  width: 44px
+  height: 42px
+  border: 2px solid rgba($gray, .18)
+  border-radius: 5px 0px 0px 5px
+  position: relative
+  cursor: pointer
+
+  &:hover
+    border-color: $upload-button-green
+    background-color: $upload-button-green
+
+    svg path
+      fill: white
+
+  svg
+    position: absolute
+    left: 13px
+    top: 12px
+
+    path
+      fill: rgba($black, 0.35)
+
+
 #channel-message-input
   border: 2px solid rgba($gray, .18)
-  border-radius: 5px
+  border-radius: 0px 5px 5px 0px
+  border-left: none
   padding: 10px
   font-size: 15px
-  width: 100%
-  line-height: 1.5
+  width: calc(100% - 44px)
+  line-height: 1.2
   resize: none
   outline: none
+  height: 42px
+  color: rgba($black, 0.9)
 
-  &:focus
-    border-color: rgba($gray, .24)
+#channel-message-box
+  &.focus
+    #channel-message-upload, #channel-message-input
+      border-color: rgba($gray, .24)
 
 .container
   margin: auto
