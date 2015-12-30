@@ -49,12 +49,12 @@ $ ->
       if e.keyCode == 27 and $("#thread-container").hasClass("active")
         disableThreadView($message)
         $(document).unbind('keydown', disableThreadKeyPress)
-        $("#thread-container #thread-prompt").html("")
+        $("#thread-container .channel-topic").html("")
 
     disableThreadClick = (e) ->
       disableThreadView($message)
       $("#thread-close").click(disableThreadClick)
-      $("#thread-container #thread-prompt").html("")
+      $("#thread-container .channel-topic").html("")
 
     $(document).bind('keydown', disableThreadKeyPress)
     $("#thread-close").click(disableThreadClick)
@@ -72,8 +72,8 @@ $ ->
       $thread = $(".message[thread_id='#{thread_id}']").clone().removeClass("color-thread")
       $("#thread-container").attr("thread_id", thread_id)
 
-    prompt = $thread.first().find(".message-text").html()
-    $("#thread-container #thread-prompt").html(prompt)
+    topic = $thread.first().find(".message-text").html()
+    $("#thread-container .channel-topic").html(topic)
     $("#thread-container").show()
     $('#thread-container .messages').append($thread)
 
