@@ -85,12 +85,12 @@ class ChannelsController < ApplicationController
   # POST /channels
   # POST /channels.json
   def create
-    @main_thread = MessageThread.create
-    @channel = Channel.new(channel_params.merge main_thread)
+    @main_thread = MessageThread.new
+    @channel = Channel.new(channel_params.merge main_thread: @main_thread)
     @memebership = ChannelMembership.new(user: current_user, channel: @channel)
 
     respond_to do |format|
-      if @channel.save and @memebership.save
+      if @main_thread.save and @channel.save and @memebership.save
         format.html { redirect_to @channel }
         format.json { render :show, status: :created, location: @channel }
       else

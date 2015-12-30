@@ -122,7 +122,7 @@ removeHighlight = ($element) ->
   $element.addClass("remove-highlight")
   setTimeout (->
     $element.removeClass("remove-highlight highlight")
-  ), 800
+  ), 600
 
 hoverThread = (e) ->
   thread_id = $(this).attr("thread_id")

@@ -2,15 +2,27 @@
 #channel-header
   #channel-name-hashtag @
   #channel-name = messaging?(@channel).name
-
-
 #channel-body
-  #messages
-    - prev_user = nil
-    - @channel.messages.each do |message|
-      = render partial: 'messages/message', object: message, locals: { prev_user: prev_user }
-      - prev_user = message.user
+  .messages-container
+    .messages
+      - prev_message = nil
+      - @channel.messages.order(:created_at).each do |message|
+        = render partial: 'messages/message', object: message, locals: { prev_message: prev_message, channel: @channel }
+        - prev_message = message
+
+#thread-container thread_id="-1"
+  #thread-container-header
+    = image_tag "icons/convo.svg", id: "thread-icon"
+    #thread-prompt
+    #thread-close
+      = image_tag "icons/slack-times.svg"
+      #thread-close-text esc
+  .messages-container
+    .messages
+
 
 #channel-footer
   #channel-message-box
-    textarea#channel-message-input rows="1" channel-id="#{@channel.id}"
+    #channel-message-upload
+      = image_tag "icons/slack-plus.svg"
+    textarea#channel-message-input rows="1" channel_id="#{@channel.id}" thread_id="#{@channel.main_thread.id}" user_id="#{current_user.id}"

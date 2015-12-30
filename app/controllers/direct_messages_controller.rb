@@ -4,26 +4,19 @@ class DirectMessagesController < ChannelsController
   # POST /direct_messages
   # POST /direct_messages.json
   def create
-    @channel = DirectMessage.new(channel_params)
+    @main_thread = MessageThread.new
+    @channel = DirectMessage.new(channel_params.merge main_thread: @main_thread)
     @memebership = ChannelMembership.new(user: current_user, channel: @channel)
-
-    respond_to do |format|
-      if @channel.save and @memebership.save
-        format.html { redirect_to @channel }
-        format.json { render :show, status: :created, location: @channel }
-      else
-        format.html { render :new }
-        format.json { render json: @channel.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   def start_convo_between(user_1, user_2)
-    @channel = DirectMessage.new
+    @main_thread = MessageThread.new
+    @channel = DirectMessage.new(main_thread: @main_thread)
     @memebership_to = ChannelMembership.new(user: user_1, channel: @channel)
     @memebership_from = ChannelMembership.new(user: user_2, channel: @channel)
+    ThreadMembership.create message_thread: @main_thread, channel: @channel
 
-    if @channel.save and @memebership_to.save and @memebership_from.save
+    if @main_thread.save and @channel.save and @memebership_to.save and @memebership_from.save
       return @channel
     else
       return false
@@ -52,14 +45,6 @@ class DirectMessagesController < ChannelsController
   def index
     @channels = DirectMessage.all
     @type = "Direct Message"
-  end
-
-  private
-
-  def channel_params
-    p = params.require(:channel).permit(:name, :topic)
-    p[:name] = p[:name].downcase
-    p
   end
 
 end

@@ -14,7 +14,8 @@ public_channels_list = [
 
 users_list = [
   { name: "slackbot", email: "aylmao@aylmao.com", password: "password", image: "slackbot.png"},
-  { name: "zhi", email: "z@z.z", password: "password", image: "zhi.jpg"}
+  { name: "zhi", email: "z@z.z", password: "password", image: "zhi.jpg"},
+  { name: "drake", email: "drizzy@six.com", password: "password", image: "drake.jpg"}
 ]
 
 threads_list = [

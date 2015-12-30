@@ -9,12 +9,14 @@ class PublicChannelsController < ChannelsController
   # POST /public_channels
   # POST /public_channels.json
   def create
-    @channel = PublicChannel.new(channel_params)
+    @main_thread = MessageThread.new
+    @channel = PublicChannel.new(channel_params.merge main_thread: @main_thread)
     @memebership = ChannelMembership.new(user: current_user, channel: @channel)
+    ThreadMembership.create message_thread: @main_thread, channel: @channel
 
     respond_to do |format|
-      if @channel.save and @memebership.save
-        format.html { redirect_to @channel, notice: 'Channel was successfully created.' }
+      if @main_thread.save and @channel.save and @memebership.save
+        format.html { redirect_to @channel }
         format.json { render :show, status: :created, location: @channel }
       else
         format.html { render :new }
