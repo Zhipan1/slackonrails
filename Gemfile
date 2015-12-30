@@ -19,7 +19,6 @@ gem 'faye'
 gem "private_pub"
 gem "font-awesome-rails"
 gem 'gemoji'
-gem 'inline_svg'
 
 group :development do
   gem 'sqlite3'
