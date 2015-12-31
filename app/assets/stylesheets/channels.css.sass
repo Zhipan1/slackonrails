@@ -50,10 +50,24 @@ hr
     width: 100%
 
 #channel-options-dropdown
-  width: 250px
+  width: 300px
   position: absolute
   left: 24px
   top: 48px
+
+  .dropdown-item
+
+    i
+      display: none
+      margin-right: 5px
+
+    &.active
+      color: $light-green
+      i
+        display: inline-block
+
+      &:hover
+        color: white
 
 
 .channel-topic
@@ -68,7 +82,7 @@ hr
 
 #channel-body
   position: relative
-  height: calc(100% - 118px)
+  height: calc(100% - 119px)
   overflow: hidden
   width: calc(100% - 4px)
 

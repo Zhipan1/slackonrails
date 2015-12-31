@@ -65,7 +65,7 @@
   margin-top: 5px
 
 #user-dropdown
-  width: 220px
+  width: 300px
   left: 10px
   top: 65px
   position: absolute
@@ -75,7 +75,7 @@
   background-color: white
   border-radius: 5px
   border: 1px solid rgba($gray, .18)
-  padding: 8px
+  padding: 12px
   z-index: 1
   font-size: 15px
   box-shadow: 4px 4px 12px 0px rgba(0,0,0,0.12)
@@ -86,16 +86,39 @@
   &.active
     opacity: 1
 
+  .dropdown-section
+    position: relative
+
+    .dropdown-section-text
+      color: $time-stamp-gray
+      font-weight: 300
+      font-size: 13px
+      margin-bottom: 10px
+      background-color: white
+      padding-right: 14px
+      display: inline-block
+      position: relative
+      z-index: 1
+
+    &:after
+      display: block
+      content: ""
+      position: absolute
+      width: calc(100% - 10px)
+      border-bottom: 1px solid rgba(74, 74, 74, 0.18)
+      top: 11px
+      left: 5px
+
 
   .dropdown-item
     padding: 3px 15px
     color: black
     border-radius: 3px
     cursor: pointer
-    color: $black
+    color: $gray
 
     a
-      color: black
+      color: $gray
 
     &:hover
       color: white

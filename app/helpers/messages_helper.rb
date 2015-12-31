@@ -17,13 +17,14 @@ module MessagesHelper
 
   def get_thread_classes(message, prev_message, channel)
     classes = ""
-    if channel.main_thread != message.message_thread
+    thread = message.message_thread
+    if channel.main_thread != thread
       next_message = message.next(channel)
       classes += "color-thread thread-color-#{message.message_thread.id%4}"
-      if not prev_message or message.message_thread != prev_message.message_thread
+      if not prev_message or thread != prev_message.message_thread
         classes += " thread-head"
       end
-      if not next_message or message.message_thread != next_message.message_thread
+      if not next_message or thread != next_message.message_thread
         classes += " thread-tail"
       end
 
@@ -33,7 +34,12 @@ module MessagesHelper
         classes += " first thread-head"
       elsif message_order < 0
         classes += " before-head"
+      else
+        classes += " after-head"
       end
+
+      # threads that current user is part of
+      classes += " user-thread" if thread.users.include? current_user
 
     else
       classes += "main-thread"

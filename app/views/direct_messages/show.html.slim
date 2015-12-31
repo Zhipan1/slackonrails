@@ -1,7 +1,8 @@
 
 #channel-header
-  #channel-name-hashtag @
-  #channel-name = messaging?(@channel).name
+  .channel-name-hashtag style="margin-right: 5px" @
+  .channel-name = messaging?(@channel).name
+
 #channel-body
   .messages-container
     .messages
@@ -12,10 +13,13 @@
 
 #thread-container thread_id="-1"
   #thread-container-header
-    #thread-prompt
+    .channel-name-hashtag = image_tag "icons/slack-hashtag.svg"
+    .channel-name thread
+    .channel-topic = @channel.topic
     #thread-close
       = image_tag "icons/slack-times.svg"
       #thread-close-text esc
+    / #thread-header-border
   .messages-container
     .messages
 

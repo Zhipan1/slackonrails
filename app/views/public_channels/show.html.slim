@@ -6,7 +6,12 @@
   .channel-topic = @channel.topic
 
   #channel-options-dropdown.dropdown-menu
-    #collapse-threads.dropdown-item Collapse threads
+    .dropdown-section
+      .dropdown-section-text Thread settings
+    #expand-all-threads.dropdown-item.active = fa_icon("check") + "Expand all threads"
+    #collapse-all-threads.dropdown-item = fa_icon("check") + "Collapse all threads"
+    #collapse-non-user-threads.dropdown-item = fa_icon("check") + "Collapse threads you're not in"
+
 
 
 #channel-body

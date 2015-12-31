@@ -11,16 +11,18 @@ $ ->
   getNotifications(channel)
   $("#channel-body .messages-container").scrollTop $("#channel-body .messages").height()
 
-  $("#collapse-threads").click ->
-    if $(this).attr("thread_collapse")
-      $("#channel-body .messages").removeClass("collapse")
-      $(this).attr("thread_collapse", "")
-      setTimeout (-> $("#collapse-threads").text("Collapse threads")), 100
-    else
-      $("#channel-body .messages").addClass("collapse")
-      $(this).attr("thread_collapse", true)
-      setTimeout (-> $("#collapse-threads").text("Expand threads")), 100
+  $("#collapse-all-threads").click -> ThreadShow($(this), "collapse")
+  $("#collapse-non-user-threads").click -> ThreadShow($(this), "smart-collapse")
+  $("#expand-all-threads").click -> ThreadShow($(this), "")
 
+  ThreadShow = ($this, rule) ->
+    $messages = $("#channel-body .messages")
+    previous_thread_rule = $messages.attr("thread_collapse")
+    $messages.removeClass(previous_thread_rule)
+    $messages.addClass(rule)
+    $messages.attr("thread_collapse", rule)
+    $this.parent().find(".dropdown-item").removeClass("active")
+    $this.addClass("active")
 
   PrivatePub.subscribe "/channels/#{channel}", (data, channel_url) ->
     if channel == channel_url.split("/channels/")[1]
