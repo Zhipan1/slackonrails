@@ -8,6 +8,10 @@ class Channel < ActiveRecord::Base
   scope :direct_messages, -> { where(type: 'DirectMessage') }
   scope :public_channels, -> { where(type: 'PublicChannel') }
 
+  def messages_by_threads
+    self.messages.order(:created_at)
+  end
+
   def self.types
     %w(DirectMessage PublicChannel)
   end

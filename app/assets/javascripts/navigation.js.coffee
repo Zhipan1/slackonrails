@@ -13,19 +13,25 @@ $ ->
         error:(data) ->
           console.log data.responseText
 
-  $(".sidebar-header").click ->
-    if $("#user-dropdown").hasClass "active"
-      hideUserDropdown()
+  $(".dropdown-menu-btn").click ->
+    $target = $($(this).attr("target"))
+    if $target.hasClass "active"
+      hideDropdown($target)
     else
-      showUserDropdown()
+      showDropdown($target)
 
-  hideUserDropdown = ->
-    $("#user-dropdown").removeClass "active"
-    setTimeout (-> $("#user-dropdown").hide()), 300
+  $(".dropdown-item").click ->
+    $target = $(this).parent()
+    hideDropdown($target)
 
-  showUserDropdown = ->
-    $("#user-dropdown").show()
-    setTimeout (-> $("#user-dropdown").addClass("active")), 50
+  hideDropdown = ($target) ->
+    $target.removeClass "active"
+    setTimeout (-> $target.hide()), 300
+
+  showDropdown = ($target) ->
+    $target.show()
+    setTimeout (-> $target.addClass("active")), 50
+
 
 
 

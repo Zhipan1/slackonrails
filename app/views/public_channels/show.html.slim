@@ -1,15 +1,19 @@
 
 #channel-header
-  .channel-name-hashtag = image_tag "icons/slack-hashtag.svg"
-  .channel-name = @channel.name
+  .channel-name-hashtag.dropdown-menu-btn target="#channel-options-dropdown" = image_tag "icons/slack-hashtag.svg"
+  .channel-name.dropdown-menu-btn target="#channel-options-dropdown" = @channel.name
+  #channel-options-btn.dropdown-menu-btn target="#channel-options-dropdown" = image_tag "icons/slack-angle-down-gray.svg"
   .channel-topic = @channel.topic
+
+  #channel-options-dropdown.dropdown-menu
+    #collapse-threads.dropdown-item Collapse threads
 
 
 #channel-body
   .messages-container
     .messages
       - prev_message = nil
-      - @channel.messages.order(:created_at).each do |message|
+      - @channel.messages_by_threads.each do |message|
         = render partial: 'messages/message', object: message, locals: { prev_message: prev_message, channel: @channel }
         - prev_message = message
 

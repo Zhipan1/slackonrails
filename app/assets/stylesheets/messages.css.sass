@@ -4,6 +4,10 @@
 @import partials/variables
 @import partials/mixins
 
+.collapse
+  .message:not(.thread-head):not(.main-thread)
+    display: none
+
 .message
   padding: 1px 0px 5px 0px
   background-color: white
@@ -25,6 +29,10 @@
   &.remove-highlight
     transition: background-color 0.6s ease
     background-color: white
+
+  &.before-head
+    display: none
+
 
 .thread-bar
   position: absolute
@@ -53,7 +61,7 @@
     height: calc(100% - 8px)
     bottom: 8px
 
-.thread-tail.thread-head
+.thread-tail.thread-head, .collapse .message.thread-head
   .thread-bar
     border-radius: 0px 3px 3px 0px
     height: calc(100% - 16px)

@@ -26,6 +26,15 @@ module MessagesHelper
       if not next_message or message.message_thread != next_message.message_thread
         classes += " thread-tail"
       end
+
+      message_order = message.before_head(channel)
+
+      if message_order == 0
+        classes += " first thread-head"
+      elsif message_order < 0
+        classes += " before-head"
+      end
+
     else
       classes += "main-thread"
     end

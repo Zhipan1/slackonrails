@@ -6,7 +6,7 @@
   .messages-container
     .messages
       - prev_message = nil
-      - @channel.messages.order(:created_at).each do |message|
+      - @channel.messages_by_threads.each do |message|
         = render partial: 'messages/message', object: message, locals: { prev_message: prev_message, channel: @channel }
         - prev_message = message
 

@@ -1,13 +1,13 @@
 .sidebar
-  .sidebar-header
+  .sidebar-header.dropdown-menu-btn target="#user-dropdown"
     .team-name Slack on Rails
-    span.dropdown-btn#toggle-btn
-       = fa_icon "angle-down"
+    #user-dropdown-btn
+       = image_tag "icons/slack-angle-down-white.svg"
     .sidebar-user
       .sidebar-user-status
       .sidebar-user-name
         = current_user.name
-  #user-dropdown
+  #user-dropdown.dropdown-menu
     .dropdown-item
       = link_to 'Edit Account', edit_user_registration_path
     .dropdown-item

@@ -11,6 +11,17 @@ $ ->
   getNotifications(channel)
   $("#channel-body .messages-container").scrollTop $("#channel-body .messages").height()
 
+  $("#collapse-threads").click ->
+    if $(this).attr("thread_collapse")
+      $("#channel-body .messages").removeClass("collapse")
+      $(this).attr("thread_collapse", "")
+      setTimeout (-> $("#collapse-threads").text("Collapse threads")), 100
+    else
+      $("#channel-body .messages").addClass("collapse")
+      $(this).attr("thread_collapse", true)
+      setTimeout (-> $("#collapse-threads").text("Expand threads")), 100
+
+
   PrivatePub.subscribe "/channels/#{channel}", (data, channel_url) ->
     if channel == channel_url.split("/channels/")[1]
       console.log data
@@ -69,7 +80,7 @@ $ ->
       $("#thread-container").attr("new_thread_head_id", $message.attr("message_id"))
       $("#thread-container").removeAttr("thread_id")
     else
-      $thread = $(".message[thread_id='#{thread_id}']").clone().removeClass("color-thread")
+      $thread = $(".message[thread_id='#{thread_id}']").clone().removeClass("color-thread before-head")
       $("#thread-container").attr("thread_id", thread_id)
 
     topic = $thread.first().find(".message-text").html()
