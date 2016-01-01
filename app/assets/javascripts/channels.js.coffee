@@ -3,11 +3,35 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+
+  getInitialThreadCache = () ->
+    cache = []
+    for t in $(".message:not(.main-thread)").slice(-20).get().reverse()
+      thread_num = parseInt $(t).attr("thread_id")
+      if thread_num and cache.length < user_thread_cache_size and cache.indexOf(thread_num) == -1
+        cache.push(thread_num)
+    return cache
+
+  pushToCache = (thread) ->
+    if user_thread_cache.indexOf(thread) == -1
+      user_thread_cache.pop()
+      user_thread_cache.unshift(thread)
+
+  updateThreadCache = ->
+    thread_id = parseInt $("#channel-body .message").last().attr("thread_id")
+    pushToCache(thread_id) if thread_id and thread_id != main_thread_id
+
+
+  # channel data
   channel = $("#channel-message-input").attr("channel_id")
   getThread = -> $("#channel-message-input").attr("thread_id")
   getNewThreadHead = -> $("#thread-container").attr("new_thread_head_id")
   main_thread_id = $("#channel-message-input").attr("thread_id")
   current_user = parseInt($("#channel-message-input").attr("user_id"))
+  user_thread_cache_size = 2
+  window.t = user_thread_cache = getInitialThreadCache()
+  user_thread_cache_index = [0]
+
   getNotifications(channel)
   $("#channel-body .messages-container").scrollTop $("#channel-body .messages").height()
 
@@ -24,12 +48,10 @@ $ ->
     $this.parent().find(".dropdown-item").removeClass("active")
     $this.addClass("active")
 
-  PrivatePub.subscribe "/channels/#{channel}", (data, channel_url) ->
-    if channel == channel_url.split("/channels/")[1]
-      console.log data
-      updateDom(data)
-
-  $("#channel-message-input").focusin( -> $("#channel-message-box").addClass("focus") ).focusout( -> $("#channel-message-box").removeClass("focus") )
+  $("#channel-message-input").focusin( ->
+    $("#channel-message-box").addClass("focus")
+    )
+  .focusout( -> $("#channel-message-box").removeClass("focus") )
 
   $("#channel-message-input").focus().autosize(append: false).on 'autosize.resized', ->
     height = $("#channel-message-input").outerHeight()
@@ -44,12 +66,24 @@ $ ->
       $(this).val("")
       return false
 
+  ## thread stuff ##
+
+  $("#channel-message-input").keydown (e) ->
+    return if $(this).val()
+    # thread hotkeys
+    if e.which == 38 #up
+      clearThreadContainer()
+      console.log user_thread_cache_index[0], user_thread_cache[user_thread_cache_index[0]]
+      enableThreadView(user_thread_cache[user_thread_cache_index[0]])
+      user_thread_cache_index[0] = (user_thread_cache_index[0] + 1) % user_thread_cache.length
 
 
-  $("#message-search").keypress (e) ->
-    if e.which == 13
-      text = $(this).val()
-      searchMessage text
+
+  $(document).keydown (e) ->
+    if e.keyCode == 27 and $("#thread-container").hasClass("active")
+      disableThreadView()
+
+  $("#thread-close").click disableThreadView
 
   $("#channel-body").on "mouseenter mouseleave", ".message", hoverThread
 
@@ -58,23 +92,11 @@ $ ->
     thread_id = $message.attr("thread_id")
     enableThreadView(thread_id, $message)
 
-    disableThreadKeyPress = (e) ->
-      if e.keyCode == 27 and $("#thread-container").hasClass("active")
-        disableThreadView($message)
-        $(document).unbind('keydown', disableThreadKeyPress)
-        $("#thread-container .channel-topic").html("")
 
-    disableThreadClick = (e) ->
-      disableThreadView($message)
-      $("#thread-close").click(disableThreadClick)
-      $("#thread-container .channel-topic").html("")
-
-    $(document).bind('keydown', disableThreadKeyPress)
-    $("#thread-close").click(disableThreadClick)
-
-
-  enableThreadView = (thread_id, $message) ->
+  enableThreadView = (thread_id, $message=$()) ->
+    message_id = $message.attr("message_id")
     $("#channel-message-input").attr("thread_id", thread_id).focus()
+    $("#thread-container").attr("highlight_message", message_id)
     $message.addClass("highlight")
 
     if $message.hasClass("main-thread")
@@ -95,17 +117,34 @@ $ ->
       setTimeout (-> removeHighlight($("#thread-container").find(".highlight"))), 400
       ), 50
 
-  disableThreadView = ($message) ->
+  disableThreadView = ($message=$()) ->
+    message_id = $("#thread-container").attr("highlight_message")
+    $message = $("#channel-body .message[message_id='#{message_id}']")
     $("#channel-message-input").attr("thread_id", main_thread_id)
     $("#thread-container").removeAttr("thread_id").removeAttr("new_thread_head_id").removeClass("active")
+
+    user_thread_cache_index[0] = 0
 
 
     setTimeout (->
       $("#thread-container").hide()
-      $('#thread-container .messages').empty()
+      clearThreadContainer()
       ), 200
 
     setTimeout (-> removeHighlight($message)), 400
+
+  clearThreadContainer = ->
+    $('#thread-container .messages').empty()
+    $("#thread-container .channel-topic").html("")
+
+
+  PrivatePub.subscribe "/channels/#{channel}", (data, channel_url) ->
+    if channel == channel_url.split("/channels/")[1]
+      console.log data
+      updateDom(data)
+      updateThreadCache()
+
+
 
   appendNewMessage = ($message, user, new_thread_head) ->
     $("#channel-body .messages").append $message
