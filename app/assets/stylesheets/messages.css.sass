@@ -25,6 +25,9 @@
   &:hover
     background-color: rgba($black, 0.03)
 
+    .message-options
+      display: block
+
   &.first
     .message-icon
       display: block
@@ -148,6 +151,72 @@
   left: 0px
 
 .inline-attachment-content
+
+
+.message-options
+  position: absolute
+  right: 6px
+  top: -20px
+  border: 1px solid rgba($black, 0.18)
+  border-radius: 6px
+  transition: 0.1s ease
+  display: none
+  +clearfix
+
+  &:hover
+    border-color: rgba($black, 0.3)
+    box-shadow: 0 1px 1px rgba(black, 0.1)
+
+  .message-option-item
+    border-right: 1px solid rgba($black, 0.18)
+    padding: 5px
+    float: left
+    height: 28px
+    width: 37px
+    background: white
+    cursor: pointer
+    opacity: 0.9
+
+    &:hover
+      img
+        &:last-child
+          display: block
+        &:first-child
+          display: none
+
+    &:first-child
+      border-top-left-radius: 6px
+      border-bottom-left-radius: 6px
+
+    &:last-child
+      border-top-right-radius: 6px
+      border-bottom-right-radius: 6px
+      border-right: none
+
+    img
+      &:last-child
+        display: none
+
+.message-see-thread
+  img
+    width: 16px
+    margin-left: 6px
+    margin-top: 1px
+
+.message-copy-text
+  img
+    width: 15px
+    margin-left: 6px
+    margin-top: 2px
+
+.message-see-more
+  img
+    width: 13px
+    margin-left: 6px
+    position: absolute
+    margin-top: 8px
+
+
 
 .thread-color-0
   .thread-bar

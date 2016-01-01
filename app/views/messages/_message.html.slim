@@ -9,3 +9,13 @@
     span.message-user = message.user.name
     .message-time = message.created_at.strftime("%-I:%M%p")
     .message-text = process_message message.text
+  .message-options
+    .message-see-thread.message-option-item
+      = image_tag "icons/message-thread.svg"
+      = image_tag "icons/message-thread-active.svg"
+    .message-copy-text.message-option-item
+      = image_tag "icons/message-link.svg"
+      = image_tag "icons/message-link-active.svg"
+    .message-see-more.message-option-item
+      = image_tag "icons/message-see-more.svg"
+      = image_tag "icons/message-see-more-active.svg"

@@ -53,8 +53,8 @@ $ ->
 
   $("#channel-body").on "mouseenter mouseleave", ".message", hoverThread
 
-  $("#channel-body").on 'click', '.message', (e) ->
-    $message = $(this)
+  $("#channel-body").on 'click', '.message .message-see-thread', (e) ->
+    $message = $(this).parent().parent()
     thread_id = $message.attr("thread_id")
     enableThreadView(thread_id, $message)
 

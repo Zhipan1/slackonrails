@@ -24,13 +24,26 @@ $ ->
     $target = $(this).parent()
     hideDropdown($target)
 
+
   hideDropdown = ($target) ->
     $target.removeClass "active"
     setTimeout (-> $target.hide()), 300
 
   showDropdown = ($target) ->
     $target.show()
-    setTimeout (-> $target.addClass("active")), 50
+    setTimeout (->
+      $target.addClass("active")
+      $("body").on "click", showDropdownEvent
+      ), 50
+
+    showDropdownEvent = ->
+      console.log 'a'
+      hideDropdown($target)
+      $("body").unbind("click", showDropdownEvent)
+
+
+
+
 
 
 
