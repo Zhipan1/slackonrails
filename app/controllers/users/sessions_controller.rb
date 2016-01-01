@@ -1,10 +1,16 @@
 class Users::SessionsController < Devise::SessionsController
 # before_filter :configure_sign_in_params, only: [:create]
-
+  require 'net/http'
 
   # DELETE /resource/sign_out
   def destroy
     super
+  end
+
+  def new
+    super do
+      PrivatePub.publish_to "wakeup", nil
+    end
   end
 
   protected
