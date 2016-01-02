@@ -14,6 +14,24 @@
       = link_to 'Edit Account', edit_user_registration_path
     .dropdown-item
       = link_to 'Log Out', destroy_user_session_path, :method=>'delete'
+
+  .channel-list
+    .sidebar-channels.channel-list-header
+      span.channel-list-title
+        = link_to public_channels_path do
+          span.channel-list-type Threads
+      = link_to new_public_channel_path do
+        span.new-channel-btn  = image_tag "icons/slack-circle-plus.svg"
+    - current_user.public_channels.each do |c|
+      - if current_channel == c
+        .sidebar-channel.active id="channel-#{c.id}" = link_to c do
+          .sidebar-hash-tag #
+          .sidebar-channel-name = c.name
+      - else
+        .sidebar-channel class="#{'unread-messages' if channel_notification? c}" id="channel-#{c.id}" = link_to c do
+          .sidebar-hash-tag #
+          .sidebar-channel-name = c.name
+
   .channel-list
     .sidebar-channels.channel-list-header
       span.channel-list-title

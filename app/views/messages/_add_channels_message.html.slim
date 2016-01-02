@@ -1,9 +1,9 @@
 
 
 .message-text-subtitle
-  span = link_to("@#{user.name}", user) + " added #{channels.map{ |c| "##{c.name}" }.to_sentence} to this thread"
+  = "#{user.name} added #{channels.map{ |c| "##{c.name}" }.to_sentence} to this thread"
 
-  .inline-attachment
-    .inline-attachment-bar
-    .inline-attachment-content
-      = render partial: 'messages/tiny_message', locals: { message: thread.messages.first }
+.inline-attachment.thread-head-preview
+  .inline-attachment-bar
+  .inline-attachment-content
+    = render partial: 'messages/tiny_message', locals: { message: thread.messages.first }

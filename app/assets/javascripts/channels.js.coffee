@@ -83,7 +83,7 @@ $ ->
     if e.keyCode == 27 and $("#thread-container").hasClass("active")
       disableThreadView()
 
-  $("#thread-close").click disableThreadView
+  $("#thread-close").click -> disableThreadView()
 
   $("#channel-body").on "mouseenter mouseleave", ".message", hoverThread
 

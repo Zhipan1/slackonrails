@@ -22,6 +22,9 @@
   position: relative
   +clearfix
 
+  a:hover
+    text-decoration: underline
+
   &:hover
     background-color: rgba($black, 0.03)
 
@@ -33,6 +36,8 @@
       display: block
     .message-user, .message-time
       display: inline-block
+    .message-options
+      top: -6px
 
   &.highlight
     background-color: $light-yellow
@@ -112,6 +117,13 @@
   color: $time-stamp-gray
   font-weight: 300
   display: none
+
+.message-text-subtitle
+  color: rgba(black, 0.5)
+  font-style: italic
+
+  a
+    color: rgba(black, 0.5)
 
 .tiny-message
   .message-text
