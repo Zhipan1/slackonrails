@@ -107,8 +107,10 @@ $ ->
       $thread = $(".message[thread_id='#{thread_id}']").clone().removeClass("color-thread before-head")
       $("#thread-container").attr("thread_id", thread_id)
 
-    topic = $thread.first().find(".message-text").html()
-    $("#thread-container .channel-topic").html(topic)
+    $first_message = $thread.first()
+    topic = $first_message.find(".message-text").html()
+    name = "<a>@#{$first_message.find(".message-user").text()}</a>: "
+    $("#thread-container #header-thread-prompt").html([name, topic])
     $("#thread-container").show()
     $('#thread-container .messages').append($thread)
 

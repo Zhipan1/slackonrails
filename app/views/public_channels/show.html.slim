@@ -24,13 +24,12 @@
 
 #thread-container thread_id="-1"
   #thread-container-header
-    .channel-name-hashtag = image_tag "icons/slack-hashtag.svg"
-    .channel-name thread
-    .channel-topic = @channel.topic
+    #header-thread-icon = image_tag "icons/channel-thread-icon.svg"
+    #header-thread-prompt
     #thread-close
       = image_tag "icons/slack-times.svg"
       #thread-close-text esc
-    / #thread-header-border
+    #thread-header-border
   .messages-container
     .messages
 
