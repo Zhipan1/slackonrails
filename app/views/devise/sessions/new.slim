@@ -1,0 +1,23 @@
+
+
+.splash-body
+  .form-modal
+    .form-header = emojify "Sign in to :fire:.slackthreads.com", 40
+    .form-subtitle
+      | Enter your
+      span  email address
+      |  and
+      span  password
+      | .
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        .form-inputs
+          = f.input :email, required: true, label: false, autofocus: true, placeholder: 'you@domain.com'
+          = f.input :password, required: true, label: false, placeholder: 'password'
+
+          .big-green-btn
+            = f.button :submit, "Sign in"
+
+    = render "devise/shared/links"
+
+  = image_tag "icons/drake.png", class: "hidden-drake"
+

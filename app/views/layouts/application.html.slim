@@ -8,4 +8,7 @@ html
     = csrf_meta_tags
   body
     = render 'layouts/navigation' if user_signed_in?
-    main = yield
+    - if user_signed_in?
+      main = yield
+    - else
+      = yield

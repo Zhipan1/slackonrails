@@ -17,7 +17,7 @@
 
 
 .message
-  padding: 1px 0px 5px 0px
+  padding: 1px 0px 5px 2px
   background-color: white
   position: relative
   +clearfix
@@ -55,6 +55,7 @@
   height: 100%
   width: 4px
   top: 0
+  left: 0
   opacity: 0
   transition: 0.3s ease
 
@@ -77,11 +78,18 @@
     height: calc(100% - 8px)
     bottom: 8px
 
-.thread-tail.thread-head, .collapse .message.thread-head, .smart-collapse .message.thread-head:not(.user-thread)
+.thread-tail.thread-head
   .thread-bar
     border-radius: 0px 3px 3px 0px
     height: calc(100% - 16px)
     top: 8px
+
+.collapse .message.thread-head, .smart-collapse .message.thread-head:not(.user-thread)
+  .thread-bar
+    border-radius: 0px 3px 3px 0px
+    height: calc(100% - 16px)
+    top: 8px
+    background-color: $time-stamp-gray
 
 .message-gutter
   float: left
