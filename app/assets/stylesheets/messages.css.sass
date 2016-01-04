@@ -5,11 +5,11 @@
 @import partials/mixins
 
 .collapse
-  .message:not(.thread-head):not(.main-thread)
+  .message:not(.thread-channel-head):not(.main-thread)
     display: none
 
 .smart-collapse
-  .message:not(.thread-head):not(.main-thread)
+  .message:not(.thread-channel-head):not(.main-thread)
     display: none
 
   .message.user-thread:not(.before-head)
@@ -84,12 +84,15 @@
     height: calc(100% - 16px)
     top: 8px
 
-.collapse .message.thread-head, .smart-collapse .message.thread-head:not(.user-thread)
+.collapse .message.thread-channel-head, .smart-collapse .message.thread-channel-head:not(.user-thread)
   .thread-bar
     border-radius: 0px 3px 3px 0px
     height: calc(100% - 16px)
     top: 8px
-    background-color: $time-stamp-gray
+
+  &:not(:hover)
+    .thread-bar
+      background-color: $time-stamp-gray
 
 .message-gutter
   float: left
@@ -240,17 +243,30 @@
 
 
 .thread-color-0
+  &:hover
+    background-color: rgba($thread-color-0, 0.08)
   .thread-bar
     background-color: $thread-color-0
+
 .thread-color-1
+  &:hover
+    background-color: rgba($thread-color-1, 0.08)
   .thread-bar
     background-color: $thread-color-1
+
 .thread-color-2
+  &:hover
+    background-color: rgba($thread-color-2, 0.03)
   .thread-bar
     background-color: $thread-color-2
+
 .thread-color-3
+  &:hover
+    background-color: rgba($thread-color-3, 0.08)
   .thread-bar
     background-color: $thread-color-3
+
+
 .thread-color-4
   .thread-bar
     background-color: $thread-color-4

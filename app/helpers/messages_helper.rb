@@ -31,7 +31,7 @@ module MessagesHelper
       message_order = message.before_head(channel)
 
       if message_order == 0
-        classes += " first thread-head"
+        classes += " first thread-channel-head"
       elsif message_order < 0
         classes += " before-head"
       else
