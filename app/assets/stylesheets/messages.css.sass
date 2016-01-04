@@ -7,6 +7,8 @@
 .collapse
   .message:not(.thread-channel-head):not(.main-thread)
     display: none
+  .message
+    border: none !important
 
 .smart-collapse
   .message:not(.thread-channel-head):not(.main-thread)
@@ -66,7 +68,8 @@
     &.active
       opacity: 1
 
-.thread-head
+
+.thread-head, .thread-channel-head
   .thread-bar
     border-radius: 0px 3px 0px 0px
     height: calc(100% - 8px)
@@ -185,6 +188,7 @@
   border-radius: 6px
   transition: 0.1s ease
   display: none
+  background: white
   +clearfix
 
   &:hover
@@ -243,26 +247,42 @@
 
 
 .thread-color-0
-  &:hover
+  &:hover, &.thread-channel-head
     background-color: rgba($thread-color-0, 0.08)
+
+  &.thread-channel-head
+    border-color: $thread-color-0
+
   .thread-bar
     background-color: $thread-color-0
 
 .thread-color-1
-  &:hover
+  &:hover, &.thread-channel-head
     background-color: rgba($thread-color-1, 0.08)
+
+  &.thread-channel-head
+    border-color: $thread-color-1
+
   .thread-bar
     background-color: $thread-color-1
 
 .thread-color-2
-  &:hover
+  &:hover, &.thread-channel-head
     background-color: rgba($thread-color-2, 0.03)
+
+  &.thread-channel-head
+    border-color: $thread-color-2
+
   .thread-bar
     background-color: $thread-color-2
 
 .thread-color-3
-  &:hover
+  &:hover, &.thread-channel-head
     background-color: rgba($thread-color-3, 0.08)
+
+  &.thread-channel-head
+    border-color: $thread-color-3
+
   .thread-bar
     background-color: $thread-color-3
 

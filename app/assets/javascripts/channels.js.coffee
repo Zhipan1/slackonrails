@@ -26,7 +26,7 @@ $ ->
   channel = $("#channel-message-input").attr("channel_id")
   getThread = -> $("#channel-message-input").attr("thread_id")
   getNewThreadHead = -> $("#thread-container").attr("new_thread_head_id")
-  main_thread_id = $("#channel-message-input").attr("thread_id")
+  main_thread_id = parseInt $("#channel-message-input").attr("thread_id")
   current_user = parseInt($("#channel-message-input").attr("user_id"))
   user_thread_cache_size = 2
   window.t = user_thread_cache = getInitialThreadCache()
