@@ -7,8 +7,6 @@
 .collapse
   .message:not(.thread-channel-head):not(.main-thread)
     display: none
-  .message
-    border: none !important
 
 .smart-collapse
   .message:not(.thread-channel-head):not(.main-thread)
@@ -202,7 +200,6 @@
     height: 28px
     width: 37px
     background: white
-    cursor: pointer
     opacity: 0.9
 
     &:hover
@@ -226,18 +223,21 @@
         display: none
 
 .message-see-thread
+  cursor: pointer
   img
     width: 16px
     margin-left: 6px
     margin-top: 1px
 
 .message-copy-text
+  cursor: not-allowed
   img
     width: 15px
     margin-left: 6px
     margin-top: 2px
 
 .message-see-more
+  cursor: not-allowed
   img
     width: 13px
     margin-left: 6px
@@ -247,7 +247,7 @@
 
 
 .thread-color-0
-  &:hover, &.thread-channel-head
+  &:hover
     background-color: rgba($thread-color-0, 0.08)
 
   &.thread-channel-head
@@ -257,7 +257,7 @@
     background-color: $thread-color-0
 
 .thread-color-1
-  &:hover, &.thread-channel-head
+  &:hover
     background-color: rgba($thread-color-1, 0.08)
 
   &.thread-channel-head
@@ -267,7 +267,7 @@
     background-color: $thread-color-1
 
 .thread-color-2
-  &:hover, &.thread-channel-head
+  &:hover
     background-color: rgba($thread-color-2, 0.03)
 
   &.thread-channel-head
@@ -277,7 +277,7 @@
     background-color: $thread-color-2
 
 .thread-color-3
-  &:hover, &.thread-channel-head
+  &:hover
     background-color: rgba($thread-color-3, 0.08)
 
   &.thread-channel-head

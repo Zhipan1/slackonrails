@@ -10,10 +10,10 @@
   #user-dropdown.dropdown-menu
     .dropdown-section
       .dropdown-section-text You
-    .dropdown-item
-      = link_to 'Edit Account', edit_user_registration_path
-    .dropdown-item
-      = link_to 'Log Out', destroy_user_session_path, :method=>'delete'
+    = link_to edit_user_registration_path do
+      .dropdown-item Edit Account
+    = link_to destroy_user_session_path, :method=>'delete' do
+      .dropdown-item Log Out
 
 
   .channel-list
