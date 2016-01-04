@@ -27,11 +27,15 @@
     - current_user.public_channels.each do |c|
       - if current_channel == c
         .sidebar-channel.active id="channel-#{c.id}" = link_to c do
-          .sidebar-hash-tag #
+          .sidebar-hash-tag
+            span #
+            = fa_icon "circle-o-notch"
           .sidebar-channel-name = c.name
       - else
         .sidebar-channel class="#{'unread-messages' if channel_notification? c}" id="channel-#{c.id}" = link_to c do
-          .sidebar-hash-tag #
+          .sidebar-hash-tag
+            span #
+            = fa_icon "circle-o-notch"
           .sidebar-channel-name = c.name
 
   .channel-list
@@ -45,9 +49,13 @@
     - current_user.direct_messages.each do |c|
       - if current_channel == c
         .sidebar-channel.active id="channel-#{c.id}" = link_to c do
-          .sidebar-hash-tag @
+          .sidebar-hash-tag
+            span @
+            = fa_icon "circle-o-notch"
           .sidebar-channel-name = messaging?(c).name
       - else
         .sidebar-channel class="#{'unread-messages' if channel_notification? c}" id="channel-#{c.id}" = link_to c do
-          .sidebar-hash-tag @
+          .sidebar-hash-tag
+            span @
+            = fa_icon "circle-o-notch"
           .sidebar-channel-name = messaging?(c).name
