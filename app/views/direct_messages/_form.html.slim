@@ -6,11 +6,14 @@
     .channels-list-browser
       - User.all.each do |user|
         = link_to start_direct_message_path(user_id: user), class: "channel-list-item" do
-          .channel-list-name
-            .channel-list-hashtag @
-            .channel-list-channel = user.name
-          .channel-list-user-count
-            .channel-list-click-action Message user
+
+          .channel-list-img
+            = image_tag "users/#{user.image}"
+          .channel-list-item-info
+            .channel-list-name
+              .channel-list-channel = user.name
+            .channel-list-user-count
+              .channel-list-click-action Message user
 
   .big-close-btn
     = image_tag "icons/slack-times.svg"

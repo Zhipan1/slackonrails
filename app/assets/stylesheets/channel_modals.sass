@@ -70,6 +70,7 @@
   width: calc(100% - 6px)
   position: relative
   display: block
+  +clearfix
 
   &:first-child
     border-top-color: transparent
@@ -119,6 +120,15 @@
   color: $time-stamp-gray
   font-weight: 300
   font-style: italic
+
+.channel-list-img img
+  width: 36px
+  border-radius: 4px
+  float: left
+  margin-right: 15px
+
+.channel-list-item-info
+  float: left
 
 .channel-list-user-count
   position: absolute
@@ -182,3 +192,5 @@
     padding: 18px 10px
     .channel-list-name
       margin-bottom: 0px
+      font-size: 15px
+      color: $channel-name-color
