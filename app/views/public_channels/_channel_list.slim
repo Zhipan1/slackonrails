@@ -7,7 +7,7 @@
     .channels-list-browser
       - PublicChannel.all.each do |c|
         - joined = c.users.include? current_user
-        = link_to "#{if joined then c else '/channels/' + c.id.to_s + '/join' end}", class: "channel-list-item" do
+        = link_to (if joined then c else "/channels/#{c.id}/join" end), class: "channel-list-item" do
           .channel-list-name
             .channel-list-hashtag #
             .channel-list-channel = c.name
