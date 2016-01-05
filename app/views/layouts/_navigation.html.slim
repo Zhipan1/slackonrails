@@ -18,12 +18,10 @@
 
   .channel-list
     .sidebar-channels.channel-list-header
-      span.channel-list-title
-        = link_to public_channels_path do
-          span.channel-list-type Channels
-          span.channel-list-count = " (#{PublicChannel.count})"
-      = link_to new_public_channel_path do
-        span.new-channel-btn  = image_tag "icons/slack-circle-plus.svg"
+      span.channel-list-title.form-modal-btn target="#channel-list-modal"
+        span.channel-list-type Channels
+        span.channel-list-count = " (#{PublicChannel.count})"
+      span.new-channel-btn.form-modal-btn target="#create-channel-form"  = image_tag "icons/slack-circle-plus.svg"
     - current_user.public_channels.each do |c|
       - if current_channel == c
         .sidebar-channel.active id="channel-#{c.id}" = link_to c do
@@ -40,12 +38,10 @@
 
   .channel-list
     #sidebar-direct-messages.channel-list-header
-      span.channel-list-title
-        = link_to direct_messages_path do
-          span.channel-list-type Direct Messages
-          span.channel-list-count = " (#{User.count - 1})"
-      = link_to direct_messages_path do
-        span.new-channel-btn  = image_tag "icons/slack-circle-plus.svg"
+      span.channel-list-title.form-modal-btn target="#direct-messages-modal"
+        span.channel-list-type Direct Messages
+        span.channel-list-count = " (#{User.count - 1})"
+      span.new-channel-btn.form-modal-btn target="#direct-messages-modal"  = image_tag "icons/slack-circle-plus.svg"
     - current_user.direct_messages.each do |c|
       - if current_channel == c
         .sidebar-channel.active id="channel-#{c.id}" = link_to c do

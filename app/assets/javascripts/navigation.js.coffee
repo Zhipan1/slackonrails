@@ -28,6 +28,19 @@ $ ->
     $(this).find(".sidebar-hash-tag").addClass("loading")
     $(this).find(".sidebar-hash-tag i").addClass("fa-spin")
 
+  $(".form-modal-btn").click ->
+    $modal = $($(this).attr("target"))
+    $modal.show()
+    setTimeout (-> $modal.addClass("active")), 50
+    $modal.find(".big-close-btn").click ->
+      $modal.removeClass("active")
+      setTimeout (-> $modal.hide()), 200
+
+  $(document).keydown (e) ->
+    if e.keyCode == 27 and ($modal = $(".popup-modal-overlay.active")).length > 0
+      $modal.removeClass("active")
+      setTimeout (-> $modal.hide()), 200
+
 
   hideDropdown = ($target) ->
     $target.removeClass "active"

@@ -1,0 +1,184 @@
+@import partials/variables
+@import partials/mixins
+
+.popup-modal-overlay
+  position: fixed
+  width: 100%
+  height: 100%
+  background-color: white
+  top: 0
+  left: 0
+  display: none
+  opacity: 0
+  padding-top: 10px
+  z-index: 1
+  transition: 0.2s ease
+
+  &.active
+    opacity: 1
+    padding-top: 0px
+
+.popup-modal
+  width: 100%
+  height: 100%
+  max-width: 640px
+  margin: 0 auto
+  padding-top: 15vh
+  height: 100vh
+
+  .form-inputs
+    max-width: none
+
+.popup-modal-header
+  +clearfix
+  margin-bottom: 40px
+
+.popup-modal-header-text
+  color: $black
+  font-size: 34px
+  font-weight: 800
+  float: left
+
+.green-btn
+  color: white
+  background-color: $big-green-btn-green
+  font-size: 15px
+  padding: 9px 14px
+  border-radius: 4px
+
+  &:hover
+    box-shadow: inset 0 -2px rgba(0,0,0,.25)
+
+  &:active
+    box-shadow: inset 0 2px 1px rgba(0,0,0,.2)
+
+.form-modal-btn
+  cursor: pointer
+
+.modal-action-btn
+  float: right
+
+.channels-list-browser
+  max-height: calc(85vh - 100px)
+  overflow: scroll
+  overflow-x: hidden
+
+.channel-list-item
+  border: 1px solid transparent
+  border-top: 1px solid $form-border-gray
+  padding: 12px 10px
+  width: calc(100% - 6px)
+  position: relative
+  display: block
+
+  &:first-child
+    border-top-color: transparent
+
+  &:hover
+    background-color: $light-background-blue
+    border: 1px solid $light-border-blue
+    border-radius: 6px
+
+    & + .channel-list-item
+      border-top-color: transparent
+
+    .channel-list-user-count
+      span, i
+        display: none
+    .channel-list-click-action
+      display: block
+
+.channel-list-click-action
+  display: none
+
+.channel-list-name
+  +clearfix
+  margin-bottom: 8px
+  color: $black
+
+.channel-list-hashtag
+  float: left
+  color: $time-stamp-gray
+  margin-right: 5px
+  font-weight: 300
+
+.channel-list-channel
+  float: left
+  font-size: 16px
+  margin-right: 8px
+
+.channel-list-status
+  float: left
+  font-size: 11px
+  font-weight: 300
+  color: $time-stamp-gray
+  margin-top: 5px
+
+.channel-list-subtitle
+  font-size: 14px
+  color: $time-stamp-gray
+  font-weight: 300
+  font-style: italic
+
+.channel-list-user-count
+  position: absolute
+  top: 20px
+  right: 15px
+  color: $time-stamp-gray
+  font-size: 14px
+  font-weight: 300
+
+  i
+    margin-right: 5px
+    vertical-align: baseline
+
+
+
+.big-close-btn
+  position: absolute
+  top: 50px
+  right: 50px
+  padding: 10px
+  border-radius: 50%
+  width: 64px
+  height: 64px
+  text-align: center
+  cursor: pointer
+
+  &:hover
+    background-color: $form-border-gray
+
+    img
+      opacity: 1
+    .big-close-btn-text
+      color: $black
+
+  img
+    opacity: 0.5
+    margin-bottom: 2px
+    margin-top: 5px
+
+.big-close-btn-text
+  font-size: 12px
+  font-weight: 300
+  color: $time-stamp-gray
+  margin-left: 1px
+
+
+#create-channel-form
+  .popup-modal-header
+    margin-bottom: 30px
+  .green-btn
+    width: auto
+    color: white
+    border: none
+    font-weight: bold
+    margin-top: 20px
+
+#direct-messages-modal
+  .popup-modal-header
+    margin-bottom: 30px
+  .channel-list-item
+    padding: 18px 10px
+    .channel-list-name
+      margin-bottom: 0px

@@ -7,8 +7,11 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   body
-    = render 'layouts/navigation' if user_signed_in?
     - if user_signed_in?
+      = render 'layouts/navigation'
+      = render 'public_channels/channel_list'
+      = render 'public_channels/new_channel_form'
+      = render 'direct_messages/form'
       main = yield
     - else
       = yield

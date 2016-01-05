@@ -1,19 +1,19 @@
-= form_for(@channel) do |f|
-  - if @channel.errors.any?
-    #error_explanation
-      h2
-        = pluralize(@channel.errors.count, "error")
-        | prohibited this channel from being saved:
-      ul
-        - @channel.errors.full_messages.each do |message|
-          li= message
-  .field
-    = f.label :name
-    br/
-    = f.text_field :name
-    br/
-    = f.label :topic
-    br/
-    = f.text_field :topic
-  .actions
-    = f.submit
+#direct-messages-modal.popup-modal-overlay
+
+  .popup-modal
+    .popup-modal-header
+      .popup-modal-header-text = "Direct Messages"
+    .channels-list-browser
+      - User.all.each do |user|
+        = link_to start_direct_message_path(user_id: user), class: "channel-list-item" do
+          .channel-list-name
+            .channel-list-hashtag @
+            .channel-list-channel = user.name
+          .channel-list-user-count
+            .channel-list-click-action Message user
+
+  .big-close-btn
+    = image_tag "icons/slack-times.svg"
+    .big-close-btn-text esc
+
+s

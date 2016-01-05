@@ -1,0 +1,25 @@
+#channel-list-modal.popup-modal-overlay
+
+  .popup-modal
+    .popup-modal-header
+      .popup-modal-header-text = "Browse all #{PublicChannel.count} channels"
+      .green-btn.modal-action-btn.form-modal-btn target="#create-channel-form" New channel
+    .channels-list-browser
+      - PublicChannel.all.each do |c|
+        - joined = c.users.include? current_user
+        = link_to "#{if joined then c else '/channels/' + c.id.to_s + '/join' end}", class: "channel-list-item" do
+          .channel-list-name
+            .channel-list-hashtag #
+            .channel-list-channel = c.name
+            .channel-list-status = "JOINED" if joined
+          .channel-list-subtitle = "Created on #{c.created_at.strftime("%B #{c.created_at.day.ordinalize}, %Y")}"
+          .channel-list-user-count
+            = fa_icon("user")
+            span = c.users.count
+            .channel-list-click-action
+              = if joined then "View channel" else "Join channel"
+
+  .big-close-btn
+    = image_tag "icons/slack-times.svg"
+    .big-close-btn-text esc
+
