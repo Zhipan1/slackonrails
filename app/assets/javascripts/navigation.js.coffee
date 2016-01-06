@@ -24,7 +24,7 @@ $ ->
     $target = $(this).parent()
     hideDropdown($target)
 
-  $(".sidebar-channel").click ->
+  $(".sidebar-channel a").click ->
     $(this).find(".sidebar-hash-tag").addClass("loading")
     $(this).find(".sidebar-hash-tag i").addClass("fa-spin")
 
