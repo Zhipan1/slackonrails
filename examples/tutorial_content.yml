@@ -1,0 +1,47 @@
+---
+- channel: basic-threading
+  content:
+  - thread: 0
+    name: "zhi"
+    messages:
+      - "Hey! Welcome to Slack Threads :wave:"
+      - "This app works just like normal Slack but with threads."
+  - thread: "main"
+    name: "zhi"
+    messages:
+      - "Let me show you how threads work. Type something to get started!"
+- channel: advanced-threading
+  content:
+  - thread: "main"
+    name: "zhi"
+    messages:
+      - "Here are some advanced features:"
+  - thread: 0
+    name: "zhi"
+    messages:
+      - "You can add another channel to a thread like so:"
+      - "@interns where’s my coffee"
+  - thread: 0
+    name: "kevin"
+    messages:
+      - "uhh I think I’m locked in the storage room"
+  - thread: 0
+    name: "zhi"
+    messages:
+      - "great! Keep up the good work :poop:"
+  - thread: 1
+    name: "zhi"
+    messages:
+      - "Cycle through the two most recent threads by pressing up on your keyboard"
+      - "(you need to be focused in the input box first)"
+  - thread: 2
+    name: "zhi"
+    messages:
+      - "Change the way threads are displayed in channel settings"
+      - "You can access channel settings in the top bar"
+  - thread: "main"
+    name: "zhi"
+    messages:
+      - "Thanks and have fun threading! :ok_woman:"
+
+

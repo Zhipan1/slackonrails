@@ -1,18 +1,41 @@
-p#notice = notice
 
 #channel-header
-  #channel-name-hashtag = image_tag "icons/slack-hashtag"
-  #channel-name = @channel.name
-  #channel-topic = @channel.topic
+  .channel-name-hashtag.dropdown-menu-btn target="#channel-options-dropdown" = image_tag "icons/slack-hashtag.svg"
+  .channel-name.dropdown-menu-btn target="#channel-options-dropdown" = @channel.name
+  #channel-options-btn.dropdown-menu-btn target="#channel-options-dropdown" = image_tag "icons/slack-angle-down-gray.svg"
+  .channel-topic = @channel.topic
+
+  #channel-options-dropdown.dropdown-menu
+    .dropdown-section
+      .dropdown-section-text Thread settings
+    #expand-all-threads.dropdown-item.active = fa_icon("check") + "Expand all threads"
+    #collapse-all-threads.dropdown-item = fa_icon("check") + "Collapse all threads"
+    #collapse-non-user-threads.dropdown-item = fa_icon("check") + "Collapse threads you're not in"
+
+
 
 #channel-body
-  #thread-overlay
-  #messages
-    - prev_user = nil
-    - @channel.messages.order(:created_at).each do |message|
-      = render partial: 'messages/message', object: message, locals: { prev_user: prev_user }
-      - prev_user = message.user
+  .messages-container
+    .messages
+      - prev_message = nil
+      - @channel.messages_by_threads.each do |message|
+        = render partial: 'messages/message', object: message, locals: { prev_message: prev_message, channel: @channel }
+        - prev_message = message
+
+#thread-container thread_id="-1"
+  #thread-container-header
+    #header-thread-icon = image_tag "icons/channel-thread-icon.svg"
+    #header-thread-prompt
+    #thread-close
+      = image_tag "icons/slack-times.svg"
+      #thread-close-text esc
+    #thread-header-border
+  .messages-container
+    .messages
+
 
 #channel-footer
   #channel-message-box
-    textarea#channel-message-input rows="1" channel-id="#{@channel.id}"
+    #channel-message-upload
+      = image_tag "icons/slack-plus.svg"
+    textarea#channel-message-input rows="1" channel_id="#{@channel.id}" thread_id="#{@channel.main_thread.id}" user_id="#{current_user.id}"

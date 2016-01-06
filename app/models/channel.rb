@@ -15,4 +15,21 @@ class Channel < ActiveRecord::Base
   def self.types
     %w(DirectMessage PublicChannel)
   end
+
+  def add_user(user)
+    ChannelMembership.create channel: self, user: user
+  end
+
+  def create_main_thread
+    self.main_thread = MessageThread.create
+    self.save
+    ThreadMembership.create channel: self, message_thread: self.main_thread
+  end
+
+  def new_thread
+    thread = MessageThread.create
+    ThreadMembership.create channel: self, message_thread: thread
+    thread
+  end
+
 end

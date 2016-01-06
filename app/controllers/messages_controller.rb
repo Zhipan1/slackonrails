@@ -58,7 +58,7 @@ class MessagesController < ApplicationController
   end
 
   def add_thread_to_mentioned_channels(thread, message, channel)
-    channel_links = detect_channels(message.text)
+    channel_links = detect_mentioned_channels(message.text)
     add_channels = []
 
     # add this thread to another channel
@@ -86,11 +86,6 @@ class MessagesController < ApplicationController
     end
 
     [thread, slackbot_message]
-  end
-
-  def add_thread_to_channels_message(user, thread, channels)
-    text = "#<add_channels_to_thread #{user.id}, #{thread.id}, #{channels.map{ |c| c.id}}>"
-    Message.new user: User.first, message_thread: thread, text: text
   end
 
   def add_thread_to_channel(thread, channel, thread_head)

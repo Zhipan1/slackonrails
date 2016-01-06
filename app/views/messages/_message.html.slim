@@ -6,7 +6,7 @@
     .message-icon
       = image_tag "users/#{message.user.image}"
   .message-content
-    span.message-user = message.user.name
+    span.message-user = link_to message.user.name, message.user
     .message-time = message.created_at.strftime("%-I:%M%p")
     .message-text = process_message message.text
   .message-options

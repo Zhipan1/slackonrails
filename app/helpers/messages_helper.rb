@@ -67,6 +67,11 @@ module MessagesHelper
     dom
   end
 
+  def add_thread_to_channels_message(user, thread, channels)
+    text = "#<add_channels_to_thread #{user.id}, #{thread.id}, #{channels.map{ |c| c.id}}>"
+    Message.new user: User.first, message_thread: thread, text: text
+  end
+
   def add_media(content)
     content.to_str.gsub(/#<(\w+)\s*(\w*)\s*,\s*(\w*)\s*,\s*([\[\w\],\s]*)>/) do |match|
       if $1 == "add_channels_to_thread"
@@ -84,9 +89,9 @@ module MessagesHelper
     emojify(add_message_links(add_media(content)))
   end
 
-  def detect_channels(content)
+  def detect_mentioned_channels(content)
     links = []
-    content.to_str.gsub(/(#(\w*))/) do |match|
+    content.to_str.gsub(/(@(\w*))/) do |match|
       if channel = PublicChannel.find_by_name($2)
         links.append channel
       end
@@ -95,9 +100,11 @@ module MessagesHelper
   end
 
   def add_message_links(content)
-    content.to_str.gsub(/(#(\w*))/) do |match|
+    content.to_str.gsub(/((?:#|@)(\w*))/) do |match|
       if channel = PublicChannel.find_by_name($2)
         %(#{link_to $1, channel})
+      elsif user = User.find_by_name($2)
+        %(#{link_to $1, user})
       else
         match
       end

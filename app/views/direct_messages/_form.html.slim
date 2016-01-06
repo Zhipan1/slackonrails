@@ -5,7 +5,7 @@
       .popup-modal-header-text = "Direct Messages"
     .channels-list-browser
       - User.all.each do |user|
-        = link_to start_direct_message_path(user_id: user), class: "channel-list-item" do
+        = link_to user, class: "channel-list-item" do
 
           .channel-list-img
             = image_tag "users/#{user.image}"

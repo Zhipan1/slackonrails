@@ -9,14 +9,16 @@
 public_channels_list = [
   {name: "general", topic: "Generally a general channel for general topics of general discussion"},
   {name: "random", topic: "Ay-lmao"},
-  {name: "ay lmao", topic: "Ay-lmao"}
+  {name: "ay lmao", topic: "Ay-lmao"},
+  {name: "interns", topic: "get to work"}
 ]
 
 users_list = [
   { name: "slackbot", email: "aylmao@aylmao.com", password: "password", image: "slackbot.png"},
   { name: "zhi", email: "z@z.z", password: "password", image: "zhi.jpg"},
   { name: "drake", email: "drizzy@six.com", password: "password", image: "drake.jpg"},
-  { name: "meek", email: "meek@sux.com", password: "password", image: "meek.jpg"}
+  { name: "meek", email: "meek@sux.com", password: "password", image: "meek.jpg"},
+  { name: "kevin", email: "kevin@intern.com", password: "password", image: "kevin.png" }
 ]
 
 threads_list = [

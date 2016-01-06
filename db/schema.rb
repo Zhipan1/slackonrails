@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(version: 20151227021244) do
   create_table "channels", force: :cascade do |t|
     t.string   "topic"
     t.string   "name"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.string   "type",           default: "PublicChannel"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "type",           default: "Channel"
     t.integer  "main_thread_id"
   end
 

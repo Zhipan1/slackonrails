@@ -22,7 +22,7 @@
         span.channel-list-type Channels
         span.channel-list-count = " (#{PublicChannel.count})"
       span.new-channel-btn.form-modal-btn target="#create-channel-form"  = image_tag "icons/slack-circle-plus.svg"
-    - current_user.public_channels.each do |c|
+    - current_user.channels.where.not(type: "DirectMessage").each do |c|
       - if current_channel == c
         .sidebar-channel.active id="channel-#{c.id}" = link_to c do
           .sidebar-hash-tag
