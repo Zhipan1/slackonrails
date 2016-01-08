@@ -28,6 +28,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     create_helper do |user|
       join_default_channels(user)
       create_walkthrough(user)
+      session[:new_user] = true
     end
 
   end
@@ -79,7 +80,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
           thread = threads[data["thread"]] = channel.new_thread
         end
         data["messages"].each do |msg|
-          thread.post_message(msg_user, msg)
+          if data["origin"] and origin = Channel.where(name: data["origin"]).first
+          else
+            origin = channel
+          end
+          thread.post_message(msg_user, msg, origin)
         end
       end
     end

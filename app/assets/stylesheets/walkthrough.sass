@@ -1,0 +1,105 @@
+@import partials/variables
+
+.walkthrough-overlay
+  position: fixed
+  width: 100%
+  height: 100%
+  background: rgba(0, 0, 0, 0.7)
+  left: 0
+  top: 0
+  z-index: 1
+  display: none
+  opacity: 0
+  transition: 0.2s ease
+
+  &.active
+    opacity: 1
+
+
+.disable-action-overlay
+  position: fixed
+  width: 100%
+  height: 100%
+  left: 0
+  top: 0
+  z-index: 2
+  display: none
+
+.walkthrough-popover
+  position: absolute
+  width: 420px
+  padding: 24px 18px 18px 24px
+  border-radius: 6px
+  background-color: $big-green-btn-green
+  z-index: 3
+  opacity: 0
+  margin-top: 10px
+  transition: 0.2s ease
+  display: none
+
+  &.active
+    opacity: 1
+    margin-top: 0
+
+  &:before
+    content: ""
+    position: absolute
+    width: 21px
+    height: 21px
+    background-color: inherit
+    transform: rotate(45deg)
+    top: 0
+
+.walkthrough-popover-header
+  font-size: 24px
+  font-weight: 800
+  color: white
+  margin-bottom: 4px
+  -webkit-font-smoothing: antialiased
+
+.walkthrough-popover-body
+  font-size: 15px
+  color: white
+  font-weight: 500
+  line-height: 1.4
+  margin-bottom: 16px
+  -webkit-font-smoothing: antialiased
+
+.walkthrough-close
+  background-color: rgba(black, 0.5)
+  border-radius: 4px
+  padding: 8px 14px 9px
+  font-weight: 800
+  color: white
+  font-size: 15px
+  display: inline-block
+  float: right
+  -webkit-font-smoothing: antialiased
+
+
+.skip-step-overlay
+  position: fixed
+  width: 100%
+  height: 100%
+  left: 0
+  top: 0
+  z-index: 2
+  display: none
+  pointer-events: none
+
+#walkthrough-start-thread
+  background-color: $link-blue
+  top: 230px
+  right: 45px
+
+  &:before
+    top: -10px
+    right: 57px
+
+
+#walkthrough-thread-info
+  top: 160px
+  left: 80px
+
+  &:before
+    top: -10px

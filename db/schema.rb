@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151227021244) do
+ActiveRecord::Schema.define(version: 20160106224422) do
 
   create_table "channel_memberships", force: :cascade do |t|
     t.integer  "user_id"
@@ -46,9 +46,11 @@ ActiveRecord::Schema.define(version: 20151227021244) do
     t.datetime "updated_at",                     null: false
     t.integer  "user_id"
     t.integer  "message_thread_id"
+    t.integer  "origin_id"
   end
 
   add_index "messages", ["message_thread_id"], name: "index_messages_on_message_thread_id"
+  add_index "messages", ["origin_id"], name: "index_messages_on_origin_id"
   add_index "messages", ["user_id"], name: "index_messages_on_user_id"
 
   create_table "thread_memberships", force: :cascade do |t|

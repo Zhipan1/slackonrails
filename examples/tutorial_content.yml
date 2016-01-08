@@ -15,7 +15,7 @@
   - thread: "main"
     name: "zhi"
     messages:
-      - "Here are some advanced features:"
+      - "Here are some advanced features :sunglasses:"
   - thread: 0
     name: "zhi"
     messages:
@@ -25,6 +25,7 @@
     name: "kevin"
     messages:
       - "uhh I think I’m locked in the storage room"
+    origin: "interns"
   - thread: 0
     name: "zhi"
     messages:
@@ -32,7 +33,7 @@
   - thread: 1
     name: "zhi"
     messages:
-      - "Cycle through the two most recent threads by pressing up on your keyboard"
+      - "Quickly reply to the most recent thread by pressing up on your keyboard"
       - "(you need to be focused in the input box first)"
   - thread: 2
     name: "zhi"

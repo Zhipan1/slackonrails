@@ -5,8 +5,8 @@ class MessageThread < ActiveRecord::Base
   has_many :users, -> { uniq }, through: :messages
   include MessagesHelper
 
-  def post_message(user, message)
-    msg = Message.create user: user, text: message, message_thread: self
+  def post_message(user, message, origin)
+    msg = Message.create user: user, text: message, message_thread: self, origin: origin
     add_thread_to_mentioned_channels(self, msg)
   end
 

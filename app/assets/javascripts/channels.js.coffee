@@ -145,6 +145,7 @@ $ ->
       console.log data
       updateDom(data)
       updateThreadCache()
+      $("#channel-body .messages").trigger("new_message")
 
 
 

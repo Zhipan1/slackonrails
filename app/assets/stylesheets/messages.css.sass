@@ -15,6 +15,9 @@
   .message.user-thread:not(.before-head)
     display: block
 
+.main-thread
+  .message-origin-channel
+    display: none
 
 .message
   padding: 1px 0px 5px 2px
@@ -25,7 +28,7 @@
   a:hover
     text-decoration: underline
 
-  &:hover
+  &:hover, &.hover
     background-color: rgba($black, 0.03)
 
     .message-options
@@ -39,6 +42,10 @@
     .message-options
       top: -6px
 
+  &.first:not(.main-thread)
+    .message-origin-channel
+      display: inline-block
+
   &.highlight
     background-color: $light-yellow
 
@@ -48,6 +55,14 @@
 
   &.before-head
     display: none
+
+.message-origin-channel
+  font-size: 13px
+  margin-left: 1px
+  margin-right: 5px
+  display: none
+  a
+    color: inherit
 
 
 .thread-bar
@@ -260,6 +275,9 @@
   .thread-bar
     background-color: $thread-color-0
 
+  .message-origin-channel
+    color: $thread-color-0
+
 .thread-color-1
   &:hover
     background-color: rgba($thread-color-1, 0.08)
@@ -269,6 +287,9 @@
 
   .thread-bar
     background-color: $thread-color-1
+
+  .message-origin-channel
+    color: $thread-color-1
 
 .thread-color-2
   &:hover
@@ -280,6 +301,9 @@
   .thread-bar
     background-color: $thread-color-2
 
+  .message-origin-channel
+    color: $thread-color-2
+
 .thread-color-3
   &:hover
     background-color: rgba($thread-color-3, 0.08)
@@ -289,6 +313,9 @@
 
   .thread-bar
     background-color: $thread-color-3
+
+  .message-origin-channel
+    color: $thread-color-3
 
 
 .thread-color-4

@@ -7,6 +7,8 @@
       = image_tag "users/#{message.user.image}"
   .message-content
     span.message-user = link_to message.user.name, message.user
+    - if message.origin and message.origin != channel
+      span.message-origin-channel = link_to "from ##{message.origin.name}", message.origin
     .message-time = message.created_at.strftime("%-I:%M%p")
     .message-text = process_message message.text
   .message-options

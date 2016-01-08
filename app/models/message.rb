@@ -1,6 +1,7 @@
 class Message < ActiveRecord::Base
   belongs_to :user
   belongs_to :message_thread
+  belongs_to :origin, class_name: "Channel"
   has_many :channels, through: :message_thread
 
   def next(channel)

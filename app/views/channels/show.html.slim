@@ -1,4 +1,7 @@
-
+-if session[:new_user] and @channel == current_user.channels.where(name: "basic-threading").first
+  #walkthrough-container
+    = render 'tutorial/thread_intro'
+    - session[:new_user] = false
 #channel-header
   .channel-name-hashtag.dropdown-menu-btn target="#channel-options-dropdown" = image_tag "icons/slack-hashtag.svg"
   .channel-name.dropdown-menu-btn target="#channel-options-dropdown" = @channel.name
