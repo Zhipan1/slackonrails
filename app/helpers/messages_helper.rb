@@ -22,7 +22,7 @@ module MessagesHelper
       next_message = message.next(channel)
       classes += "color-thread thread-color-#{message.message_thread.id%4}"
       if not prev_message or thread != prev_message.message_thread
-        classes += " thread-head"
+        classes += " thread-channel-head"
       end
       if not next_message or thread != next_message.message_thread
         classes += " thread-tail"
