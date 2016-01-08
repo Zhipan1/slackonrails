@@ -49,9 +49,9 @@
             span @
             = fa_icon "circle-o-notch"
           .sidebar-channel-name = messaging?(c).name
-      - else
+      - elsif dm = messaging?(c)
         .sidebar-channel class="#{'unread-messages' if channel_notification? c}" id="channel-#{c.id}" = link_to c do
           .sidebar-hash-tag
             span @
             = fa_icon "circle-o-notch"
-          .sidebar-channel-name = messaging?(c).name
+          .sidebar-channel-name = dm.name
