@@ -22,22 +22,6 @@ users_list = [
 ]
 
 threads_list = [
-  {
-    messages: [
-      { user: 2, text: "hi"},
-      { user: 1, text: "hey! I'm slackbot"},
-      { user: 2, text: "hi slackbot nice to meet you"},
-    ],
-    channels: [{ head: 2, channel: 1}, { head: 3, channel: 2}]
-  },
-  {
-    messages: [
-      { user: 2, text: "lalalalala"},
-      { user: 1, text: "what can I do for u"},
-      { user: 2, text: "order pizza"},
-    ],
-    channels: [{ head: 5, channel: 1}, { head: 4, channel: 3}]
-  }
 ]
 
 public_channels_list.each do |c|

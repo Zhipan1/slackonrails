@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    current_user.channels.where(name: "basic-threading").first
+    current_user.channels.where(name: "basic-threading").first || Channel.first
   end
 
 end
