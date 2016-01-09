@@ -30,6 +30,16 @@
 
   &:hover, &.hover
     background-color: rgba($black, 0.03)
+    z-index: 1
+
+  &.hover
+    &.thread-channel-head, &.main-thread
+      border-top: 1px dotted $gray
+      margin-top: -1px
+    &.thread-tail, &.main-thread
+      border-bottom: 1px dotted $gray
+      margin-bottom: -1px
+
 
   &:hover
     .message-options
@@ -266,16 +276,11 @@
 
 
 .thread-color-0
-  &:hover, &.hover
+  &.message:hover, &.message.hover
     background-color: rgba($thread-color-0, 0.08)
 
-  &.hover
-    &.thread-channel-head
-      border-top: 1px dashed $thread-color-0
-      margin-top: -1px
-    &.thread-tail
-      border-bottom: 1px dashed $thread-color-0
-      margin-bottom: -1px
+  &.message.hover
+    border-color: $thread-color-0
 
   &.thread-channel-head
     border-color: $thread-color-0
@@ -286,17 +291,16 @@
   .message-origin-channel
     color: $thread-color-0
 
+  #reply-to-banner
+    border-color: rgba($thread-color-0, 0.8)
+    background-color: rgba($thread-color-0, 0.15)
+
 .thread-color-1
-  &:hover, &.hover
+  &.message:hover, &.message.hover
     background-color: rgba($thread-color-1, 0.08)
 
-  &.hover
-    &.thread-channel-head
-      border-top: 1px dashed $thread-color-1
-      margin-top: -1px
-    &.thread-tail
-      border-bottom: 1px dashed $thread-color-1
-      margin-bottom: -1px
+  &.message.hover
+    border-color: $thread-color-1
 
   &.thread-channel-head
     border-color: $thread-color-1
@@ -307,17 +311,16 @@
   .message-origin-channel
     color: $thread-color-1
 
+  #reply-to-banner
+    border-color: rgba($thread-color-1, 0.8)
+    background-color: rgba($thread-color-1, 0.15)
+
 .thread-color-2
-  &:hover, &.hover
+  &.message:hover, &.message.hover
     background-color: rgba($thread-color-2, 0.03)
 
-  &.hover
-    &.thread-channel-head
-      border-top: 1px dashed $thread-color-2
-      margin-top: -1px
-    &.thread-tail
-      border-bottom: 1px dashed $thread-color-2
-      margin-bottom: -1px
+  &.message.hover
+    border-color: $thread-color-2
 
   &.thread-channel-head
     border-color: $thread-color-2
@@ -328,17 +331,16 @@
   .message-origin-channel
     color: $thread-color-2
 
+  #reply-to-banner
+    border-color: rgba($thread-color-2, 0.5)
+    background-color: rgba($thread-color-2, 0.10)
+
 .thread-color-3
-  &:hover, &.hover
+  &.message:hover, &.message.hover
     background-color: rgba($thread-color-3, 0.08)
 
-  &.hover
-    &.thread-channel-head
-      border-top: 1px dashed $thread-color-3
-      margin-top: -1px
-    &.thread-tail
-      border-bottom: 1px dashed $thread-color-3
-      margin-bottom: -1px
+  &.message.hover
+    border-color: $thread-color-3
 
   &.thread-channel-head
     border-color: $thread-color-3
@@ -349,17 +351,7 @@
   .message-origin-channel
     color: $thread-color-3
 
-
-.thread-color-4
-  .thread-bar
-    background-color: $thread-color-4
-.thread-color-5
-  .thread-bar
-    background-color: $thread-color-5
-.thread-color-6
-  .thread-bar
-    background-color: $thread-color-6
-.thread-color-7
-  .thread-bar
-    background-color: $thread-color-7
+  #reply-to-banner
+    border-color: rgba($thread-color-3, 0.8)
+    background-color: rgba($thread-color-3, 0.15)
 

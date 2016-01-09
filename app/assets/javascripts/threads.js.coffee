@@ -11,11 +11,15 @@ $ ->
     resetFocus()
 
 
+
 REPLY_BANNER_MARGIN = 11
 
 @message_index = null
 @thread_cache_up = []
 @thread_cache_down = []
+
+getMainThreadId = ->
+  parseInt $("#channel-message-input").attr("main_thread_id")
 
 getCache = (direction) ->
   if direction == "up"
@@ -40,11 +44,17 @@ addToCache = (thread, direction) ->
     cache.push(thread)
   console.log getCache(direction)
 
+resetCache = ->
+  @thread_cache_up = []
+  @thread_cache_down = []
+
 
 resetFocus = ->
   removeFocus(get_message_at_index(current_message_index()))
   @message_index = null
   hideInputBoxBanner()
+  resetCache()
+  resetMetaData()
 
 threadHotKeys = (e) ->
   return if $(this).val()
@@ -59,19 +69,19 @@ focusMessage = (direction) ->
   $old_focus_message = get_message_at_index(current_message_index())
   if direction == "up"
     update_to_prev_message_index($old_focus_message)
-    new_direction = "up"
-    old_direction = "down"
+    # new_direction = "up"
+    # old_direction = "down"
   else
     update_to_next_message_index($old_focus_message)
-    new_direction = "down"
-    old_direction = "up"
+    # new_direction = "down"
+    # old_direction = "up"
 
   $new_focus_message = get_message_at_index(current_message_index())
-  new_thread_id = $new_focus_message.attr("thread_id")
-  old_thread_id = $old_focus_message.attr("thread_id") if $old_focus_message
+  # new_thread_id = $new_focus_message.attr("thread_id")
+  # old_thread_id = $old_focus_message.attr("thread_id") if $old_focus_message
+  # addToCache(new_thread_id, new_direction) if not $new_focus_message.hasClass("main-thread")
+  # removeFromCache(old_thread_id, old_direction)
 
-  addToCache(new_thread_id, new_direction) if not $new_focus_message.hasClass("main-thread")
-  removeFromCache(old_thread_id, old_direction)
   removeFocus($old_focus_message)
   addFocus($new_focus_message)
   scrollTo($new_focus_message)
@@ -81,10 +91,19 @@ focusMessage = (direction) ->
 
 updateInputBox = ($message) ->
   $reply_to_banner = $("#reply-to-banner")
+  $message_box = $("#channel-message-box")
+  old_color_match = $message_box.attr("class").match(/thread-color-\d/)
+  if old_color_match
+    old_color = old_color_match[0]
+    $message_box.removeClass(old_color)
   if $message.hasClass("main-thread")
     text = "@#{$message.find(".message-user").text()}"
   else
     text = "thread"
+    thread_color_match = $message.attr("class").match(/thread-color-\d/)
+    thread_color = thread_color_match[0] if thread_color_match
+    $message_box.addClass(thread_color)
+
 
   $reply_to_banner.text("reply to #{text}:")
   input_padding = $reply_to_banner.outerWidth() + REPLY_BANNER_MARGIN
@@ -102,6 +121,10 @@ setInputMetaData = ($message) ->
     $("#channel-message-input").attr("new_thread_head_id", $message.attr("message_id"))
   else
     $("#channel-message-input").removeAttr("new_thread_head_id")
+
+resetMetaData = ->
+  $("#channel-message-input").removeAttr("new_thread_head_id")
+  $("#channel-message-input").attr("thread_id", getMainThreadId())
 
 removeFocus = ($message) ->
   if not $message
@@ -138,7 +161,7 @@ emphasize = ($message) ->
     deemphasize($("#channel-body .message:visible").not($thread))
 
 deemphasize = ($elements) ->
-  $elements.css(opacity: 0.2)
+  $elements.css(opacity: 0.5)
 
 clearEmphasis = ->
   $("#channel-body .message:visible").css(opacity: "")
@@ -155,7 +178,7 @@ update_to_prev_message_index = ($message) ->
     thread_id = $message.attr("thread_id")
     $new_message = get_message_at_index(current_message_index())
     # decrement to the start of last message of new thread and to next non cached thread
-    if ((new_thread_id = $new_message.attr("thread_id")) == thread_id) or (inThreadCache(new_thread_id, "up"))
+    if ((new_thread_id = $new_message.attr("thread_id")) == thread_id)
       update_to_prev_message_index($new_message)
 
 update_to_next_message_index = ($message) ->
@@ -169,7 +192,7 @@ update_to_next_message_index = ($message) ->
     thread_id = $message.attr("thread_id")
     $new_message = get_message_at_index(current_message_index())
     #increment to the start of last message of new thread and to next non cached thread
-    if ((new_thread_id = $new_message.attr("thread_id")) == thread_id) or (inThreadCache(new_thread_id, "down"))
+    if ((new_thread_id = $new_message.attr("thread_id")) == thread_id)
       update_to_next_message_index($new_message)
 
 
