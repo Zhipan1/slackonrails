@@ -15,7 +15,7 @@
 
       .form-inputs
         = f.input :name, required: true, label: false, autofocus: true, placeholder:"champagne-papi"
-        = f.input :email, required: true, label: false, autofocus: true, placeholder:"you@domain.com"
+        = f.input :email, required: true, label: false, placeholder:"you@domain.com"
         = f.input :password, required: true, label: false, placeholder: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
 
         .big-green-btn
