@@ -116,6 +116,8 @@ $ ->
       console.log data
       updateDom(data)
       $("#channel-body .messages").trigger("new_message")
+      updateInputMetaData(data.thread_id)
+
 
 
 
@@ -142,6 +144,9 @@ $ ->
           new_message = $(message.render)
           old_message = $("#channel-body .message[message_id='#{message.id}']").addClass("highlight")
           old_message.replaceWith(new_message)
+
+updateInputMetaData = (id) ->
+  $("#channel-message-input").attr("thread_id", id)
 
 removeHighlight = ($element) ->
   $element.addClass("remove-highlight")

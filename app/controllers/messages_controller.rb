@@ -16,7 +16,7 @@ class MessagesController < ApplicationController
         # need to render new message + update dom
         rendered_message = render partial: 'messages/message', object: @message, locals: { prev_message: prev_message, channel: channel }
         update_dom = update_dom(@message, channel)
-        PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message, user: @message.user.id, update_dom: update_dom, new_thread_head: (thread.messages.first.id if new_thread_head)
+        PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message, user: @message.user.id, update_dom: update_dom, new_thread_head: (thread.messages.first.id if new_thread_head), thread_id: thread.id
         if slackbot_message
           rendered_slack_message = render_to_string partial: 'messages/message', object: slackbot_message, locals: { prev_message: @message, channel: channel }
           # gotta wrap message in an array since render returns an array but render_to_string returns string
