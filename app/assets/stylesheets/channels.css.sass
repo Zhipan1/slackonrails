@@ -215,7 +215,25 @@ hr
   height: 42px
   color: rgba($black, 0.9)
 
+#reply-to-banner
+  position: absolute
+  padding: 5px 0px 6px 2px
+  font-size: 14px
+  background-color: rgba(224, 21, 99, 0.12)
+  border: 1px solid rgba(224, 21, 99, 0.4)
+  color: $gray
+  display: none
+  border-right: none
+  border-radius: 2px 0px 0px 2px
+  top: 9px
+  left: 50px
+  line-height: 10px
+  -webkit-font-smoothing: antialiased
+  font-weight: 500
+  font-size: 16px
+
 #channel-message-box
+  position: relative
   &.focus
     #channel-message-upload, #channel-message-input
       border-color: rgba($gray, .24)

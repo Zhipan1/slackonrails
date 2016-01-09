@@ -31,6 +31,7 @@
   &:hover, &.hover
     background-color: rgba($black, 0.03)
 
+  &:hover
     .message-options
       display: block
 
@@ -82,7 +83,7 @@
       opacity: 1
 
 
-.thread-head, .thread-channel-head
+.thread-channel-head
   .thread-bar
     border-radius: 0px 3px 0px 0px
     height: calc(100% - 8px)
@@ -94,7 +95,7 @@
     height: calc(100% - 8px)
     bottom: 8px
 
-.thread-tail.thread-head
+.thread-tail.thread-channel-head
   .thread-bar
     border-radius: 0px 3px 3px 0px
     height: calc(100% - 16px)
@@ -264,10 +265,17 @@
     margin-top: 8px
 
 
-
 .thread-color-0
-  &:hover
+  &:hover, &.hover
     background-color: rgba($thread-color-0, 0.08)
+
+  &.hover
+    &.thread-channel-head
+      border-top: 1px dashed $thread-color-0
+      margin-top: -1px
+    &.thread-tail
+      border-bottom: 1px dashed $thread-color-0
+      margin-bottom: -1px
 
   &.thread-channel-head
     border-color: $thread-color-0
@@ -279,8 +287,16 @@
     color: $thread-color-0
 
 .thread-color-1
-  &:hover
+  &:hover, &.hover
     background-color: rgba($thread-color-1, 0.08)
+
+  &.hover
+    &.thread-channel-head
+      border-top: 1px dashed $thread-color-1
+      margin-top: -1px
+    &.thread-tail
+      border-bottom: 1px dashed $thread-color-1
+      margin-bottom: -1px
 
   &.thread-channel-head
     border-color: $thread-color-1
@@ -292,8 +308,16 @@
     color: $thread-color-1
 
 .thread-color-2
-  &:hover
+  &:hover, &.hover
     background-color: rgba($thread-color-2, 0.03)
+
+  &.hover
+    &.thread-channel-head
+      border-top: 1px dashed $thread-color-2
+      margin-top: -1px
+    &.thread-tail
+      border-bottom: 1px dashed $thread-color-2
+      margin-bottom: -1px
 
   &.thread-channel-head
     border-color: $thread-color-2
@@ -305,8 +329,16 @@
     color: $thread-color-2
 
 .thread-color-3
-  &:hover
+  &:hover, &.hover
     background-color: rgba($thread-color-3, 0.08)
+
+  &.hover
+    &.thread-channel-head
+      border-top: 1px dashed $thread-color-3
+      margin-top: -1px
+    &.thread-tail
+      border-bottom: 1px dashed $thread-color-3
+      margin-bottom: -1px
 
   &.thread-channel-head
     border-color: $thread-color-3

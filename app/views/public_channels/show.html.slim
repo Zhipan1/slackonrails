@@ -38,4 +38,5 @@
   #channel-message-box
     #channel-message-upload
       = image_tag "icons/slack-plus.svg"
+    #reply-to-banner
     textarea#channel-message-input rows="1" channel_id="#{@channel.id}" thread_id="#{@channel.main_thread.id}" user_id="#{current_user.id}"

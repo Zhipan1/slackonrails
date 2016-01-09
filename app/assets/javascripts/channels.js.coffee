@@ -4,33 +4,17 @@
 
 $ ->
 
-  getInitialThreadCache = () ->
-    cache = []
-    for t in $(".message:not(.main-thread)").slice(-20).get().reverse()
-      thread_num = parseInt $(t).attr("thread_id")
-      if thread_num and cache.length < user_thread_cache_size and cache.indexOf(thread_num) == -1
-        cache.push(thread_num)
-    return cache
-
-  pushToCache = (thread) ->
-    if user_thread_cache.indexOf(thread) == -1
-      user_thread_cache.pop()
-      user_thread_cache.unshift(thread)
-
-  updateThreadCache = ->
-    thread_id = parseInt $("#channel-body .message").last().attr("thread_id")
-    pushToCache(thread_id) if thread_id and thread_id != main_thread_id
-
 
   # channel data
   channel = $("#channel-message-input").attr("channel_id")
   getThread = -> $("#channel-message-input").attr("thread_id")
-  getNewThreadHead = -> $("#thread-container").attr("new_thread_head_id")
+  getNewThreadHead = ->
+    if id = $("#channel-message-input").attr("new_thread_head_id")
+      parseInt id
+    else
+      null
   main_thread_id = parseInt $("#channel-message-input").attr("thread_id")
   current_user = parseInt($("#channel-message-input").attr("user_id"))
-  user_thread_cache_size = 2
-  window.t = user_thread_cache = getInitialThreadCache()
-  user_thread_cache_index = [0]
 
   getNotifications(channel)
   $("#channel-body .messages-container").scrollTop $("#channel-body .messages").height()
@@ -68,17 +52,6 @@ $ ->
 
   ## thread stuff ##
 
-  $("#channel-message-input").keydown (e) ->
-    return if $(this).val()
-    # thread hotkeys
-    if e.which == 38 #up
-      clearThreadContainer()
-      console.log user_thread_cache_index[0], user_thread_cache[user_thread_cache_index[0]]
-      enableThreadView(user_thread_cache[user_thread_cache_index[0]])
-      user_thread_cache_index[0] = (user_thread_cache_index[0] + 1) % user_thread_cache.length
-
-
-
   $(document).keydown (e) ->
     if e.keyCode == 27 and $("#thread-container").hasClass("active")
       disableThreadView()
@@ -101,7 +74,7 @@ $ ->
 
     if $message.hasClass("main-thread")
       $thread = $message.clone().addClass("first")
-      $("#thread-container").attr("new_thread_head_id", $message.attr("message_id"))
+      $("#channel-message-input").attr("new_thread_head_id", $message.attr("message_id"))
       $("#thread-container").removeAttr("thread_id")
     else
       $thread = $(".message[thread_id='#{thread_id}']").clone().removeClass("color-thread before-head")
@@ -123,10 +96,8 @@ $ ->
     message_id = $("#thread-container").attr("highlight_message")
     $message = $("#channel-body .message[message_id='#{message_id}']")
     $("#channel-message-input").attr("thread_id", main_thread_id)
-    $("#thread-container").removeAttr("thread_id").removeAttr("new_thread_head_id").removeClass("active")
-
-    user_thread_cache_index[0] = 0
-
+    $("#thread-container").removeAttr("thread_id").removeClass("active")
+    $("#channel-message-input").removeAttr("new_thread_head_id")
 
     setTimeout (->
       $("#thread-container").hide()
@@ -144,7 +115,6 @@ $ ->
     if channel == channel_url.split("/channels/")[1]
       console.log data
       updateDom(data)
-      updateThreadCache()
       $("#channel-body .messages").trigger("new_message")
 
 
@@ -154,9 +124,9 @@ $ ->
     message_thread_id = $message.attr("thread_id")
     $("#channel-body .messages-container").animate { scrollTop: $("#channel-body .messages").height() }, "slow"
 
-    if new_thread_head == parseInt $("#thread-container").attr("new_thread_head_id")
-      $("#thread-container").attr("thread_id", message_thread_id).removeAttr("new_thread_head_id")
-      $("#channel-message-input").attr("thread_id", message_thread_id)
+    if new_thread_head == getNewThreadHead()
+      $("#thread-container").attr("thread_id", message_thread_id)
+      $("#channel-message-input").attr("thread_id", message_thread_id).removeAttr("new_thread_head_id")
 
 
     if $("#thread-container").hasClass('active') and $("#thread-container").attr("thread_id") == message_thread_id
@@ -197,24 +167,7 @@ postMessage = (text, channel, thread, new_thread_head) ->
         text: text
         channel_id: channel
         message_thread_id: thread
-        new_thread_head_id: new_thread_head
+        new_thread_head_id: new_thread_head if new_thread_head != null
     error:(data) ->
       console.log data.responseText
-
-searchMessage = (text) ->
-  $.ajax
-    type: "GET"
-    url: "/messages/search"
-    data:
-      message:
-        text: text
-    success:(data) ->
-      console.log data
-    error:(data) ->
-      console.log data.responseText
-
-
-
-
-window.p = PrivatePub
 
