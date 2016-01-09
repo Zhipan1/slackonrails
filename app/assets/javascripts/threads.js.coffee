@@ -14,7 +14,32 @@ $ ->
 REPLY_BANNER_MARGIN = 11
 
 @message_index = null
-@thread_cache = []
+@thread_cache_up = []
+@thread_cache_down = []
+
+getCache = (direction) ->
+  if direction == "up"
+    @thread_cache_up
+  else
+    @thread_cache_down
+
+inThreadCache = (thread, direction) ->
+  cache = getCache(direction)
+  cache.indexOf(thread) != -1
+
+removeFromCache = (thread, direction) ->
+  cache = getCache(direction)
+  if inThreadCache(thread, direction)
+    index = cache.indexOf(thread)
+    cache.splice(index, 1)
+    console.log cache
+
+addToCache = (thread, direction) ->
+  cache = getCache(direction)
+  if not inThreadCache(thread, direction)
+    cache.push(thread)
+  console.log getCache(direction)
+
 
 resetFocus = ->
   removeFocus(get_message_at_index(current_message_index()))
@@ -31,17 +56,28 @@ threadHotKeys = (e) ->
     focusMessage("down")
 
 focusMessage = (direction) ->
-  $old_highlight_message = get_message_at_index(current_message_index())
+  $old_focus_message = get_message_at_index(current_message_index())
   if direction == "up"
-    update_to_prev_message_index($old_highlight_message)
+    update_to_prev_message_index($old_focus_message)
+    new_direction = "up"
+    old_direction = "down"
   else
-    update_to_next_message_index($old_highlight_message)
-  $highlight_message = get_message_at_index(current_message_index())
-  removeFocus($old_highlight_message)
-  addFocus($highlight_message)
-  emphasize($highlight_message)
-  updateInputBox($highlight_message)
-  setInputMetaData($highlight_message)
+    update_to_next_message_index($old_focus_message)
+    new_direction = "down"
+    old_direction = "up"
+
+  $new_focus_message = get_message_at_index(current_message_index())
+  new_thread_id = $new_focus_message.attr("thread_id")
+  old_thread_id = $old_focus_message.attr("thread_id") if $old_focus_message
+
+  addToCache(new_thread_id, new_direction) if not $new_focus_message.hasClass("main-thread")
+  removeFromCache(old_thread_id, old_direction)
+  removeFocus($old_focus_message)
+  addFocus($new_focus_message)
+  scrollTo($new_focus_message)
+  emphasize($new_focus_message)
+  updateInputBox($new_focus_message)
+  setInputMetaData($new_focus_message)
 
 updateInputBox = ($message) ->
   $reply_to_banner = $("#reply-to-banner")
@@ -86,6 +122,11 @@ addFocus = ($message) ->
     thread_id = $message.attr("thread_id")
     $("#channel-body .message[thread_id='#{thread_id}'").addClass("hover")
 
+scrollTo = ($message) ->
+  $container = $("#channel-body .messages")
+  offset = $message.offset().top - $container.offset().top + $container.scrollTop()
+  $("#channel-body .messages-container").scrollTop offset
+
 emphasize = ($message) ->
   if not $message
     return false
@@ -113,7 +154,8 @@ update_to_prev_message_index = ($message) ->
   if not $message.hasClass("main-thread") # go to prev message that's not in same thread
     thread_id = $message.attr("thread_id")
     $new_message = get_message_at_index(current_message_index())
-    if $new_message.attr("thread_id") == thread_id # decrement to the start of last message of new thread
+    # decrement to the start of last message of new thread and to next non cached thread
+    if ((new_thread_id = $new_message.attr("thread_id")) == thread_id) or (inThreadCache(new_thread_id, "up"))
       update_to_prev_message_index($new_message)
 
 update_to_next_message_index = ($message) ->
@@ -126,7 +168,8 @@ update_to_next_message_index = ($message) ->
   if not $message.hasClass("main-thread") # go to prev message that's not in same thread
     thread_id = $message.attr("thread_id")
     $new_message = get_message_at_index(current_message_index())
-    if $new_message.attr("thread_id") == thread_id #decrement to the start of last message of new thread
+    #increment to the start of last message of new thread and to next non cached thread
+    if ((new_thread_id = $new_message.attr("thread_id")) == thread_id) or (inThreadCache(new_thread_id, "down"))
       update_to_next_message_index($new_message)
 
 
