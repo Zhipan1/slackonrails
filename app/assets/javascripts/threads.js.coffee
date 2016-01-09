@@ -13,7 +13,7 @@ $ ->
 
 
 REPLY_BANNER_MARGIN = 11
-
+DEEMPHASIZE_OPACITY = 0.1
 @message_index = null
 @thread_cache_up = []
 @thread_cache_down = []
@@ -130,20 +130,20 @@ removeFocus = ($message) ->
   if not $message
     return false
   if $message.hasClass("main-thread")
-    $message.removeClass("hover")
+    $message.removeClass("focus-message")
   else
     thread_id = $message.attr("thread_id")
-    $("#channel-body .message[thread_id='#{thread_id}'").removeClass("hover")
+    $("#channel-body .message[thread_id='#{thread_id}'").removeClass("focus-message")
   clearEmphasis()
 
 addFocus = ($message) ->
   if not $message
     return false
   if $message.hasClass("main-thread")
-    $message.addClass("hover")
+    $message.addClass("focus-message")
   else
     thread_id = $message.attr("thread_id")
-    $("#channel-body .message[thread_id='#{thread_id}'").addClass("hover")
+    $("#channel-body .message[thread_id='#{thread_id}'").addClass("focus-message")
 
 scrollTo = ($message) ->
   $container = $("#channel-body .messages")
@@ -161,7 +161,7 @@ emphasize = ($message) ->
     deemphasize($("#channel-body .message:visible").not($thread))
 
 deemphasize = ($elements) ->
-  $elements.css(opacity: 0.5)
+  $elements.css(opacity: DEEMPHASIZE_OPACITY)
 
 clearEmphasis = ->
   $("#channel-body .message:visible").css(opacity: "")

@@ -91,8 +91,8 @@ module MessagesHelper
 
   def detect_mentioned_channels(content)
     links = []
-    content.to_str.gsub(/(@(\w*))/) do |match|
-      if channel = PublicChannel.find_by_name($2)
+    content.to_str.gsub(/(@([\w-]*))/) do |match|
+      if channel = current_user.channels.where.not(type: "DirectMessage").find_by_name($2)
         links.append channel
       end
     end if content.present?
@@ -100,8 +100,8 @@ module MessagesHelper
   end
 
   def add_message_links(content)
-    content.to_str.gsub(/((?:#|@)(\w*))/) do |match|
-      if channel = PublicChannel.find_by_name($2)
+    content.to_str.gsub(/((?:#|@)([\w-]*))/) do |match|
+      if channel = current_user.channels.where.not(type: "DirectMessage").find_by_name($2)
         %(#{link_to $1, channel})
       elsif user = User.find_by_name($2)
         %(#{link_to $1, user})

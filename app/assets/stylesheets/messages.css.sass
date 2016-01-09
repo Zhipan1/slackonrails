@@ -28,22 +28,17 @@
   a:hover
     text-decoration: underline
 
-  &:hover, &.hover
+  &:hover, &.focus-message, &.hover
     background-color: rgba($black, 0.03)
     z-index: 1
 
-  &.hover
-    &.thread-channel-head, &.main-thread
-      border-top: 1px dotted $gray
-      margin-top: -1px
-    &.thread-tail, &.main-thread
-      border-bottom: 1px dotted $gray
-      margin-bottom: -1px
-
-
-  &:hover
+  &:hover, &.hover
     .message-options
       display: block
+
+  &.focus-message
+    .thread-bar
+      opacity: 1
 
   &.first
     .message-icon
@@ -276,10 +271,10 @@
 
 
 .thread-color-0
-  &.message:hover, &.message.hover
+  &.message:hover, &.message.focus-message
     background-color: rgba($thread-color-0, 0.08)
 
-  &.message.hover
+  &.message.focus-message
     border-color: $thread-color-0
 
   &.thread-channel-head
@@ -296,10 +291,10 @@
     background-color: rgba($thread-color-0, 0.15)
 
 .thread-color-1
-  &.message:hover, &.message.hover
+  &.message:hover, &.message.focus-message
     background-color: rgba($thread-color-1, 0.08)
 
-  &.message.hover
+  &.message.focus-message
     border-color: $thread-color-1
 
   &.thread-channel-head
@@ -316,10 +311,10 @@
     background-color: rgba($thread-color-1, 0.15)
 
 .thread-color-2
-  &.message:hover, &.message.hover
+  &.message:hover, &.message.focus-message
     background-color: rgba($thread-color-2, 0.03)
 
-  &.message.hover
+  &.message.focus-message
     border-color: $thread-color-2
 
   &.thread-channel-head
@@ -336,10 +331,10 @@
     background-color: rgba($thread-color-2, 0.10)
 
 .thread-color-3
-  &.message:hover, &.message.hover
+  &.message:hover, &.message.focus-message
     background-color: rgba($thread-color-3, 0.08)
 
-  &.message.hover
+  &.message.focus-message
     border-color: $thread-color-3
 
   &.thread-channel-head
