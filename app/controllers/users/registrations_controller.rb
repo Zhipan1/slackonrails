@@ -30,7 +30,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
       create_walkthrough(user)
       session[:new_user] = true
     end
+  end
 
+  def new
+    super do
+      PrivatePub.publish_to "wakeup", nil
+    end
   end
 
   private
