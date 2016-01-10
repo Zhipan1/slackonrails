@@ -1,1 +1,13 @@
 
+.splash-body
+  .form-modal
+    .form-header = emojify "Hey, welcome to Slack Threads :wave:", 40
+    .form-subtitle This is a Slack clone with threaded messages. Create an account to try it out!
+    .form-inputs
+      = link_to "Create an account", new_registration_path(User.new), class: "form-btn green"
+    = link_to "Sign in", new_session_path(User.new)
+
+
+  = image_tag "icons/drake.png", class: "hidden-drake"
+
+

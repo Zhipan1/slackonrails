@@ -1,26 +1,37 @@
 
 .splash-body
-  .form-modal
-    .form-header = emojify "Sign up for :fire:.slackthreads.com", 40
-    .form-subtitle
-      | Enter your
-      span  username
-      | ,
-      span  email address
-      |, and
-      span  password
-      | .
+  .splash-intro
+    .splash-intro-header Welcome to Slack Threads
+    .splash-intro-subtitle
+      | a
+      b  prototype
+      |  of Slack with
+      b  message threads
+      | . Create an account to try it out!
+    .splash-intro-img
+      = image_tag "slack_ui.png"
 
-    = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+  .splash-form
+    .form-modal
+      .form-header = emojify "Sign up for :fire:.slackthreads.com", 40
+      .form-subtitle
+        | Enter your
+        span  username
+        | ,
+        span  email address
+        |, and
+        span  password
+        | .
 
-      .form-inputs
-        = f.input :name, required: true, label: false, autofocus: true, placeholder:"champagne-papi"
-        = f.input :email, required: true, label: false, placeholder:"you@domain.com"
-        = f.input :password, required: true, label: false, placeholder: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+      = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
 
-        .big-green-btn
-          = f.button :submit, "Create Account"
+        .form-inputs
+          = f.input :name, required: true, label: false, autofocus: true, placeholder:"champagne-papi"
+          = f.input :email, required: true, label: false, placeholder:"you@domain.com"
+          = f.input :password, required: true, label: false, placeholder: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
 
-    = render "devise/shared/links"
+          = f.button :submit, "Create an account", class: "form-btn"
 
-  = image_tag "icons/drake.png", class: "hidden-drake-2"
+      = render "devise/shared/links"
+
+    = image_tag "icons/drake.png", class: "hidden-drake"

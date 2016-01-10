@@ -1,0 +1,76 @@
+@import partials/mixins
+@import partials/variables
+
+.splash-body
+  +clearfix
+  -webkit-font-smoothing: antialiased
+  position: relative
+  height: 100%
+
+.splash-intro, .splash-form
+  width: 50%
+  position: relative
+  float: left
+  height: 100%
+  overflow: hidden
+
+  @media screen and (max-width: 1000px)
+    width: 100%
+    float: right
+    .hidden-drake
+      display: none
+
+.splash-form
+  padding-top: 15vh
+
+.splash-intro
+  background-color: #6C4090
+  text-align: center
+
+.splash-intro-header
+  font-size: 36px
+  color: white
+  font-weight: 700
+  margin-bottom: 25px
+  margin-top: 10vh
+
+.splash-intro-subtitle
+  font-size: 24px
+  color: white
+  width: 100%
+  max-width: 500px
+  margin: auto
+  margin-bottom: 10vh
+  line-height: 1.5
+  font-weight: 400
+
+  b
+    font-weight: 800
+
+.splash-intro-img
+  width: 80%
+  margin: auto
+  img
+    width: 100%
+
+.form-modal
+  border: none
+  box-shadow: none
+
+
+
+.hidden-drake
+  width: 35px
+  position: absolute
+  bottom: 10vh
+  left: -20px
+  transform: rotate(87deg)
+  transition: 0.3s ease
+
+  &:hover
+    left: 0px
+
+
+
+
+

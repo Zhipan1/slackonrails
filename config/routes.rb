@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   devise_for :users, controllers: { registrations: 'users/registrations'}
 
   get '/messages/search', to: 'messages#search'
@@ -22,7 +21,7 @@ Rails.application.routes.draw do
   get '/channels/:channel_id/join', to: 'channels#user_join', as: 'join_channel'
 
   devise_scope :user do
-    root to: "users/sessions#new"
+    root to: "users/registrations#new"
   end
 
 
