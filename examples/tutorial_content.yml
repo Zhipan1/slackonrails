@@ -1,4 +1,22 @@
 ---
+- channel: interns
+  content:
+  - thread: 0
+    name: "kevin"
+    messages:
+      - "Does anyone know where the bathroom is?"
+  - thread: "main"
+    name: "kevin"
+    messages:
+      - "Please. I've been holding it in since this morning"
+  - thread: 0
+    name: "kevin"
+    messages:
+      - "Nevermind."
+  - thread: "main"
+    name: "kevin"
+    messages:
+      - "Does anyone have a spare pair of pants?"
 - channel: basic-threading
   content:
   - thread: 0
