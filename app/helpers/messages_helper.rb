@@ -89,23 +89,23 @@ module MessagesHelper
     emojify(add_message_links(add_media(content)))
   end
 
-  def detect_mentioned_channels(content)
+  def detect_mentioned_channels(content, user)
     links = []
     content.to_str.gsub(/(@([\w-]*))/) do |match|
-      if channel = PublicChannel.find_by_name($2)
+      if user and channel = user.channels.where(type: "Channel", name: $2).first
         links.append channel
-      elsif current_user and channel = current_user.channels.where.not(type: "DirectMessage").first
+      elsif channel = PublicChannel.find_by_name($2)
         links.append channel
       end
     end if content.present?
     links
   end
 
-  def add_message_links(content)
+  def add_message_links(content, user=current_user)
     content.to_str.gsub(/((?:#|@)([\w-]*))/) do |match|
-      if channel = PublicChannel.find_by_name($2)
+      if user and channel = user.channels.where(type: "Channel", name: $2).first
         %(#{link_to $1, channel})
-      elsif current_user and channel = current_user.channels.where.not(type: "DirectMessage").first
+      elsif channel = PublicChannel.find_by_name($2)
         %(#{link_to $1, channel})
       elsif user = User.find_by_name($2)
         %(#{link_to $1, user})

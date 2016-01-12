@@ -116,7 +116,7 @@ $ ->
       console.log data
       updateDom(data)
       $("#channel-body .messages").trigger("new_message")
-      updateInputMetaData(data.thread_id)
+      updateInputMetaData(data.thread_id) if $("#thread-container").hasClass('active')
 
 
 
@@ -172,7 +172,7 @@ postMessage = (text, channel, thread, new_thread_head) ->
         text: text
         channel_id: channel
         message_thread_id: thread
-        new_thread_head_id: new_thread_head if new_thread_head != null
+        reply_to_message_id: new_thread_head if new_thread_head != null
     error:(data) ->
       console.log data.responseText
 

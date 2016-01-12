@@ -62,21 +62,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
     tutorial_content_path = "#{examples_dir}/tutorial_content.yml"
     channels_seed = YAML::parse_file(tutorial_channels_path).to_ruby
     content_seed = YAML::parse_file(tutorial_content_path).to_ruby
-    create_walkthrough_channels(user, channels_seed)
-    create_walkthrough_content(user, content_seed)
+    walkthrough_channels = create_walkthrough_channels(user, channels_seed)
+    create_walkthrough_content(user, content_seed, walkthrough_channels)
   end
 
   def create_walkthrough_channels(user, channels_seed)
+    channels = {}
     channels_seed.each do |c|
       channel = Channel.create c
       channel.add_user(user)
       channel.create_main_thread
+      channels[channel.name] = channel
     end
+    channels
   end
 
-  def create_walkthrough_content(user, content_seed)
+  def create_walkthrough_content(user, content_seed, walkthrough_channels)
     content_seed.each do |c|
-      channel = user.channels.where(name: c["channel"]).first
+      channel = walkthrough_channels[c["channel"]] || PublicChannel.where(name: c["channel"])
       threads = { "main" => channel.main_thread}
       c["content"].each do |data|
         thread = threads[data["thread"]]
@@ -85,11 +88,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
           thread = threads[data["thread"]] = channel.new_thread
         end
         data["messages"].each do |msg|
-          if data["origin"] and origin = Channel.where(name: data["origin"]).first
+          if data["origin"] and origin = walkthrough_channels[data["origin"]] || PublicChannel.where(name: data["origin"])
           else
             origin = channel
           end
-          thread.post_message(msg_user, msg, origin)
+          message, slackbot_message = thread.post_message(msg_user, msg, origin)
+          if data["add_to_walkthrough_channels"]
+            add_channels = data["add_to_walkthrough_channels"].map { |c| walkthrough_channels[c]}
+            thread.add_thread_to_channels(add_channels, message)
+          end
         end
       end
     end

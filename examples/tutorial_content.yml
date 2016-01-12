@@ -5,13 +5,7 @@
     name: "kevin"
     messages:
       - "Does anyone know where the bathroom is?"
-  - thread: "main"
-    name: "kevin"
-    messages:
       - "Please. I've been holding it in since this morning"
-  - thread: 0
-    name: "kevin"
-    messages:
       - "Nevermind."
   - thread: "main"
     name: "kevin"
@@ -38,7 +32,12 @@
     name: "zhi"
     messages:
       - "You can add another channel to a thread like so:"
+  - thread: 0
+    name: "zhi"
+    messages:
       - "@interns where’s my coffee"
+    add_to_walkthrough_channels:
+      - "interns"
   - thread: 0
     name: "kevin"
     messages:

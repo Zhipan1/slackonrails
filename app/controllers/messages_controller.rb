@@ -3,127 +3,79 @@ class MessagesController < ApplicationController
   include MessagesHelper
 
   def create
-    thread, thread_membership = get_or_create_thread(thread_id, channel)
-    @message = Message.create(message_params.merge(user: current_user, origin: channel))
-    thread, slackbot_message = add_thread_to_mentioned_channels(thread, @message, channel)
+    # cases
+    # respond to a message, which creates a new thread
+    # respond to a thread
+    # - don't allow people to add another channel to the main thread, create a new one instead
+    message_text = message_params[:text]
+    message_channel = Channel.find message_params[:channel_id]
+    message_user = current_user
+    message_thread = MessageThread.find message_params[:message_thread_id]
+    reply_to_message = Message.find_by_id message_params[:reply_to_message_id]
 
-    prev_message = channel.messages.last
+    if reply_to_message # replying to a individual message, create a new thread
+      thread = MessageThread.create().add_channel_to_thread(message_channel, reply_to_message)
+      reply_to_message.message_thread = thread
+      reply_to_message.save
+
+    elsif can_post_to_thread(message_text, message_channel, message_thread)
+      thread = message_thread
+    else
+      thread = MessageThread.create().add_channel_to_thread(message_channel)
+    end
+
+    @message, slackbot_message = thread.post_message(message_user, message_text, message_channel)
 
     respond_to do |format|
-      if thread.save and @message.save and (not slackbot_message or slackbot_message.save)
-        format.html {}
-        format.json {}
-        # need to render new message + update dom
-        rendered_message = render partial: 'messages/message', object: @message, locals: { prev_message: prev_message, channel: channel }
-        update_dom = update_dom(@message, channel)
-        PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message, user: @message.user.id, update_dom: update_dom, new_thread_head: (thread.messages.first.id if new_thread_head), thread_id: thread.id
-        if slackbot_message
-          rendered_slack_message = render_to_string partial: 'messages/message', object: slackbot_message, locals: { prev_message: @message, channel: channel }
-          # gotta wrap message in an array since render returns an array but render_to_string returns string
-          PrivatePub.publish_to "/channels/#{channel.id}", message: [rendered_slack_message], user: slackbot_message.user.id
-        end
-        PrivatePub.publish_to "/channels/0", channel: channel.id
-        channel.channel_memberships.where.not(user: current_user).update_all notification: true
-      else
-        format.html { render :nothing => true }
-        format.json {}
+      format.html { render :nothing => true }
+      format.json {}
+      if @message.save
+
+        send_message_through_ajax(@message, message_channel, thread, reply_to_message)
+
+        send_slackbot_message_through_ajax(slackbot_message, message_channel, thread) if slackbot_message
+
+        send_push_notifications(message_channel)
+
       end
     end
   end
 
-  def get_or_create_thread(thread_id, channel)
-
-    if new_thread_head
-      message = Message.find_by_id new_thread_head
-      if message.message_thread == channel.main_thread
-        thread = create_thread(message, channel)
-      else
-        thread = message.message_thread
-      end
-    else
-      thread = MessageThread.find_by_id thread_id
-    end
-
-    membership = ThreadMembership.where(message_thread: thread, channel: channel).first
-
-    [thread, membership]
+  # don't allow people to add another channel to the main thread, create a new one instead
+  def can_post_to_thread(message_text, message_channel, message_thread)
+    is_main = message_thread == message_channel.main_thread
+    isnt_adding_another_channel = (detect_mentioned_channels(message_text, current_user) - [message_channel]).empty?
+    (not is_main) or (is_main and isnt_adding_another_channel)
   end
 
-  def create_thread(head, channel)
-    thread = MessageThread.create
-    head.message_thread = thread
-    head.save
-    add_thread_to_channel(thread, channel, head)
-    thread
+  def render_message(message, channel)
+    rendered_message = render_to_string partial: 'messages/message', object: message, locals: { prev_message: message.prev(channel), channel: channel }
+    [rendered_message]
   end
 
-  def add_thread_to_mentioned_channels(thread, message, channel)
-    channel_links = detect_mentioned_channels(message.text)
-    add_channels = []
-
-    # add this thread to another channel
-    if channel_links.empty? or channel_links[0] == channel
-      message.message_thread = thread
-      return thread
-    else
-      # if message links to other channel and is in main thread, start a new thread
-      if thread == channel.main_thread
-        thread = create_thread(message, channel)
-      else
-        message.message_thread = thread
-      end
-      for channel in channel_links
-        if not thread.channels.include? channel
-          add_channels.append channel
-        end
-      end
-    end
-
-    slackbot_message = add_thread_to_channels_message(message.user, thread, add_channels) if not add_channels.empty?
-
-    for channel in add_channels
-      add_thread_to_channel(thread, channel, message)
-    end
-
-    [thread, slackbot_message]
+  def send_message_through_ajax(message, channel, thread, new_thread=false)
+    rendered_message = render_message(message, channel)
+    update_dom = update_dom(message, channel) # update thread styles on affected messages
+    PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message, user: message.user.id, update_dom: update_dom, new_thread_head: (thread.messages.first.id if new_thread), thread_id: thread.id
   end
 
-  def add_thread_to_channel(thread, channel, thread_head)
-    ThreadMembership.where(message_thread: thread, channel: channel, head: thread_head).first_or_create
+  def send_slackbot_message_through_ajax(slackbot_message, channel, thread)
+    rendered_message = render_message(slackbot_message, channel)
+    # gotta wrap message in an array since render returns an array but render_to_string returns string
+    PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message, user: slackbot_message.user.id
   end
 
-  def search
-    search = params[:message][:text]
-    @messages = Message.where("text LIKE ?", "%#{search}%").all.sort
-
-    respond_to do |format|
-      if @messages.count > 0
-        format.html { render partial: 'messages/search', object: @messages }
-        format.json {  }
-        # rendered_message = render partial: 'messages/message', object: @message, locals: { prev_user: prev_user }
-      else
-        format.html { render text: "Nothing found!" }
-        format.json {}
-      end
-    end
+  def send_push_notifications(channel)
+    PrivatePub.publish_to "/channels/0", channel: channel.id
   end
+
 
   private
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
-      params.require(:message).permit(:text)
+      params.require(:message).permit(:text, :channel_id, :message_thread_id, :reply_to_message_id)
     end
 
-    def channel
-      Channel.find params[:message][:channel_id]
-    end
-
-    def thread_id
-      params[:message][:message_thread_id]
-    end
-
-    def new_thread_head
-      params[:message][:new_thread_head_id]
-    end
 
 end
