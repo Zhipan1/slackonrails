@@ -13,13 +13,12 @@
 
 #thread-container thread_id="-1"
   #thread-container-header
-    .channel-name-hashtag = image_tag "icons/slack-hashtag.svg"
-    .channel-name thread
-    .channel-topic = @channel.topic
+    #header-thread-icon = image_tag "icons/channel-thread-icon.svg"
+    #header-thread-prompt
     #thread-close
       = image_tag "icons/slack-times.svg"
       #thread-close-text esc
-    / #thread-header-border
+    #thread-header-border
   .messages-container
     .messages
 
@@ -28,4 +27,5 @@
   #channel-message-box
     #channel-message-upload
       = image_tag "icons/slack-plus.svg"
-    textarea#channel-message-input rows="1" channel_id="#{@channel.id}" thread_id="#{@channel.main_thread.id}" user_id="#{current_user.id}"
+    #reply-to-banner
+    textarea#channel-message-input rows="1" channel_id="#{@channel.id}" thread_id="#{@channel.main_thread.id}" user_id="#{current_user.id}" main_thread_id="#{@channel.main_thread.id}"
