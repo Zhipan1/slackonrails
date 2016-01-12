@@ -1,7 +1,12 @@
 class ChannelsController < ApplicationController
   before_action :set_channel, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :wake_up_faye
   include ChannelsHelper
+
+  def wake_up_faye
+    PrivatePub.publish_to "wakeup", nil
+  end
 
   # GET /channels
   # GET /channels.json
