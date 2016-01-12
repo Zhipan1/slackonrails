@@ -1,23 +1,20 @@
 module MessagesHelper
   def get_message_classes(message, prev_message, channel)
-    message_is_thread = message.message_thread.messages.count > 1
-    prev_message_is_thread = (prev_message and prev_message.message_thread.messages.count > 1)
+    message_thread = message.message_thread
     prev_user = prev_message.user if prev_message
 
     diff_user = prev_user != message.user
-    diff_thread = (prev_message and (prev_message.message_thread != message.message_thread))
-    diff_time = (prev_message and (message.created_at - prev_message.created_at) > 10.minute)
+    diff_thread = (prev_message and (prev_message.message_thread != message_thread))
 
-    classes = get_thread_classes(message, prev_message, channel)
+    classes = get_thread_classes(message, prev_message, channel, message_thread)
 
-    classes += " first" if diff_user or diff_thread or diff_time
+    classes += " first" if diff_user or diff_thread
 
     classes
   end
 
-  def get_thread_classes(message, prev_message, channel)
+  def get_thread_classes(message, prev_message, channel, thread)
     classes = ""
-    thread = message.message_thread
     if channel.main_thread != thread
       next_message = message.next(channel)
       classes += "color-thread thread-color-#{message.message_thread.id%4}"
