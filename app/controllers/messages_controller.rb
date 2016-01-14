@@ -54,15 +54,19 @@ class MessagesController < ApplicationController
   end
 
   def send_message_through_ajax(message, channel, thread, new_thread=false)
-    rendered_message = render_message(message, channel)
-    update_dom = update_dom(message, channel) # update thread styles on affected messages
-    PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message, user: message.user.id, update_dom: update_dom, new_thread_head: (thread.messages.first.id if new_thread), thread_id: thread.id
+    thread.channels.each do |c|
+      rendered_message = render_message(message, c)
+      update_dom = update_dom(message, c) # update thread styles on affected messages
+      PrivatePub.publish_to "/channels/#{c.id}", message: rendered_message, user: message.user.id, update_dom: update_dom, new_thread_head: (thread.messages.first.id if new_thread), thread_id: thread.id
+    end
   end
 
   def send_slackbot_message_through_ajax(slackbot_message, channel, thread)
-    rendered_message = render_message(slackbot_message, channel)
     # gotta wrap message in an array since render returns an array but render_to_string returns string
-    PrivatePub.publish_to "/channels/#{channel.id}", message: rendered_message, user: slackbot_message.user.id
+    thread.channels.each do |c|
+      rendered_message = render_message(slackbot_message, c)
+      PrivatePub.publish_to "/channels/#{c.id}", message: rendered_message, user: slackbot_message.user.id
+    end
   end
 
   def send_push_notifications(channel)

@@ -6,7 +6,7 @@ $ ->
 
 
   # channel data
-  channel = $("#channel-message-input").attr("channel_id")
+  getChannel = -> $("#channel-message-input").attr("channel_id")
   getThread = -> $("#channel-message-input").attr("thread_id")
   getNewThreadHead = ->
     if id = $("#channel-message-input").attr("new_thread_head_id")
@@ -16,7 +16,7 @@ $ ->
   main_thread_id = parseInt $("#channel-message-input").attr("thread_id")
   current_user = parseInt($("#channel-message-input").attr("user_id"))
 
-  getNotifications(channel)
+  getNotifications(getChannel())
   $("#channel-body .messages-container").scrollTop $("#channel-body .messages").height()
 
   $("#collapse-all-threads").click -> ThreadShow($(this), "collapse")
@@ -46,7 +46,7 @@ $ ->
       if not $(this).val()
         return false
       text = $(this).val()
-      postMessage(text, channel, getThread(), getNewThreadHead())
+      postMessage(text, getChannel(), getThread(), getNewThreadHead())
       $(this).val("")
       return false
 
@@ -111,8 +111,8 @@ $ ->
     $("#thread-container .channel-topic").html("")
 
 
-  PrivatePub.subscribe "/channels/#{channel}", (data, channel_url) ->
-    if channel == channel_url.split("/channels/")[1]
+  PrivatePub.subscribe "/channels/#{getChannel()}", (data, channel_url) ->
+    if getChannel() == channel_url.split("/channels/")[1]
       console.log data
       updateDom(data)
       $("#channel-body .messages").trigger("new_message")
